@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Acceso - QueryBI AI</title>
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body style="background-color: #0f172a;">
+
+    <!-- FORMULARIO SIMPLE DE LOGIN QUE REDIRIGE AL DASHBOARD -->
+    <div class="contenedor-login">
+        <h2 style="text-align: center; margin-bottom: 20px; color: #0f172a;">Iniciar Sesión</h2>
+        <p style="text-align: center; margin-bottom: 20px; font-size: 14px; color: #64748b;">Ingresa tus credenciales para acceder a QueryBI AI</p>
+        
+        <!-- Al hacer clic en Ingresar te lleva a dashboard.html simulación de acceso -->
+        <form action="dashboard.html" method="GET">
+            <div class="grupo-campo">
+                <label>Correo Electrónico:</label>
+                <input type="email" placeholder="usuario@uns.edu.pe" required>
+            </div>
+            
+            <div class="grupo-campo">
+                <label>Contraseña:</label>
+                <input type="password" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="btn-enviar">Ingresar a la Plataforma</button>
+        </form>
+        
+        <p style="text-align: center; margin-top: 15px;">
+            <a href="index.html" style="color: #2563eb; text-decoration: none; font-size: 14px;">← Volver a la presentación</a>
+        </p>
+    </div>
+
+</body>
+</html>
