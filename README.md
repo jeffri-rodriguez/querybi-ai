@@ -166,11 +166,8 @@ Haz commit de tus cambios **antes** de este proceso. Después prueba que todo si
 
 Pasa cuando dos personas cambiaron las mismas líneas. Git marca el archivo así:
 ```
-<<<<<<< HEAD
 lo que tú escribiste
-=======
 lo que escribió el otro
->>>>>>> main
 ```
 Para resolverlo:
 1. Abre el archivo y decide qué queda (tu versión, la otra o una mezcla).
