@@ -165,18 +165,21 @@ Haz commit de tus cambios **antes** de este proceso. Después prueba que todo si
 ### 4. Si hay conflicto
 
 Pasa cuando dos personas cambiaron las mismas líneas. Git marca el archivo así:
-```
-lo que tú escribiste
-lo que escribió el otro
-```
+
+    <<<<<<< HEAD
+    lo que tú escribiste
+    =======
+    lo que escribió el otro
+    >>>>>>> main
+
 Para resolverlo:
 1. Abre el archivo y decide qué queda (tu versión, la otra o una mezcla).
 2. Borra las marcas `<<<<<<<`, `=======` y `>>>>>>>`.
 3. Ejecuta:
 ```bash
-   git add .
-   git commit
-   git push
+git add .
+git commit
+git push
 ```
 
 VS Code muestra botones sobre el conflicto (*Accept Current / Incoming / Both*). Si no estás seguro de qué conservar, **pregúntale a quien escribió la otra parte**. Para cancelar el merge y volver al estado anterior: `git merge --abort`.
