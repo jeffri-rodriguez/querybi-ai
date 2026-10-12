@@ -1,6 +1,85 @@
 # aplicaciones-producto
 QueryBI AI: una aplicación web para consultar y analizar datos empresariales mediante preguntas en lenguaje natural.
 
+## Estructura del proyecto
+```text
+querybi-ai/
+│
+├── index.html                       # Página pública de inicio
+│
+├── paginas/
+│   ├── nosotros.html                # Quiénes somos, misión y visión
+│   ├── como-funciona.html            # Explicación del funcionamiento
+│   └── ayuda.html                    # Preguntas frecuentes y orientación
+│
+├── acceso/
+│   ├── login.html                    # Interfaz de inicio de sesión
+│   └── recuperar-contrasena.html     # Interfaz para recuperar acceso
+│
+├── aplicacion/
+│   ├── panel.html                    # Inicio del espacio de trabajo
+│   ├── consultas.html                # Preguntas, resultados, gráficos y SQL
+│   ├── historial.html                # Consultas anteriores de ejemplo
+│   ├── reportes.html                 # Listado y vista previa de reportes
+│   └── perfil.html                   # Datos del usuario y contraseña
+│
+├── administracion/
+│   ├── fuentes.html                  # Listado de fuentes de datos
+│   ├── configurar-fuente.html        # Formulario de configuración de fuente
+│   ├── esquema.html                  # Tablas, campos, relaciones y permisos
+│   └── usuarios.html                 # Listado, creación y edición de usuarios
+│
+├── assets/
+│   │
+│   ├── css/
+│   │   ├── estilos.css               # Base visual compartida
+│   │   ├── publico.css               # Diseño de las páginas públicas
+│   │   ├── acceso.css                # Diseño de login y recuperación
+│   │   ├── aplicacion.css            # Menú lateral y estructura interna
+│   │   ├── consultas.css             # Área de preguntas y resultados
+│   │   └── administracion.css        # Diseño de administración
+│   │
+│   ├── js/
+│   │   ├── principal.js              # Comportamientos generales y navegación
+│   │   ├── acceso.js                 # Validaciones y acceso simulado
+│   │   ├── panel.js                  # Presentación del resumen inicial
+│   │   ├── consultas.js              # Consultas simuladas y sus estados
+│   │   ├── graficos.js               # Representación de datos de ejemplo
+│   │   ├── historial.js              # Búsqueda y detalle de consultas
+│   │   ├── reportes.js               # Vista previa y acciones de reportes
+│   │   ├── perfil.js                 # Validaciones del formulario de perfil
+│   │   ├── fuentes.js                # Listado y formularios de fuentes
+│   │   ├── esquema.js                # Selección visual de tablas y campos
+│   │   ├── usuarios.js               # Formularios y roles simulados
+│   │   └── validaciones.js           # Validaciones reutilizables
+│   │
+│   ├── datos/
+│   │   └── datos-demo.js             # Datos ficticios compartidos
+│   │
+│   └── imagenes/
+│       ├── logo.svg                  # Logo de QueryBI AI
+│       └── favicon.svg               # Icono de la pestaña del navegador
+│
+├── README.md                         # Documentación del proyecto
+└── .gitignore                        # Reglas de exclusión para Git
+```
+
+### Organización de las interfaces
+
+- El proyecto contempla **15 páginas HTML**.
+- Misión y visión se incluyen en `paginas/nosotros.html`.
+- Los resultados, gráficos y SQL se muestran en `aplicacion/consultas.html`.
+- La creación y edición de usuarios se incluyen en `administracion/usuarios.html`.
+- Los estados de carga, error y ausencia de resultados se presentan dentro de la pantalla correspondiente.
+- Las reglas de adaptación a dispositivos móviles se incluyen en los archivos CSS de cada área.
+- Los datos ficticios se centralizan en `assets/datos/datos-demo.js`.
+
+### Arquitectura y alcance
+
+La aplicación utiliza arquitectura cliente-servidor: el servidor web del profesor aloja y entrega los archivos, mientras que el navegador interpreta el HTML, aplica los estilos CSS y ejecuta JavaScript.
+
+En este avance, el acceso, los roles, las conexiones y las consultas son simulaciones de interfaz. No existe autenticación real, ejecución de SQL ni persistencia en una base de datos.
+
 ## Flujo de trabajo con Git y GitHub
 
 **Idea central:** `main` es la versión oficial del proyecto. **Nadie trabaja directamente en `main`.** Cada tarea se hace en una rama propia y se une a `main` mediante un Pull Request (PR).
@@ -86,21 +165,21 @@ Haz commit de tus cambios **antes** de este proceso. Después prueba que todo si
 ### 4. Si hay conflicto
 
 Pasa cuando dos personas cambiaron las mismas líneas. Git marca el archivo así:
-```
-<<<<<<< HEAD
-lo que tú escribiste
-=======
-lo que escribió el otro
->>>>>>> main
-```
+
+    <<<<<<< HEAD
+    lo que tú escribiste
+    =======
+    lo que escribió el otro
+    >>>>>>> main
+
 Para resolverlo:
 1. Abre el archivo y decide qué queda (tu versión, la otra o una mezcla).
 2. Borra las marcas `<<<<<<<`, `=======` y `>>>>>>>`.
 3. Ejecuta:
 ```bash
-   git add .
-   git commit
-   git push
+git add .
+git commit
+git push
 ```
 
 VS Code muestra botones sobre el conflicto (*Accept Current / Incoming / Both*). Si no estás seguro de qué conservar, **pregúntale a quien escribió la otra parte**. Para cancelar el merge y volver al estado anterior: `git merge --abort`.

@@ -1,70 +1,83 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>QueryBI AI - Presentación del Proyecto</title>
-    <link rel="stylesheet" href="css/estilo.css">
-</head>
-<body>
-
-    <!-- CABECERA PRINCIPAL DE LA PÁGINA -->
-    <header>
-        <div class="logo">QueryBI <span>AI</span></div>
-        <nav>
-            <a href="#que-hace">¿Qué hace?</a>
-            <a href="#participantes">Integrantes</a>
-            <a href="login.html" class="btn-acceder">ACCEDER</a>
-        </nav>
-    </header>
-
-    <!-- SECCIÓN DE BIENVENIDA Y RESUMEN DEL PROYECTO -->
-    <section class="hero">
-        <h1>Consulta y Análisis de Datos con Lenguaje Natural</h1>
-        <p>Plataforma web diseñada para convertir preguntas comunes en consultas SQL automáticas utilizando Inteligencia Artificial.</p>
-        <a href="login.html" class="btn-acceder">Probar Plataforma</a>
-    </section>
-
-    <!-- SECCIÓN: QUÉ HACE NUESTRA PÁGINA -->
-    <section id="que-hace" class="seccion">
-        <h2>¿Cómo funciona nuestra aplicación?</h2>
-        <p>QueryBI AI facilita la toma de decisiones empresariales para usuarios que no dominan lenguaje SQL.</p>
-        
-        <div class="contenedor-tarjetas">
-            <div class="tarjeta">
-                <h3>1. Pregunta en Español</h3>
-                <p>Escribe tu consulta empresarial tal como se la harías a una persona.</p>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="QueryBI AI: prototipo académico de consulta y análisis de datos empresariales.">
+        <title>Inicio | QueryBI AI</title>
+        <link rel="icon" href="assets/imagenes/favicon.svg" type="image/svg+xml">
+        <link rel="stylesheet" href="assets/css/estilos.css">
+        <link rel="stylesheet" href="assets/css/publico.css">
+        <link rel="stylesheet" href="assets/css/aplicacion.css">
+        <link rel="stylesheet" href="assets/css/consultas.css">
+        <script src="assets/datos/datos-demo.js" defer></script>
+        <script src="assets/js/principal.js" defer></script>
+        <script src="assets/js/validaciones.js" defer></script>
+        <script src="assets/js/graficos.js" defer></script>
+    </head>
+    <body>
+        <noscript>
+            <p class="aviso">Activa JavaScript para usar las consultas de ejemplo, los filtros y los formularios. Los enlaces de navegación siguen disponibles.</p>
+        </noscript>
+        <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+        <header class="encabezado-publico">
+            <div class="contenedor barra-publica">
+                <a href="index.html">
+                    <img class="logo" src="assets/imagenes/logo.svg" alt="QueryBI AI" width="155" height="40">
+                </a>
+                <nav class="menu-publico" aria-label="Navegación principal">
+                    <a href="index.html" aria-current="page">Inicio</a>
+                    <a href="paginas/nosotros.html">Nosotros</a>
+                    <a href="paginas/como-funciona.html">Cómo funciona</a>
+                    <a href="paginas/ayuda.html">Ayuda</a>
+                    <a href="acceso/login.html" class="boton">Ingresar</a>
+                </nav>
             </div>
-            <div class="tarjeta">
-                <h3>2. Generación SQL por IA</h3>
-                <p>El modelo analiza el esquema de la base de datos y construye la consulta SQL correspondiente.</p>
+        </header>
+        <main id="contenido" class="contenedor">
+            <section class="portada">
+                <div>
+                    <span class="rotulo">QueryBI / cuaderno de análisis</span>
+                    <h1>Menos filas.<br>Más <em>respuestas.</em>
+                    </h1>
+                    <p>Una forma más cercana de explorar los datos de tu negocio. Haz una pregunta y encuentra el detalle detrás de los números.</p>
+                    <div class="acciones">
+                        <a href="aplicacion/consultas.html" class="boton">Explorar la demo →</a>
+                        <a href="paginas/nosotros.html">Conocer el proyecto</a>
+                    </div>
+                    <p class="texto-secundario">Grupo 04 · Aplicaciones Distribuidas I</p>
+                </div>
+                <section class="tarjeta">
+                    <span class="rotulo">Reporte 001 / Tienda Demo</span>
+                    <h2>Un trimestre, de un vistazo.</h2>
+                    <p class="importe">S/ 46 500</p>
+                    <p class="texto-secundario">Ventas de enero a marzo de 2025 · Datos ficticios</p>
+                    <div id="grafico-portada" class="grafico"></div>
+                    <a href="aplicacion/consultas.html?ejemplo=mensual">Abrir este análisis ↗</a>
+                </section>
+            </section>
+            <div class="frase-portada">
+                <span>01 / PREGUNTA</span>
+                <span>02 / EXPLORA</span>
+                <span>03 / COMPARTE</span>
             </div>
-            <div class="tarjeta">
-                <h3>3. Resultados Visuales</h3>
-                <p>Valida la consulta de forma segura y muestra los resultados en tablas e indicadores.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECCIÓN: PARTICIPANTES Y AUTORES DEL PROYECTO -->
-    <section id="participantes" class="seccion" style="background-color: #ffffff;">
-        <h2>Equipo de Desarrollo (Grupo 04)</h2>
-        <p>Estudiantes de Ingeniería de Sistemas e Informática - UNS</p>
-
-        <div class="contenedor-tarjetas">
-            <div class="tarjeta">
-                <h3>Castro Laiza Fredy S.</h3>
-                <p>Ingeniero de IA/p>
-            </div>
-            <div class="tarjeta">
-                <h3>Boñon Jamanca Valeria</h3>
-                <p>Ingeniera de prompts</p>
-            </div>
-            <div class="tarjeta">
-                <h3>Diosito</h3>
-                <p>Estudiante de la UNS</p>
-            </div>
-        </div>
-    </section>
-
-</body>
+            <section class="seccion-publica">
+                <div class="dos-columnas">
+                    <div>
+                        <span class="rotulo">El proyecto</span>
+                        <h2>Los datos cuentan algo.<br>Empecemos por una pregunta.</h2>
+                    </div>
+                    <div>
+                        <p>QueryBI AI propone acercar la información empresarial a personas que no dominan SQL. Esta entrega permite recorrer las interfaces con ejemplos locales.</p>
+                        <p>No se conecta a bases de datos ni a una IA. Prueba las consultas de muestra y guarda tus reportes en este navegador.</p>
+                        <a href="paginas/como-funciona.html">Así funciona</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer class="pie">
+            <p>QueryBI AI · Grupo 04 · Aplicaciones Distribuidas I</p>
+            <small>Datos ficticios · Sin IA ni base de datos · Los cambios locales no se comparten con otros usuarios.</small>
+        </footer>
+    </body>
 </html>
