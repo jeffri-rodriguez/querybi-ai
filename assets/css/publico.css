@@ -1,0 +1,105 @@
+/* La portada tiene una composición editorial y un ejemplo de reporte. */
+.encabezado-publico {
+    background: var(--fondo);
+    border-bottom: 1px solid var(--borde);
+}
+
+.barra-publica {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.menu-publico {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+    font-size: 14px;
+}
+
+.menu-publico a:not(.boton) {
+    text-decoration: none;
+    color: var(--tinta);
+}
+
+.menu-publico a[aria-current="page"] {
+    text-decoration: underline;
+    text-decoration-color: var(--naranja);
+}
+
+.portada {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    align-items: center;
+    gap: 64px;
+    padding: 65px 0;
+}
+
+.portada h1 {
+    font-size: clamp(40px, 5vw, 66px);
+    margin: 20px 0;
+}
+
+.portada h1 em {
+    color: var(--verde);
+}
+
+.portada > div > p {
+    max-width: 470px;
+}
+
+.portada .tarjeta {
+    border-top: 6px solid var(--verde);
+    box-shadow: 9px 9px 0 #e0ddcf;
+}
+
+.seccion-publica {
+    padding: 36px 0 50px;
+}
+
+.numero-paso {
+    color: var(--naranja);
+    font-family: Georgia, serif;
+    font-size: 38px;
+}
+
+.preguntas details {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--borde);
+}
+
+.preguntas summary {
+    font-weight: bold;
+}
+
+.frase-portada {
+    border-top: 1px solid var(--tinta);
+    border-bottom: 1px solid var(--tinta);
+    padding: 22px 0;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.frase-portada span {
+    font-family: monospace;
+    font-size: 12px;
+}
+
+@media (max-width: 760px) {
+    .portada {
+        grid-template-columns: 1fr;
+        padding: 32px 0;
+        gap: 30px;
+    }
+
+    .menu-publico {
+        gap: 14px;
+    }
+
+}

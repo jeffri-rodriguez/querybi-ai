@@ -1,0 +1,51 @@
+/* Tablas de administración y formulario de edición. */
+.lista-permisos {
+    padding: 0;
+    list-style: none;
+}
+
+.lista-permisos li {
+    margin-bottom: 14px;
+}
+
+.lista-permisos input {
+    margin-right: 10px;
+    accent-color: var(--verde);
+}
+
+.lista-relaciones {
+    padding-left: 20px;
+    overflow-wrap: anywhere;
+}
+
+.lista-relaciones li {
+    margin-bottom: 12px;
+}
+
+.formulario-administracion {
+    max-width: 900px;
+}
+
+.estado-activo {
+    color: #214d3d;
+    background: #e5ece2;
+}
+
+.estado-inactivo {
+    color: #913d22;
+    background: #f6e7d8;
+}
+
+dialog {
+    width: min(92%, 540px);
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 26px;
+    border: 1px solid var(--verde);
+    background: var(--papel);
+    color: var(--tinta);
+}
+
+dialog::backdrop {
+    background: rgb(20 32 23 / 55%);
+}

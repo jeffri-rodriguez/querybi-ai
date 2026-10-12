@@ -1,0 +1,21 @@
+/* Entrada a la demostración: no es autenticación real. */
+.acceso {
+    width: 100%;
+    max-width: 500px;
+    margin: 45px auto;
+    border-top: 5px solid var(--verde);
+}
+
+.acceso h1 {
+    margin-top: 4px;
+}
+
+.acceso .acciones {
+    align-items: stretch;
+    flex-direction: column;
+}
+
+.enlace-regreso {
+    display: block;
+    margin-top: 20px;
+}
