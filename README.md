@@ -24,8 +24,8 @@ La integración con MySQL y el procesamiento de preguntas mediante inteligencia 
 | Empresas y administradores | Catálogos locales para el superadministrador |
 | Usuarios de empresa | Catálogo local para el administrador empresarial |
 | Esquema y permisos | Selección local de tablas y campos por fuente; aplicación de permisos en el servidor pendiente |
-| Perfil | Nombre de presentación guardado localmente |
-| Recuperación y cambio de contraseña | Demostración de interfaz |
+| Perfil | Datos de sesión y nombre de presentación local |
+| Recuperación y cambio de contraseña | Pendientes; se informa su disponibilidad |
 | Base de datos MySQL | Pendiente de diseño e integración |
 | Generación de SQL mediante IA | Pendiente |
 | Ejecución de consultas contra bases empresariales | Pendiente |
@@ -202,7 +202,6 @@ querybi-ai/
 
         js/
             principal.js
-            acceso.js
             panel.js
             consultas.js
             detalle-consulta.js
@@ -486,15 +485,23 @@ a las consultas. Su validación y aplicación en el servidor están pendientes.
 
 ### 8.12. Perfil y recuperación de acceso
 
-El perfil muestra el correo y el rol de la cuenta autenticada.
+El perfil muestra desde PHP el nombre, correo, rol y ámbito de la cuenta
+autenticada.
 
-Permite guardar un nombre de presentación en el navegador. Esto no modifica la identidad de la cuenta en el servidor.
+Permite guardar un nombre de presentación para el saludo del panel.
+Esta preferencia pertenece a la cuenta actual en el navegador y no
+modifica sus credenciales ni permisos.
 
-Los formularios de cambio y recuperación de contraseña son demostraciones:
+El nombre debe tener entre 2 y 80 caracteres. Si el almacenamiento falla,
+se conserva la preferencia anterior y se muestra un mensaje de error.
 
-- No cambian las credenciales de ingreso.
-- No envían correos.
-- No generan enlaces reales de recuperación.
+El usuario puede restablecer sus datos locales después de confirmar
+la operación. Se eliminan únicamente las claves correspondientes
+a su cuenta; se conservan las de otras cuentas y otras aplicaciones.
+
+El cambio de contraseña y la recuperación por correo están pendientes
+de integración. La página de recuperación explica esta limitación
+y permite volver al ingreso o consultar la ayuda.
 
 ## 9. Datos locales y restablecimiento
 
@@ -552,11 +559,18 @@ También deben revisarse los mensajes de error, los botones de cancelar, los enl
 
 ### Aplicación e interfaces
 
-- Revisar los textos de perfil y recuperación.
 - Completar la revisión de navegación y adaptación a pantallas pequeñas.
 - Actualizar la documentación conforme se incorporen cambios.
 
 ### Persistencia e integración
+
+La base de datos MySQL y al menos un flujo de registro y consulta
+persistente son obligatorios para la entrega del primer hito.
+Actualmente están pendientes por la organización del trabajo del grupo.
+
+Cuando esté disponible el diseño de la base de datos, será necesario
+programar la conexión desde PHP y demostrar ese flujo. localStorage
+no sustituye esta evidencia.
 
 - Diseñar la base de datos.
 - Crear e integrar el esquema en MySQL.

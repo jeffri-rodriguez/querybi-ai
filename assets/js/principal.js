@@ -176,24 +176,29 @@ const QBI = {
     },
 
     perfil: function () {
-        if (window.QBI_SESION) {
-            const cuenta = window.QBI_SESION;
+        const cuenta = window.QBI_SESION;
 
-            const preferencias = this.leer('perfil', {
-                nombre: cuenta.nombre
-            });
-
+        if (!cuenta) {
             return {
-                nombre: preferencias.nombre,
-                correo: cuenta.correo,
-                rol: cuenta.nombre_rol
+                nombre: 'Visitante',
+                correo: '',
+                rol: 'Sin sesión'
             };
         }
 
+        const preferencias = this.leer('perfil', null);
+
+        const alias = preferencias
+            && typeof preferencias.nombre === 'string'
+                ? preferencias.nombre.trim()
+                : '';
+
         return {
-            nombre: 'Visitante',
-            correo: '',
-            rol: 'Sin sesión'
+            nombre: alias.length >= 2 && alias.length <= 80
+                ? alias
+                : cuenta.nombre,
+            correo: cuenta.correo,
+            rol: cuenta.nombre_rol
         };
     },
 

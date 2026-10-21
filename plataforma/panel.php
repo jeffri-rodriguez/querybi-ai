@@ -30,7 +30,7 @@ qbi_requerir(['superadministrador']);
                 <span class="rotulo">Administración de la plataforma</span>
                 <h1>Panel general</h1>
 
-                <p class="texto-secundario">
+                <p id="saludo-plataforma" class="texto-secundario">
                     Bienvenido, <?= qbi_texto(qbi_usuario()['nombre']) ?>.
                 </p>
             </div>
