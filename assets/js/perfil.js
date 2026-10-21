@@ -1,32 +1,79 @@
-const perfil = QBI.perfil();
-document.getElementById('nombre').value = perfil.nombre;
-document.getElementById('correo').value = perfil.correo;
-document.getElementById('correo').readOnly = true;
-document.getElementById('nombre').required = true;
-document.getElementById('rol-perfil').textContent = 'Perfil de demostración: ' + perfil.rol;
-document.getElementById('form-perfil').addEventListener('submit', function (evento) {
-    evento.preventDefault();
-    const nombre = document.getElementById('nombre').value.trim();
-    if (!Validaciones.nombre(nombre)) {
-        QBI.mensaje('mensaje-perfil', 'Escribe al menos dos caracteres para el nombre.', true);
-        return;
-    }
-    const guardado = QBI.guardar('perfil', { nombre: nombre, correo: document.getElementById('correo').value.trim(), rol: perfil.rol });
-    QBI.mensaje('mensaje-perfil', guardado ? 'Nombre de presentación guardado en este navegador. La cuenta no fue modificada.' : 'Perfil actualizado solo para esta página.');
-});
-document.getElementById('form-clave').addEventListener('submit', function (evento) {
-    evento.preventDefault();
-    const error = Validaciones.clave(document.getElementById('nueva').value, document.getElementById('confirmacion').value);
-    QBI.mensaje('mensaje-clave', error || 'Los campos coinciden. No se guardó ni se cambió ninguna contraseña.', Boolean(error));
-    if (!error) evento.target.reset();
-});
-document.getElementById('restablecer').addEventListener('click', function () {
-    if (!window.confirm('¿Borrar todos los datos de esta demostración guardados en este navegador?')) return;
-    try {
-        Object.keys(localStorage).filter(function (clave) { return clave.startsWith(QBI.prefijo); }).forEach(function (clave) { localStorage.removeItem(clave); });
-        QBI.temporal = {};
-        window.location.reload();
-    } catch (error) {
-        QBI.mensaje('mensaje-perfil', 'El navegador no permite modificar el almacenamiento.', true);
-    }
-});
+(function () {
+    const formulario = document.getElementById('form-perfil');
+    const nombre = document.getElementById('nombre');
+    const guardar = document.getElementById('guardar-perfil');
+    const restablecer = document.getElementById('restablecer');
+
+    nombre.value = QBI.perfil().nombre;
+
+    formulario.addEventListener('submit', function (evento) {
+        evento.preventDefault();
+
+        const valor = nombre.value.trim();
+
+        if (valor.length < 2 || valor.length > 80) {
+            QBI.mensaje(
+                'mensaje-perfil',
+                'Escribe un nombre de entre 2 y 80 caracteres.',
+                true
+            );
+
+            return;
+        }
+
+        if (!formulario.reportValidity()) return;
+
+        const anterior = QBI.leer('perfil', null);
+
+        if (!QBI.guardar('perfil', { nombre: valor })) {
+            QBI.temporal.perfil = anterior;
+
+            QBI.mensaje(
+                'mensaje-perfil',
+                'No se pudo guardar el nombre. Revisa el almacenamiento del navegador.',
+                true
+            );
+
+            return;
+        }
+
+        nombre.value = valor;
+
+        QBI.mensaje(
+            'mensaje-perfil',
+            'Nombre de presentación guardado para esta cuenta en este navegador.'
+        );
+    });
+
+    restablecer.addEventListener('click', function () {
+        const confirmado = window.confirm(
+            'Se eliminarán los datos locales de tu cuenta en este navegador. '
+            + 'Esta acción no se puede deshacer. ¿Continuar?'
+        );
+
+        if (!confirmado) return;
+
+        try {
+            const claves = Object.keys(localStorage).filter(clave =>
+                clave.startsWith(QBI.prefijo)
+            );
+
+            claves.forEach(clave => localStorage.removeItem(clave));
+
+            QBI.temporal = {};
+
+            window.location.reload();
+        } catch (error) {
+            QBI.mensaje(
+                'mensaje-restablecer',
+                'No se pudo completar el restablecimiento. '
+                    + 'Recarga la página para revisar qué datos se conservaron.',
+                true
+            );
+        }
+    });
+
+    nombre.disabled = false;
+    guardar.disabled = false;
+    restablecer.disabled = false;
+})();

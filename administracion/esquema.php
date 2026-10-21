@@ -1,131 +1,140 @@
 <?php
 require_once __DIR__ . '/../servidor/sesion.php';
+
 qbi_requerir(['administrador']);
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="QueryBI AI: prototipo académico de consulta y análisis de datos empresariales.">
-        <title>Esquema y permisos | QueryBI AI</title>
-        <link rel="icon" href="../assets/imagenes/favicon.svg" type="image/svg+xml">
-        <link rel="stylesheet" href="../assets/css/estilos.css">
-        <link rel="stylesheet" href="../assets/css/aplicacion.css">
-        <link rel="stylesheet" href="../assets/css/administracion.css">
-        <script src="../assets/datos/datos-demo.js" defer></script>
-        <script src="../assets/js/principal.js" defer></script>
-        <script src="../assets/js/validaciones.js" defer></script>
-        <script src="../assets/js/graficos.js" defer></script>
-        <script src="../assets/js/esquema.js" defer></script>
-    </head>
-    <body>
-        <noscript>
-            <p class="aviso">Activa JavaScript para usar las consultas de ejemplo, los filtros y los formularios. Los enlaces de navegación siguen disponibles.</p>
-        </noscript>
-        <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
-        <?php require __DIR__ . '/../servidor/navegacion.php'; ?>
-            <main id="contenido" class="contenido-app">
-                <div class="cabecera-seccion">
-                    <div>
-                        <h1>Esquema y permisos</h1>
-                        <p class="texto-secundario">Fuente de ejemplo: Tienda Demo.</p>
-                    </div>
-                </div>
-                <p class="aviso">Las selecciones se guardan en este navegador como ejemplo. No aplican permisos reales sobre los datos.</p>
-                <div class="dos-columnas">
-                    <section class="tarjeta">
-                        <h2>Tablas disponibles</h2>
-                        <ul class="lista-permisos">
-                            <li>
-                                <label>
-                                    <input type="checkbox" checked> clientes</label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="checkbox" checked> ventas</label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="checkbox" checked> productos</label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="checkbox" checked> detalle_venta</label>
-                            </li>
-                        </ul>
-                    </section>
-                    <section class="tarjeta">
-                        <h2>Relaciones</h2>
-                        <ul class="lista-relaciones">
-                            <li>clientes.id → ventas.id_cliente</li>
-                            <li>ventas.id → detalle_venta.id_venta</li>
-                            <li>productos.id → detalle_venta.id_producto</li>
-                        </ul>
-                        <p>Un cliente puede tener varias ventas. Cada venta tiene uno o más detalles.</p>
-                    </section>
-                </div>
-                <section class="tarjeta espacio-superior">
-                    <h2>Campos autorizados</h2>
-                    <div class="tabla-contenedor">
-                        <table>
-                            <caption>Tabla ventas</caption>
-                            <thead>
-                                <tr>
-                                    <th scope="col">Habilitar</th>
-                                    <th scope="col">Campo</th>
-                                    <th scope="col">Tipo</th>
-                                    <th scope="col">Descripción</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <input type="checkbox" checked aria-label="Habilitar id">
-                                    </td>
-                                    <td>id</td>
-                                    <td>INT</td>
-                                    <td>Identificador de venta</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="checkbox" checked aria-label="Habilitar fecha">
-                                    </td>
-                                    <td>fecha</td>
-                                    <td>DATE</td>
-                                    <td>Fecha de venta</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="checkbox" checked aria-label="Habilitar total">
-                                    </td>
-                                    <td>total</td>
-                                    <td>DECIMAL</td>
-                                    <td>Importe en soles</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="checkbox" checked aria-label="Habilitar id_cliente">
-                                    </td>
-                                    <td>id_cliente</td>
-                                    <td>INT</td>
-                                    <td>Cliente asociado</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="acciones">
-                        <button id="guardar-esquema" class="boton" type="button">Guardar selección local</button>
-                        <a href="fuentes.php">Volver a fuentes</a>
-                    </div>
-                </section>
-                <p id="mensaje-esquema" class="mensaje" role="status" hidden></p>
-            </main>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Esquema y permisos | QueryBI AI</title>
+
+    <link rel="icon" href="../assets/imagenes/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../assets/css/estilos.css">
+    <link rel="stylesheet" href="../assets/css/aplicacion.css">
+    <link rel="stylesheet" href="../assets/css/administracion.css">
+
+    <script src="../assets/datos/datos-demo.js" defer></script>
+    <script src="../assets/datos/esquema-demo.js" defer></script>
+    <script src="../assets/js/principal.js" defer></script>
+    <script src="../assets/js/esquema.js" defer></script>
+</head>
+<body>
+    <noscript>
+        <p class="aviso">
+            Activa JavaScript para consultar el esquema de demostración.
+        </p>
+    </noscript>
+
+    <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+
+    <?php require __DIR__ . '/../servidor/navegacion.php'; ?>
+
+    <main id="contenido" class="contenido-app">
+        <div class="cabecera-seccion">
+            <div>
+                <h1>Esquema y permisos</h1>
+                <p class="texto-secundario">
+                    Selección de tablas y campos de demostración.
+                </p>
+            </div>
+
+            <a href="fuentes.php">Volver a fuentes</a>
         </div>
-        <footer class="pie">
-            <p>QueryBI AI · Grupo 04 · Aplicaciones Distribuidas I</p>
-            <small>Datos ficticios · Sin IA ni base de datos · Los cambios locales no se comparten con otros usuarios.</small>
-        </footer>
-    </body>
+
+        <p class="aviso">
+            Esta selección se guarda en este navegador. No modifica la estructura
+            de una base de datos ni aplica permisos a las consultas.
+            Los resultados de Ejemplos siguen siendo datos preparados.
+        </p>
+
+        <form
+            id="form-fuente-esquema"
+            action="esquema.php"
+            method="get"
+            class="tarjeta"
+        >
+            <div class="campo">
+                <label for="fuente-esquema">Fuente del catálogo</label>
+                <select
+                    id="fuente-esquema"
+                    name="fuente"
+                    required
+                ></select>
+            </div>
+
+            <button
+                id="abrir-esquema"
+                class="boton boton-secundario"
+                type="submit"
+            >
+                Ver esquema
+            </button>
+        </form>
+
+        <p
+            id="estado-esquema"
+            class="mensaje"
+            role="status"
+            hidden
+        ></p>
+
+        <section
+            id="editor-esquema"
+            class="espacio-superior"
+            hidden
+        >
+            <h2 id="nombre-fuente-esquema"></h2>
+
+            <p id="estado-fuente-esquema"></p>
+
+            <p class="texto-secundario">
+                Al desmarcar una tabla, sus campos dejan de contar en la
+                selección. Sus marcas se conservan para cuando vuelvas
+                a seleccionarla.
+            </p>
+
+            <div id="tablas-esquema" class="dos-columnas"></div>
+
+            <section class="tarjeta espacio-superior">
+                <h3>Relaciones de referencia</h3>
+
+                <div id="relaciones-esquema"></div>
+
+                <p class="texto-secundario">
+                    Estas relaciones describen el ejemplo y no cambian
+                    al marcar las casillas.
+                </p>
+            </section>
+
+            <p id="resumen-esquema" role="status"></p>
+            <p id="cambios-esquema" role="status"></p>
+
+            <div class="acciones">
+                <button
+                    id="guardar-esquema"
+                    class="boton"
+                    type="button"
+                >
+                    Guardar selección local
+                </button>
+
+                <button
+                    id="descartar-esquema"
+                    class="boton boton-secundario"
+                    type="button"
+                >
+                    Descartar cambios
+                </button>
+            </div>
+        </section>
+    </main>
+    </div>
+
+    <footer class="pie">
+        <p>QueryBI AI · Grupo 04 · Aplicaciones Distribuidas I</p>
+    </footer>
+</body>
 </html>

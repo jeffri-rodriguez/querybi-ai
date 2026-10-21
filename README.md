@@ -23,7 +23,7 @@ La integración con MySQL y el procesamiento de preguntas mediante inteligencia 
 | Fuentes de datos | Catálogo local con creación, edición y detalle |
 | Empresas y administradores | Catálogos locales para el superadministrador |
 | Usuarios de empresa | Catálogo local para el administrador empresarial |
-| Esquema y permisos | Interfaz de demostración pendiente de revisión e integración |
+| Esquema y permisos | Selección local de tablas y campos por fuente; aplicación de permisos en el servidor pendiente |
 | Perfil | Nombre de presentación guardado localmente |
 | Recuperación y cambio de contraseña | Demostración de interfaz |
 | Base de datos MySQL | Pendiente de diseño e integración |
@@ -219,6 +219,7 @@ querybi-ai/
 
         datos/
             datos-demo.js
+            esquema-demo.js
 
         imagenes/
             logo.svg
@@ -454,11 +455,34 @@ La pantalla está protegida por PHP. Los registros que muestra siguen siendo dat
 
 ### 8.11. Esquema y permisos
 
-Existe una interfaz de ejemplo con tablas, campos, relaciones y casillas de selección.
+El administrador puede seleccionar una fuente del catálogo y consultar
+su esquema de demostración cuando esté disponible.
 
-La selección se puede guardar localmente, pero todavía no restringe consultas ni establece permisos reales sobre tablas o columnas.
+La pantalla permite:
 
-La revisión de este módulo y su integración con las fuentes forman parte del trabajo pendiente.
+- Seleccionar tablas y campos.
+- Consultar las relaciones de referencia.
+- Ver la cantidad de tablas y campos seleccionados.
+- Guardar la selección localmente por fuente, tabla y campo.
+- Descartar cambios sin guardar.
+- Recuperar las selecciones guardadas en la versión anterior.
+
+Al desmarcar una tabla, sus campos quedan deshabilitados en el formulario
+y dejan de contar en el resumen. Sus marcas se conservan para cuando
+la tabla vuelva a seleccionarse.
+
+Una fuente deshabilitada permite consultar el esquema de ejemplo, pero
+no editar su selección.
+
+Se muestran mensajes específicos cuando la fuente no existe, no tiene
+un esquema disponible o el catálogo está vacío.
+
+Los metadatos ilustrativos se encuentran en
+`assets/datos/esquema-demo.js`. Actualmente corresponden al ejemplo
+de Tienda Demo y no constituyen el diseño definitivo de la base de datos.
+
+La selección no modifica estructuras de MySQL ni aplica restricciones
+a las consultas. Su validación y aplicación en el servidor están pendientes.
 
 ### 8.12. Perfil y recuperación de acceso
 
@@ -528,8 +552,6 @@ También deben revisarse los mensajes de error, los botones de cancelar, los enl
 
 ### Aplicación e interfaces
 
-- Revisar el módulo Esquema y permisos.
-- Alinear sus interacciones con la fuente seleccionada.
 - Revisar los textos de perfil y recuperación.
 - Completar la revisión de navegación y adaptación a pantallas pequeñas.
 - Actualizar la documentación conforme se incorporen cambios.
@@ -544,6 +566,8 @@ También deben revisarse los mensajes de error, los botones de cancelar, los enl
 - Integrar la gestión de usuarios y administradores con las cuentas de acceso.
 - Vincular la activación y desactivación de cuentas con la autenticación.
 - Implementar el cambio y la recuperación reales de contraseña.
+- Guardar la configuración de tablas y campos en MySQL.
+- Validar y aplicar en el servidor los permisos sobre los datos consultados.
 
 ### Procesamiento de consultas
 

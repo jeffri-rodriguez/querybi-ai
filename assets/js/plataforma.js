@@ -1,4 +1,6 @@
 (function () {
+    document.getElementById('saludo-plataforma').textContent =
+        'Hola, ' + QBI.perfil().nombre;
     function lista(clave) {
         const datos = QBI.leer(clave, datosDemo[clave]);
         return Array.isArray(datos) ? datos : [];

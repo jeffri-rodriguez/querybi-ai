@@ -337,8 +337,9 @@ function mostrarDetalleFuente() {
             ? 'Esta fuente tiene un esquema de ejemplo preparado para recorrer la interfaz.'
             : 'Todavía no hay un esquema de demostración registrado para esta fuente.';
 
-    document.getElementById('ver-esquema').hidden =
-        fuente.id !== 'tienda';
+    document.getElementById('ver-esquema').hidden = fuente.id !== 'tienda';
+    document.getElementById('ver-esquema').href =
+    'esquema.php?fuente=' + encodeURIComponent(fuente.id);
 
     if (parametros.get('guardada') === '1') {
         QBI.mensaje(
