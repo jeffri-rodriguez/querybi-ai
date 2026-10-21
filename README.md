@@ -1,357 +1,717 @@
 # QueryBI AI
 
-Proyecto del Grupo 04 para el curso de Aplicaciones Distribuidas I.
+Proyecto académico del Grupo 04 para el curso de Aplicaciones Distribuidas I de la Universidad Nacional del Santa.
 
-QueryBI AI es una aplicación web orientada a consultar y analizar datos empresariales mediante preguntas en lenguaje natural. Su desarrollo se realiza por etapas.
+QueryBI AI es una aplicación web orientada a facilitar la consulta y el análisis de información empresarial mediante preguntas en lenguaje natural.
 
-## Estructura del proyecto
+Actualmente se encuentra en desarrollo para el primer hito. Esta versión implementa la navegación, el acceso mediante sesiones PHP, las restricciones por rol y los principales flujos de interfaz con datos de demostración.
+
+La integración con MySQL y el procesamiento de preguntas mediante inteligencia artificial todavía están pendientes.
+
+## 1. Estado actual del proyecto
+
+| Componente | Estado actual |
+|---|---|
+| Páginas públicas | Implementadas |
+| Inicio y cierre de sesión | Implementados en PHP con cuentas fijas de prueba |
+| Restricción de acceso por rol | Aplicada en el servidor |
+| Panel empresarial | Implementado con indicadores de registros locales |
+| Registro de preguntas libres | Implementado; las preguntas quedan pendientes |
+| Ejemplos de consultas | Resultados, gráficos y SQL preparados previamente |
+| Historial y detalle | Implementados con almacenamiento local |
+| Reportes | Vista previa y exportación CSV de datos de ejemplo |
+| Fuentes de datos | Catálogo local con creación, edición y detalle |
+| Empresas y administradores | Catálogos locales para el superadministrador |
+| Usuarios de empresa | Catálogo local para el administrador empresarial |
+| Esquema y permisos | Interfaz de demostración pendiente de revisión e integración |
+| Perfil | Nombre de presentación guardado localmente |
+| Recuperación y cambio de contraseña | Demostración de interfaz |
+| Base de datos MySQL | Pendiente de diseño e integración |
+| Generación de SQL mediante IA | Pendiente |
+| Ejecución de consultas contra bases empresariales | Pendiente |
+
+Este README describe el estado del código. La entrega completa del primer hito debe verificarse también contra los documentos del curso y sus entregables.
+
+## 2. Arquitectura
+
+La aplicación utiliza una arquitectura cliente-servidor.
+
+### Cliente
+
+El navegador se encarga de:
+
+- Mostrar las páginas HTML y los estilos CSS.
+- Ejecutar JavaScript.
+- Gestionar formularios, filtros, tablas y gráficos.
+- Mantener los registros de demostración en localStorage.
+- Mostrar mensajes de validación, estados vacíos y resultados preparados.
+
+### Servidor
+
+PHP se encarga de:
+
+- Validar las credenciales de las cuentas de prueba.
+- Crear y mantener la sesión.
+- Comprobar el rol antes de entregar una página protegida.
+- Generar la navegación correspondiente al usuario.
+- Procesar el cierre de sesión.
+
+El acceso a una página protegida no depende únicamente de que su enlace aparezca en el menú. La comprobación también se realiza en PHP cuando se solicita la dirección directamente.
+
+### Almacenamiento actual
+
+Se utilizan tres mecanismos diferentes:
+
+| Mecanismo | Finalidad |
+|---|---|
+| Sesión PHP | Mantener la identidad autenticada y su rol |
+| Archivos de datos de prueba | Proporcionar cuentas y ejemplos iniciales |
+| localStorage | Conservar registros de demostración en el navegador |
+
+localStorage proporciona almacenamiento local entre visitas, pero no sustituye una base de datos compartida en el servidor.
+
+Actualmente no existe conexión con MySQL.
+
+## 3. Tecnologías utilizadas
+
+- HTML5 para la estructura de las interfaces.
+- CSS3 en archivos externos para el diseño.
+- JavaScript para las interacciones del navegador.
+- PHP para las sesiones y el control de acceso.
+- localStorage para los datos locales de demostración.
+- Git para el control de versiones.
+- GitHub para el repositorio y la colaboración.
+
+El proyecto se desarrolla sin un framework de aplicación y no necesita instalar dependencias con npm o Composer para ejecutarse en su estado actual.
+
+## 4. Roles y acceso
+
+### Superadministrador
+
+Administra el catálogo de la plataforma:
+
+- Panel general.
+- Empresas.
+- Administradores de empresa.
+- Su perfil.
+
+No tiene acceso automático al espacio de consultas ni a la administración interna de las empresas.
+
+### Administrador de empresa
+
+Accede al espacio de trabajo empresarial y a sus pantallas administrativas:
+
+- Panel empresarial.
+- Consultas.
+- Ejemplos.
+- Historial.
+- Reportes.
+- Fuentes de datos.
+- Esquema y permisos.
+- Usuarios de empresa.
+- Su perfil.
+
+Los registros creados desde Usuarios tienen el rol Usuario y se asocian a la empresa de la sesión.
+
+### Usuario
+
+Accede a las funciones de consulta:
+
+- Panel empresarial.
+- Consultas.
+- Ejemplos.
+- Historial.
+- Reportes.
+- Su perfil.
+
+No puede acceder a las pantallas de administración de fuentes, esquema, usuarios o plataforma.
+
+### Matriz de acceso
+
+| Área | Superadministrador | Administrador | Usuario |
+|---|---|---|---|
+| Páginas públicas | Sí | Sí | Sí |
+| Panel de plataforma | Sí | No | No |
+| Empresas | Sí | No | No |
+| Administradores de empresa | Sí | No | No |
+| Panel empresarial | No | Sí | Sí |
+| Consultas y ejemplos | No | Sí | Sí |
+| Historial y reportes | No | Sí | Sí |
+| Fuentes de datos | No | Sí | No |
+| Esquema y permisos | No | Sí | No |
+| Usuarios de empresa | No | Sí | No |
+| Mi perfil | Sí | Sí | Sí |
+
+Las páginas públicas también se pueden visitar sin iniciar sesión.
+
+## 5. Estructura del proyecto
+
+Las rutas siguientes son relativas a la raíz del proyecto:
+
 ```text
 querybi-ai/
-│
-├── index.html                       # Página pública de inicio
-│
-├── paginas/
-│   ├── nosotros.html                # Quiénes somos, misión y visión
-│   ├── como-funciona.html            # Explicación del funcionamiento
-│   └── ayuda.html                    # Preguntas frecuentes y orientación
-│
-├── acceso/
-│   ├── login.php                    # Interfaz de inicio de sesión
-│   ├── salir.php                    
-│   └── recuperar-contrasena.html     # Interfaz para recuperar acceso
-│
-├── aplicacion/
-│   ├── panel.php                    # Inicio del espacio de trabajo
-│   ├── consultas.php                # Registra preguntas pendientes
-│   ├── historial.php                # Consultas anteriores de ejemplo
-│   ├── reportes.php                 # Listado y vista previa de reportes
-│   └── perfil.php                   # Datos del usuario y contraseña
-│   └── ejemplos.php
-│   └── detalle-consulta.php
-│
-├── administracion/
-│   ├── fuentes.php                  # Listado de fuentes de datos
-│   ├── configurar-fuente.php        # Formulario de configuración de fuente
-│   ├── esquema.php                  # Tablas, campos, relaciones y permisos
-│   └── usuarios.php                 # Listado, creación y edición de usuarios
-│   └── detalle-fuente.php                 # Listado, creación y edición de usuarios
-│
-├── assets/
-│   │
-│   ├── css/
-│   │   ├── estilos.css               # Base visual compartida
-│   │   ├── publico.css               # Diseño de las páginas públicas
-│   │   ├── acceso.css                # Diseño de login y recuperación
-│   │   ├── aplicacion.css            # Menú lateral y estructura interna
-│   │   ├── consultas.css             # Área de preguntas y resultados
-│   │   └── administracion.css        # Diseño de administración
-│   │
-│   ├── js/
-│   │   ├── principal.js              # Comportamientos generales y navegación
-│   │   ├── acceso.js                 # Validaciones y acceso simulado
-│   │   ├── panel.js                  # Presentación del resumen inicial
-│   │   ├── consultas.js              # Registra consultas pendientes
-│   │   ├── graficos.js               # Representación de datos de ejemplo
-│   │   ├── historial.js              # Búsqueda y detalle de consultas
-│   │   ├── reportes.js               # Vista previa y acciones de reportes
-│   │   ├── perfil.js                 # Validaciones del formulario de perfil
-│   │   ├── fuentes.js                # Listado y formularios de fuentes
-│   │   ├── esquema.js                # Selección visual de tablas y campos
-│   │   ├── usuarios.js               # Formularios y roles simulados
-│   │   └── validaciones.js           # Validaciones reutilizables
-│   │   └── ejemplos.js
-│   │   └── detalle-consulta.js
-│   │
-│   ├── datos/
-│   │   └── datos-demo.js             # Datos ficticios compartidos
-│   │
-│   └── imagenes/
-│       ├── logo.svg                  # Logo de QueryBI AI
-│       └── favicon.svg               # Icono de la pestaña del navegador
-│
-├── plataforma/
-│   └── panel.php
-|
-├── servidor/
-│   └── sesion.php
-│   └── cuentas-demo.php
-│   └── navegacion.php.
-|
-├── README.md                         # Documentación del proyecto
-└── .gitignore                        # Reglas de exclusión para Git
+    index.html
+    README.md
+    .gitignore
+
+    paginas/
+        nosotros.html
+        como-funciona.html
+        ayuda.html
+
+    acceso/
+        login.php
+        salir.php
+        recuperar-contrasena.html
+
+    aplicacion/
+        panel.php
+        consultas.php
+        detalle-consulta.php
+        ejemplos.php
+        historial.php
+        reportes.php
+        perfil.php
+
+    administracion/
+        fuentes.php
+        configurar-fuente.php
+        detalle-fuente.php
+        esquema.php
+        usuarios.php
+
+    plataforma/
+        panel.php
+        empresas.php
+        administradores.php
+
+    servidor/
+        sesion.php
+        cuentas-demo.php
+        navegacion.php
+        vista-gestion.php
+
+    assets/
+        css/
+            estilos.css
+            publico.css
+            acceso.css
+            aplicacion.css
+            consultas.css
+            administracion.css
+
+        js/
+            principal.js
+            acceso.js
+            panel.js
+            consultas.js
+            detalle-consulta.js
+            ejemplos.js
+            graficos.js
+            historial.js
+            reportes.js
+            perfil.js
+            fuentes.js
+            esquema.js
+            gestion.js
+            plataforma.js
+            validaciones.js
+
+        datos/
+            datos-demo.js
+
+        imagenes/
+            logo.svg
+            favicon.svg
 ```
 
-### Organización de las interfaces
+### Responsabilidad de las carpetas
 
-- El proyecto combina páginas públicas HTML con pantallas protegidas PHP.
-- La cabecera y la navegación interna se comparten desde `servidor/navegacion.php`.
-- Misión y visión se incluyen en `paginas/nosotros.html`.
-- Los resultados, gráficos y SQL se muestran en `aplicacion/consultas.php`.
-- La creación y edición de usuarios se incluyen en `administracion/usuarios.php`.
-- Los estados de carga, error y ausencia de resultados se presentan dentro de la pantalla correspondiente.
-- Las reglas de adaptación a dispositivos móviles se incluyen en los archivos CSS de cada área.
-- Los datos ficticios se centralizan en `assets/datos/datos-demo.js`.
-
-## Arquitectura y estado del desarrollo
-
-La aplicación utiliza arquitectura cliente-servidor.
-
-- El navegador presenta HTML y CSS y ejecuta JavaScript.
-- PHP comprueba las credenciales, mantiene la sesión y autoriza el acceso a las páginas.
-- MySQL todavía no está integrado.
-
-### Acceso y roles
-
-Existen tres roles:
-
-| Rol | Acceso actual |
+| Carpeta | Contenido |
 |---|---|
-| Superadministrador | Panel general de la plataforma y perfil. |
-| Administrador | Panel empresarial, consultas, historial, reportes, fuentes, esquema, usuarios de ejemplo y perfil. |
-| Usuario | Panel empresarial, consultas, historial, reportes y perfil. |
+| paginas | Información pública del proyecto |
+| acceso | Inicio de sesión, cierre y recuperación de demostración |
+| aplicacion | Espacio de consultas y análisis |
+| administracion | Funciones del administrador empresarial |
+| plataforma | Funciones del superadministrador |
+| servidor | Código PHP compartido |
+| assets/css | Estilos separados por área |
+| assets/js | Comportamiento de las interfaces |
+| assets/datos | Datos ficticios iniciales |
+| assets/imagenes | Recursos gráficos |
 
-Cada página protegida comprueba los permisos en PHP antes de mostrar su contenido.
+### Archivos compartidos principales
 
-Una persona sin sesión es dirigida al ingreso. Una cuenta sin el rol autorizado recibe una respuesta HTTP 403.
+- `servidor/sesion.php`: manejo de sesiones, comprobación de roles y funciones auxiliares.
+- `servidor/cuentas-demo.php`: cuentas fijas utilizadas para probar el ingreso.
+- `servidor/navegacion.php`: encabezado y menú según el rol autenticado.
+- `servidor/vista-gestion.php`: presentación compartida de empresas, administradores y usuarios.
+- `assets/js/principal.js`: utilidades de almacenamiento, tablas, mensajes y navegación.
+- `assets/js/gestion.js`: formularios, filtros y detalles de los catálogos administrativos.
+- `assets/datos/datos-demo.js`: ejemplos y registros iniciales.
 
-El servidor determina el rol. Modificar localStorage o el JavaScript del navegador no concede permisos adicionales.
+## 6. Ejecución local
 
-### Cuentas de prueba
+### Requisitos
 
-Las cuentas están predefinidas en `servidor/cuentas-demo.php`. Sus contraseñas se verifican mediante hashes.
+- PHP con soporte de sesiones. Las pruebas de desarrollo se realizaron con PHP 8.3.
+- Un navegador con JavaScript, cookies y localStorage habilitados.
+- Git, si se trabajará con el repositorio.
 
-| Rol | Correo | Contraseña de prueba |
+Para esta versión no es necesario iniciar MySQL.
+
+### Opción A: servidor integrado de PHP
+
+Abre una terminal en la carpeta que contiene `index.html` y ejecuta:
+
+```bash
+php -S localhost:8000
+```
+
+Luego abre:
+
+```text
+http://localhost:8000/
+```
+
+Para detener el servidor, presiona `Ctrl + C` en la terminal.
+
+El servidor integrado se utiliza para desarrollo local.
+
+### Opción B: Apache con PHP
+
+1. Coloca la carpeta del proyecto en el directorio de publicación de Apache.
+2. Comprueba que Apache tenga PHP habilitado.
+3. Inicia el servidor.
+4. Accede a la dirección correspondiente.
+
+Por ejemplo, si la carpeta se llama `querybi-ai`:
+
+```text
+http://localhost/querybi-ai/
+```
+
+### Consideraciones
+
+- No ejecutes la aplicación abriendo los archivos mediante `file://`.
+- Live Server por sí solo no procesa las páginas PHP.
+- Mantén el mismo host y puerto durante las pruebas: localStorage depende del origen utilizado.
+- Si cambias archivos JavaScript o CSS y no ves los cambios, realiza una recarga forzada del navegador.
+
+## 7. Cuentas de prueba
+
+| Rol | Correo | Contraseña |
 |---|---|---|
 | Superadministrador | superadmin@querybi.test | SuperDemo2026! |
 | Administrador | admin@tienda.test | AdminDemo2026! |
 | Usuario | usuario@tienda.test | UsuarioDemo2026! |
 
-Estas cuentas son exclusivamente de demostración.
+Estas credenciales corresponden únicamente al entorno académico de demostración.
 
-El formulario local de usuarios todavía no crea ni modifica las cuentas de acceso.
+Las cuentas se definen en `servidor/cuentas-demo.php`. El servidor comprueba la contraseña y obtiene el rol desde esa configuración.
 
-### Funciones y datos de demostración
+El usuario no selecciona ni modifica su rol desde el formulario de ingreso.
 
-Las consultas siguen utilizando resultados preparados en JavaScript. No se genera SQL mediante IA ni se ejecuta contra una base de datos.
+Crear registros en los catálogos de administradores o usuarios no crea nuevas cuentas de acceso.
 
-Las fuentes, los usuarios de ejemplo, los reportes y el historial utilizan almacenamiento local del navegador.
+## 8. Funcionalidades
 
-El espacio local se diferencia por cuenta. Esta separación no sustituye la autorización ni el filtrado de datos en el servidor.
+### 8.1. Páginas públicas
 
-El perfil permite personalizar un nombre de presentación local. El correo y el rol de la cuenta proceden de la sesión.
+Incluyen:
 
-### Módulo de fuentes de datos
+- Presentación de QueryBI AI.
+- Información del equipo, misión y visión.
+- Explicación del funcionamiento previsto.
+- Preguntas frecuentes y orientación.
+- Acceso al inicio de sesión.
 
-El administrador dispone de:
+### 8.2. Autenticación y sesiones
 
-- Listado con búsqueda por nombre, base de datos o servidor.
-- Filtro por estado habilitado o deshabilitado.
-- Registro de fuentes de demostración.
-- Edición conservando el identificador.
-- Pantalla de detalle.
-- Validación de campos, puerto y nombres duplicados.
-- Mensajes para fuentes inexistentes y errores de almacenamiento.
+El ingreso se valida en PHP utilizando las cuentas de prueba.
 
-Las tres páginas del módulo comprueban el rol en PHP.
+Las páginas protegidas comprueban la sesión y el rol:
 
-El catálogo continúa almacenándose en el navegador de cada cuenta.
-Los cambios del administrador todavía no se comparten con otras cuentas.
+- Sin sesión, se redirige al formulario de ingreso.
+- Con un rol no autorizado, se responde con acceso denegado.
+- El cierre de sesión se procesa mediante una solicitud POST.
+- Los formularios de ingreso y salida utilizan un token de protección CSRF.
 
-La contraseña de prueba se descarta. No se almacena ni se envía.
+La información disponible en JavaScript se utiliza como contexto de la interfaz. La autorización de las páginas se decide en el servidor.
 
-El botón «Revisar datos» valida el formulario; no comprueba conexiones.
+### 8.3. Panel empresarial
 
-Solo Tienda Demo tiene un esquema de ejemplo preparado.
+Muestra:
 
-### Preguntas, ejemplos e historial
+- Cantidad de registros del historial.
+- Cantidad de preguntas pendientes.
+- Cantidad de reportes de ejemplo guardados.
+- Actividad reciente.
+- Accesos a preguntas y ejemplos.
 
-El módulo Consultas permite registrar preguntas propias:
+Los indicadores corresponden a los datos locales de la cuenta que está utilizando el navegador.
 
-- Requiere una fuente habilitada en el catálogo local.
-- Admite preguntas de entre 5 y 1000 caracteres.
-- Guarda pregunta, fuente, fecha y estado Pendiente.
-- No genera SQL ni obtiene resultados.
-- Abre una pantalla de detalle después del registro.
+### 8.4. Preguntas libres
 
-La sección Ejemplos conserva las tablas, gráficos y SQL preparados.
-Sus registros se identifican como Ejemplo listo o Ejemplo sin resultados.
+La pantalla Consultas permite:
 
-El historial distingue preguntas propias y ejemplos y permite buscar
-y filtrar por estado.
+1. Seleccionar una fuente habilitada en el catálogo local.
+2. Escribir una pregunta de entre 5 y 1000 caracteres.
+3. Guardarla.
+4. Abrir su detalle.
 
-Los ejemplos registrados anteriormente siguen disponibles.
+La pregunta queda con estado Pendiente.
 
-El panel muestra el total de registros, las preguntas pendientes
-y los reportes de ejemplo.
+Actualmente no se interpreta mediante IA, no se convierte automáticamente a SQL y no produce resultados empresariales.
 
-Los datos continúan almacenándose por cuenta en el navegador.
-Todavía no existe una cola de procesamiento en el servidor ni persistencia
-en MySQL.
+Si no existen fuentes habilitadas, se impide registrar la pregunta hasta disponer de una.
 
-### Desarrollo pendiente
+### 8.5. Ejemplos de consultas
 
-- Gestión de empresas y administradores desde el panel de plataforma.
-- Integración de los módulos con datos y operaciones del servidor.
-- Aplicación del ámbito de empresa al acceder a sus recursos.
-- Diseño e implementación de MySQL.
-- Persistencia real de registro y consulta.
-- Generación de SQL mediante IA, validación y ejecución controlada.
+La pantalla Ejemplos permite explorar preguntas preparadas previamente.
 
-La integración inicial de MySQL y un flujo persistente siguen siendo necesarios para completar la entrega grupal del primer avance.
+Según el ejemplo seleccionado, muestra:
 
-## Ejecución de la versión actual
+- La pregunta.
+- Una tabla de resultados.
+- Un gráfico.
+- El SQL de referencia.
+- Un estado sin resultados cuando corresponde.
 
-Requisito: PHP 8 o superior.
+Los datos y el SQL ya están definidos en el proyecto. Mostrar un ejemplo no implica ejecutar ese SQL contra una base de datos.
 
-Desde la carpeta que contiene `index.html`, ejecuta:
+### 8.6. Historial y detalle
+
+El historial reúne:
+
+- Preguntas libres pendientes.
+- Consultas de ejemplo.
+
+Permite revisar el tipo de registro, la fuente, el estado y la fecha, y acceder a su detalle.
+
+El detalle de una pregunta pendiente no presenta resultados ni SQL generados.
+
+El detalle de un ejemplo permite acceder a su demostración cuando el ejemplo correspondiente está disponible.
+
+### 8.7. Reportes
+
+Permite guardar reportes a partir de los resultados de ejemplo, revisar su contenido y exportar sus datos en formato CSV.
+
+Los reportes se conservan localmente y no representan información obtenida de una base empresarial real.
+
+### 8.8. Fuentes de datos
+
+El administrador puede:
+
+- Consultar el catálogo.
+- Buscar y filtrar fuentes.
+- Crear una fuente.
+- Editar sus datos.
+- Consultar su detalle.
+- Habilitarla o deshabilitarla en el catálogo local.
+
+El formulario valida los datos de configuración, incluidos el nombre y el puerto.
+
+Esta funcionalidad registra una configuración de demostración. No abre conexiones, no verifica credenciales de MySQL ni descubre tablas.
+
+La contraseña de prueba introducida en el formulario no se conserva.
+
+La vista de esquema disponible corresponde al ejemplo preparado de Tienda Demo. Crear otra fuente no genera automáticamente un esquema para ella.
+
+### 8.9. Empresas y administradores
+
+El superadministrador dispone de dos catálogos separados:
+
+- Empresas.
+- Administradores de empresa.
+
+Ambos permiten listar, buscar, filtrar por estado, crear, consultar detalles y editar.
+
+Reglas del catálogo:
+
+- No se permiten nombres de empresa duplicados, ignorando mayúsculas y tildes.
+- No se permiten correos duplicados entre administradores.
+- Cada administrador debe estar asociado a una empresa existente.
+- Un administrador activo requiere una empresa activa.
+- Para desactivar una empresa deben desactivarse primero sus administradores.
+- La edición conserva el identificador del registro.
+- Se utiliza activación y desactivación, sin eliminación de registros.
+
+Estas reglas afectan al catálogo local. Sus cambios no bloquean sesiones ni modifican las cuentas fijas de ingreso.
+
+### 8.10. Usuarios de empresa
+
+El administrador empresarial puede listar, buscar, filtrar, crear, consultar y editar registros de usuarios.
+
+En esta pantalla:
+
+- El rol del registro es Usuario.
+- La empresa se toma del contexto de la sesión.
+- Se rechazan correos duplicados dentro del catálogo de usuarios de esa empresa.
+- No se ofrece la creación de superadministradores ni administradores.
+
+La pantalla está protegida por PHP. Los registros que muestra siguen siendo datos de demostración almacenados en el navegador.
+
+### 8.11. Esquema y permisos
+
+Existe una interfaz de ejemplo con tablas, campos, relaciones y casillas de selección.
+
+La selección se puede guardar localmente, pero todavía no restringe consultas ni establece permisos reales sobre tablas o columnas.
+
+La revisión de este módulo y su integración con las fuentes forman parte del trabajo pendiente.
+
+### 8.12. Perfil y recuperación de acceso
+
+El perfil muestra el correo y el rol de la cuenta autenticada.
+
+Permite guardar un nombre de presentación en el navegador. Esto no modifica la identidad de la cuenta en el servidor.
+
+Los formularios de cambio y recuperación de contraseña son demostraciones:
+
+- No cambian las credenciales de ingreso.
+- No envían correos.
+- No generan enlaces reales de recuperación.
+
+## 9. Datos locales y restablecimiento
+
+Los registros de demostración se guardan utilizando claves separadas por el identificador de la cuenta.
+
+Esto permite mantener separados los datos locales utilizados por las distintas cuentas de prueba en un mismo navegador.
+
+Sin embargo:
+
+- Los cambios no se sincronizan entre usuarios.
+- Los cambios no se comparten entre dispositivos.
+- Los cambios pueden perderse al borrar los datos del navegador.
+- El almacenamiento puede estar bloqueado por la configuración del navegador.
+- localStorage puede ser inspeccionado y modificado desde las herramientas del navegador.
+
+Por ello, localStorage no se utiliza como autoridad para autenticar usuarios o autorizar páginas.
+
+Las restricciones de acceso a páginas se comprueban mediante la sesión PHP.
+
+### Restablecer la demostración
+
+Desde Mi perfil se pueden restablecer los datos locales de la cuenta actual.
+
+La acción elimina sus registros locales y permite volver a cargar los valores iniciales.
+
+No modifica las cuentas fijas de acceso ni elimina los datos locales correspondientes a otras cuentas.
+
+## 10. Comprobación manual
+
+Antes de guardar un bloque de cambios, revisar lo siguiente:
+
+| Prueba | Resultado esperado |
+|---|---|
+| Ingresar con una cuenta válida | Se abre el panel correspondiente a su rol |
+| Ingresar con contraseña incorrecta | Se rechaza el acceso |
+| Abrir una página protegida sin sesión | Se redirige al ingreso |
+| Abrir una página de otro rol mediante su URL | Se muestra acceso denegado |
+| Cerrar sesión | Las páginas protegidas requieren ingresar nuevamente |
+| Registrar una pregunta válida | Se guarda como Pendiente y se abre su detalle |
+| Registrar una pregunta vacía | Se rechaza |
+| Abrir un ejemplo | Se presentan sus datos preparados |
+| Guardar un reporte de ejemplo | Aparece en Reportes |
+| Crear y editar una fuente | Los cambios aparecen en su catálogo |
+| Crear una empresa y su administrador | Ambos registros quedan asociados |
+| Repetir un nombre de empresa | Se rechaza el duplicado |
+| Desactivar una empresa con administradores activos | Se impide la operación |
+| Crear un usuario empresarial | Se asignan el rol Usuario y la empresa de la sesión |
+| Buscar un registro inexistente | Se muestra el estado sin coincidencias |
+| Recargar después de guardar | Los datos permanecen si localStorage está disponible |
+| Consultar desde una pantalla pequeña | La navegación, formularios y tablas siguen siendo utilizables |
+
+También deben revisarse los mensajes de error, los botones de cancelar, los enlaces de retorno y la consola del navegador.
+
+## 11. Trabajo pendiente
+
+### Aplicación e interfaces
+
+- Revisar el módulo Esquema y permisos.
+- Alinear sus interacciones con la fuente seleccionada.
+- Revisar los textos de perfil y recuperación.
+- Completar la revisión de navegación y adaptación a pantallas pequeñas.
+- Actualizar la documentación conforme se incorporen cambios.
+
+### Persistencia e integración
+
+- Diseñar la base de datos.
+- Crear e integrar el esquema en MySQL.
+- Guardar y recuperar registros mediante PHP y MySQL.
+- Incorporar validaciones del lado del servidor para las operaciones de datos.
+- Aplicar la separación de datos por empresa en el servidor.
+- Integrar la gestión de usuarios y administradores con las cuentas de acceso.
+- Vincular la activación y desactivación de cuentas con la autenticación.
+- Implementar el cambio y la recuperación reales de contraseña.
+
+### Procesamiento de consultas
+
+- Integrar el procesamiento de lenguaje natural.
+- Generar y validar SQL.
+- Ejecutar consultas de lectura autorizadas.
+- Aplicar restricciones sobre las fuentes, tablas y campos.
+- Obtener resultados y reportes a partir de datos reales.
+
+La planificación de estos trabajos debe ajustarse al alcance de cada hito del curso.
+
+## 12. Trabajo con Git y GitHub
+
+El repositorio mantiene el historial de cambios mediante Git.
+
+Cada commit debe representar una mejora concreta y comprobable, por ejemplo:
+
+- Incorporar sesiones y restricciones por rol.
+- Completar la gestión de fuentes.
+- Separar preguntas libres de ejemplos.
+- Incorporar los catálogos administrativos.
+- Actualizar la documentación.
+
+### Preparación inicial
+
+Clonar el repositorio utilizando su dirección real:
 
 ```bash
-php -S 127.0.0.1:8000 -t .
+git clone URL_DEL_REPOSITORIO
+cd NOMBRE_DE_LA_CARPETA
 ```
 
-Abre:
+Configurar la identidad utilizada en los commits:
 
-```text
-http://127.0.0.1:8000/
-```
-
-Para detener el servidor, utiliza `Ctrl+C`.
-
-Las páginas PHP deben abrirse mediante este servidor o uno compatible con PHP. Live Server y el servidor HTTP de Python no ejecutan PHP.
-
-### Comprobaciones del acceso
-
-1. Sin sesión, abre una página interna: debe dirigir al ingreso.
-2. Introduce una contraseña incorrecta: debe mostrar un error.
-3. Ingresa como usuario: debe mostrar las funciones de consulta.
-4. Intenta abrir administración mediante su dirección: debe responder con acceso denegado.
-5. Ingresa como administrador: debe permitir las páginas de administración.
-6. Intenta abrir el panel de plataforma: debe responder con acceso denegado.
-7. Ingresa como superadministrador: debe abrir el panel de plataforma.
-8. Cierra sesión: las páginas protegidas deben volver a solicitar ingreso.
-
-## Flujo de trabajo con Git y GitHub
-
-**Idea central:** `main` es la versión oficial del proyecto. **Nadie trabaja directamente en `main`.** Cada tarea se hace en una rama propia y se une a `main` mediante un Pull Request (PR).
-
-### 1. Primera vez (una sola vez por persona)
-
-1. Aceptar la invitación al repositorio (llega por correo o en las notificaciones de GitHub).
-2. Clonar el repositorio:
 ```bash
-   git clone ENLACE_DEL_REPO
-   cd nombre-del-repo
+git config user.name "Tu Nombre"
+git config user.email "tu-correo@ejemplo.com"
 ```
-3. Configurar nombre y correo (el mismo correo de tu cuenta de GitHub):
-```bash
-   git config user.name "Tu Nombre"
-   git config user.email "tu-correo@ejemplo.com"
-```
-4. Ejecutar el proyecto siguiendo el apartado «Ejecución de la versión actual» y comprobar que la página de inicio carga correctamente.
 
-### 2. Ciclo de cada tarea
+Después, iniciar el servidor PHP como se indica en la sección de ejecución local.
 
-**Paso 1: Actualizar `main`**
+### Ramas de trabajo
+
+La rama `main` mantiene la versión integrada del proyecto.
+
+Para comenzar una tarea, con el trabajo anterior ya guardado:
+
 ```bash
 git switch main
 git pull
-```
-
-**Paso 2: Crear tu rama** (un nombre corto que diga qué haces)
-```bash
 git switch -c feature/nombre-de-la-tarea
 ```
 
-**Paso 3: Trabajar y guardar avances** (varios commits pequeños)
+Si ya se está trabajando en una rama para la tarea actual, se continúa en esa misma rama.
+
+### Guardar avances
+
+Revisar los cambios:
+
 ```bash
 git status
-git add .
-git commit -m "Mensaje claro de lo que hiciste"
+git diff
 ```
-Siempre revisa `git status` antes de `git add .` para no subir archivos por error.
 
-**Paso 4: Subir tu rama a GitHub**
+Agregar únicamente los archivos del bloque:
+
+```bash
+git add ruta/al/archivo1 ruta/al/archivo2
+```
+
+Revisar lo preparado:
+
+```bash
+git diff --cached
+```
+
+Crear el commit:
+
+```bash
+git commit -m "feat: describir la funcionalidad incorporada"
+```
+
+Se pueden utilizar estos prefijos:
+
+| Prefijo | Uso |
+|---|---|
+| feat | Funcionalidad nueva |
+| fix | Corrección de un error |
+| docs | Documentación |
+| style | Cambios de formato sin modificar el comportamiento |
+| refactor | Reorganización del código conservando su comportamiento |
+
+### Publicar una rama
+
+La primera vez:
+
 ```bash
 git push -u origin feature/nombre-de-la-tarea
 ```
-El `-u` solo se pone la primera vez en cada rama. Después basta con `git push`.
 
-**Paso 5: Abrir el Pull Request**
-1. Entrar al repo en GitHub y pulsar **Compare & pull request**.
-2. Verificar que diga `base: main ← compare: tu-rama`.
-3. Poner un título claro y una descripción corta (qué hiciste y cómo probarlo).
-4. Pulsar **Create pull request** y avisar al grupo por el chat.
+En las siguientes publicaciones de esa rama:
 
-**Paso 6: Revisión**
-Otro compañero revisa la pestaña **Files changed** y verifica que:
-- No se subieron archivos innecesarios (comprimidos, archivos pesados, carpetas de tu editor).
-- No hay código a medio hacer.
-- Se entiende lo que hace.
+```bash
+git push
+```
 
-Si hay que corregir algo, el autor hace los cambios en su misma rama (`add`, `commit`, `push`) y el PR se actualiza solo.
+En GitHub se abre un Pull Request hacia `main`, indicando:
 
-**Paso 7: Merge**
-Cuando está aprobado, se pulsa **Merge pull request** y luego **Confirm merge**. Después se pulsa **Delete branch** en GitHub.
+- Qué problema o necesidad resuelve.
+- Qué cambió.
+- Cómo comprobarlo.
+- Qué limitaciones permanecen.
 
-**Paso 8: Limpiar y empezar de nuevo**
+Otro integrante revisa el cambio antes de integrarlo.
+
+### Después de integrar una rama
+
 ```bash
 git switch main
 git pull
 git branch -d feature/nombre-de-la-tarea
 ```
-Y se repite desde el Paso 2 con la siguiente tarea. Nunca se reutiliza una rama vieja.
 
-### 3. Si `main` avanzó mientras trabajabas
+### Conflictos
 
-Trae lo nuevo a tu rama:
-```bash
-git switch main
-git pull
-git switch tu-rama
-git merge main
-```
-Haz commit de tus cambios **antes** de este proceso. Después prueba que todo siga funcionando y haz `git push`.
+Si Git informa de un conflicto:
 
-### 4. Si hay conflicto
+1. Revisar los archivos afectados.
+2. Comparar ambas versiones.
+3. Conservar la combinación correcta.
+4. Eliminar las marcas de conflicto.
+5. Probar nuevamente el funcionamiento.
+6. Agregar los archivos resueltos y finalizar el merge.
 
-Pasa cuando dos personas cambiaron las mismas líneas. Git marca el archivo así:
+No se deben descartar cambios de otro integrante sin revisarlos.
 
-    <<<<<<< HEAD
-    lo que tú escribiste
-    =======
-    lo que escribió el otro
-    >>>>>>> main
+### Archivos que no deben subirse
 
-Para resolverlo:
-1. Abre el archivo y decide qué queda (tu versión, la otra o una mezcla).
-2. Borra las marcas `<<<<<<<`, `=======` y `>>>>>>>`.
-3. Ejecuta:
-```bash
-git add .
-git commit
-git push
-```
+- Credenciales reales.
+- Datos personales o empresariales reales.
+- Archivos temporales.
+- Registros de ejecución.
+- Copias comprimidas del proyecto.
+- Configuraciones particulares del editor que no necesite el equipo.
 
-VS Code muestra botones sobre el conflicto (*Accept Current / Incoming / Both*). Si no estás seguro de qué conservar, **pregúntale a quien escribió la otra parte**. Para cancelar el merge y volver al estado anterior: `git merge --abort`.
+Las cuentas incluidas en este proyecto son exclusivamente de demostración.
 
-### 5. Reglas del grupo
+## 13. Publicación en el servidor del curso
 
-1. Nadie hace commit ni push directo a `main`.
-2. Una rama por tarea, con nombre claro.
-3. Siempre `git switch main` y `git pull` antes de crear una rama.
-4. Siempre `git status` antes de `git add .`.
-5. No subir archivos innecesarios ni pesados (`.zip`, videos, archivos temporales).
-6. Repartir las tareas para no editar el mismo archivo a la vez.
-7. Avisar en el chat antes de tocar archivos compartidos (CSS principal, etc.).
-8. Revisar y unir los PR rápido, para que las ramas no se alejen de `main`.
-9. Después de cada merge, hacer `git pull` en `main` y probar que la página sigue funcionando.
+El servidor de destino debe procesar PHP y permitir el uso de sesiones.
 
-### Comandos útiles
+Para publicar:
 
-| Comando | Para qué sirve |
-|---------|----------------|
-| `git status` | Ver en qué rama estás y qué cambió |
-| `git branch` | Listar tus ramas locales |
-| `git log --oneline` | Ver el historial resumido |
-| `git diff` | Ver qué líneas cambiaste antes de hacer `add` |
-| `git fetch` | Descargar novedades sin modificar tus archivos |
+1. Verificar que la versión local funcione.
+2. Transferir los archivos mediante el mecanismo indicado por el docente.
+3. Mantener la estructura de carpetas y los nombres de archivo.
+4. Omitir los archivos internos de Git y los archivos temporales.
+5. Probar el ingreso, la salida y el acceso por rol en el servidor.
+6. Comprobar que se carguen correctamente CSS, JavaScript e imágenes.
+
+GitHub se utiliza para el repositorio. GitHub Pages no ejecuta PHP y, por tanto, no permite utilizar por sí solo las funciones de sesión de esta versión.
+
+La publicación no incorpora automáticamente la base de datos ni convierte los catálogos locales en datos compartidos.
+
+## 14. Equipo
+
+- Universidad: Universidad Nacional del Santa.
+- Escuela profesional: Ingeniería de Sistemas e Informática.
+- Curso: Aplicaciones Distribuidas I.
+- Grupo: 04.
+- Proyecto: QueryBI AI.

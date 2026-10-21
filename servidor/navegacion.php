@@ -13,7 +13,9 @@ $grupos = [];
 
 if ($cuenta['rol'] === 'superadministrador') {
     $grupos['Plataforma'] = [
-        ['plataforma/panel.php', 'Panel general']
+        ['plataforma/panel.php', 'Panel general'],
+        ['plataforma/empresas.php', 'Empresas'],
+        ['plataforma/administradores.php', 'Administradores']
     ];
 } else {
     $grupos['Análisis'] = [
@@ -29,7 +31,7 @@ if ($cuenta['rol'] === 'administrador') {
     $grupos['Administración'] = [
         ['administracion/fuentes.php', 'Fuentes de datos'],
         ['administracion/esquema.php', 'Esquema y permisos'],
-        ['administracion/usuarios.php', 'Usuarios de ejemplo']
+        ['administracion/usuarios.php', 'Usuarios']
     ];
 }
 
