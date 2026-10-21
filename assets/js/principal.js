@@ -1,6 +1,8 @@
 // Funciones compartidas. localStorage pertenece al navegador, no a un servidor.
 const QBI = {
-    prefijo: 'querybi-demo-v2-',
+    prefijo: 'querybi-demo-v3-'
+    + (window.QBI_SESION ? window.QBI_SESION.id : 'visitante')
+    + '-',
     temporal: {},
 
     leer: function (clave, valorInicial) {
@@ -126,7 +128,25 @@ const QBI = {
     },
 
     perfil: function () {
-        return this.leer('perfil', { nombre: 'Visitante Demo', correo: 'visitante@ejemplo.test', rol: 'Analista' });
+        if (window.QBI_SESION) {
+            const cuenta = window.QBI_SESION;
+
+            const preferencias = this.leer('perfil', {
+                nombre: cuenta.nombre
+            });
+
+            return {
+                nombre: preferencias.nombre,
+                correo: cuenta.correo,
+                rol: cuenta.nombre_rol
+            };
+        }
+
+        return {
+            nombre: 'Visitante',
+            correo: '',
+            rol: 'Sin sesión'
+        };
     },
 
     fuentes: function () {

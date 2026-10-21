@@ -1,7 +1,7 @@
 const perfil = QBI.perfil();
 document.getElementById('nombre').value = perfil.nombre;
 document.getElementById('correo').value = perfil.correo;
-document.getElementById('correo').required = true;
+document.getElementById('correo').readOnly = true;
 document.getElementById('nombre').required = true;
 document.getElementById('rol-perfil').textContent = 'Perfil de demostración: ' + perfil.rol;
 document.getElementById('form-perfil').addEventListener('submit', function (evento) {
@@ -12,7 +12,7 @@ document.getElementById('form-perfil').addEventListener('submit', function (even
         return;
     }
     const guardado = QBI.guardar('perfil', { nombre: nombre, correo: document.getElementById('correo').value.trim(), rol: perfil.rol });
-    QBI.mensaje('mensaje-perfil', guardado ? 'Perfil guardado en este navegador.' : 'Perfil actualizado solo para esta página.');
+    QBI.mensaje('mensaje-perfil', guardado ? 'Nombre de presentación guardado en este navegador. La cuenta no fue modificada.' : 'Perfil actualizado solo para esta página.');
 });
 document.getElementById('form-clave').addEventListener('submit', function (evento) {
     evento.preventDefault();

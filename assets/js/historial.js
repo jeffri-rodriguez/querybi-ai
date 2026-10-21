@@ -11,7 +11,7 @@ function mostrarHistorial() {
         return;
     }
     const filas = consultas.map(function (consulta) {
-        return [consulta.pregunta, QBI.fecha(consulta.fecha), consulta.estado, QBI.enlace('Ver detalle', 'consultas.html?consulta=' + encodeURIComponent(consulta.id))];
+        return [consulta.pregunta, QBI.fecha(consulta.fecha), consulta.estado, QBI.enlace('Ver detalle', 'consultas.php?consulta=' + encodeURIComponent(consulta.id))];
     });
     QBI.tabla(contenedor, ['Pregunta', 'Fecha', 'Estado', 'Detalle'], filas, 'Historial local');
 }

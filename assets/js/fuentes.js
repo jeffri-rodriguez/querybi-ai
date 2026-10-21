@@ -1,7 +1,7 @@
 const listaFuentes = document.getElementById('lista-fuentes');
 if (listaFuentes) {
     const filas = QBI.fuentes().map(function (fuente) {
-        return [fuente.nombre, fuente.motor, fuente.habilitada ? 'Habilitada (demo)' : 'Deshabilitada (demo)', QBI.enlace('Editar', 'configurar-fuente.html?id=' + encodeURIComponent(fuente.id))];
+        return [fuente.nombre, fuente.motor, fuente.habilitada ? 'Habilitada (demo)' : 'Deshabilitada (demo)', QBI.enlace('Editar', 'configurar-fuente.php?id=' + encodeURIComponent(fuente.id))];
     });
     QBI.tabla(listaFuentes, ['Nombre', 'Motor', 'Estado local', 'Configuración'], filas, 'Catálogo de demostración');
 }
@@ -49,7 +49,7 @@ if (formFuente) {
         const indice = fuentes.findIndex(function (item) { return item.id === nueva.id; });
         if (indice >= 0) fuentes[indice] = nueva;
         else fuentes.push(nueva);
-        if (QBI.guardar('fuentes', fuentes)) window.location.href = 'fuentes.html';
+        if (QBI.guardar('fuentes', fuentes)) window.location.href = 'fuentes.php';
         else QBI.mensaje('mensaje-fuente', 'La fuente no pudo conservarse entre páginas.', true);
     });
 }

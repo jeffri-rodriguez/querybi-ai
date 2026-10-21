@@ -1,5 +1,8 @@
 # QueryBI AI
-QueryBI AI: una aplicación web para consultar y analizar datos empresariales mediante preguntas en lenguaje natural.
+
+Proyecto del Grupo 04 para el curso de Aplicaciones Distribuidas I.
+
+QueryBI AI es una aplicación web orientada a consultar y analizar datos empresariales mediante preguntas en lenguaje natural. Su desarrollo se realiza por etapas.
 
 ## Estructura del proyecto
 ```text
@@ -13,21 +16,22 @@ querybi-ai/
 │   └── ayuda.html                    # Preguntas frecuentes y orientación
 │
 ├── acceso/
-│   ├── login.html                    # Interfaz de inicio de sesión
+│   ├── login.php                    # Interfaz de inicio de sesión
+│   ├── salir.php                    
 │   └── recuperar-contrasena.html     # Interfaz para recuperar acceso
 │
 ├── aplicacion/
-│   ├── panel.html                    # Inicio del espacio de trabajo
-│   ├── consultas.html                # Preguntas, resultados, gráficos y SQL
-│   ├── historial.html                # Consultas anteriores de ejemplo
-│   ├── reportes.html                 # Listado y vista previa de reportes
-│   └── perfil.html                   # Datos del usuario y contraseña
+│   ├── panel.php                    # Inicio del espacio de trabajo
+│   ├── consultas.php                # Preguntas, resultados, gráficos y SQL
+│   ├── historial.php                # Consultas anteriores de ejemplo
+│   ├── reportes.php                 # Listado y vista previa de reportes
+│   └── perfil.php                   # Datos del usuario y contraseña
 │
 ├── administracion/
-│   ├── fuentes.html                  # Listado de fuentes de datos
-│   ├── configurar-fuente.html        # Formulario de configuración de fuente
-│   ├── esquema.html                  # Tablas, campos, relaciones y permisos
-│   └── usuarios.html                 # Listado, creación y edición de usuarios
+│   ├── fuentes.php                  # Listado de fuentes de datos
+│   ├── configurar-fuente.php        # Formulario de configuración de fuente
+│   ├── esquema.php                  # Tablas, campos, relaciones y permisos
+│   └── usuarios.php                 # Listado, creación y edición de usuarios
 │
 ├── assets/
 │   │
@@ -60,25 +64,118 @@ querybi-ai/
 │       ├── logo.svg                  # Logo de QueryBI AI
 │       └── favicon.svg               # Icono de la pestaña del navegador
 │
+├── plataforma/
+│   └── panel.php
+|
+├── servidor/
+│   └── sesion.php
+│   └── cuentas-demo.php
+│   └── navegacion.php.
+|
 ├── README.md                         # Documentación del proyecto
 └── .gitignore                        # Reglas de exclusión para Git
 ```
 
 ### Organización de las interfaces
 
-- El proyecto contempla **15 páginas HTML**.
+- El proyecto combina páginas públicas HTML con pantallas protegidas PHP.
+- La cabecera y la navegación interna se comparten desde `servidor/navegacion.php`.
 - Misión y visión se incluyen en `paginas/nosotros.html`.
-- Los resultados, gráficos y SQL se muestran en `aplicacion/consultas.html`.
-- La creación y edición de usuarios se incluyen en `administracion/usuarios.html`.
+- Los resultados, gráficos y SQL se muestran en `aplicacion/consultas.php`.
+- La creación y edición de usuarios se incluyen en `administracion/usuarios.php`.
 - Los estados de carga, error y ausencia de resultados se presentan dentro de la pantalla correspondiente.
 - Las reglas de adaptación a dispositivos móviles se incluyen en los archivos CSS de cada área.
 - Los datos ficticios se centralizan en `assets/datos/datos-demo.js`.
 
-### Arquitectura y alcance
+## Arquitectura y estado del desarrollo
 
-La aplicación utiliza arquitectura cliente-servidor: el servidor web del profesor aloja y entrega los archivos, mientras que el navegador interpreta el HTML, aplica los estilos CSS y ejecuta JavaScript.
+La aplicación utiliza arquitectura cliente-servidor.
 
-En este avance, el acceso, los roles, las conexiones y las consultas son simulaciones de interfaz. No existe autenticación real, ejecución de SQL ni persistencia en una base de datos.
+- El navegador presenta HTML y CSS y ejecuta JavaScript.
+- PHP comprueba las credenciales, mantiene la sesión y autoriza el acceso a las páginas.
+- MySQL todavía no está integrado.
+
+### Acceso y roles
+
+Existen tres roles:
+
+| Rol | Acceso actual |
+|---|---|
+| Superadministrador | Panel general de la plataforma y perfil. |
+| Administrador | Panel empresarial, consultas, historial, reportes, fuentes, esquema, usuarios de ejemplo y perfil. |
+| Usuario | Panel empresarial, consultas, historial, reportes y perfil. |
+
+Cada página protegida comprueba los permisos en PHP antes de mostrar su contenido.
+
+Una persona sin sesión es dirigida al ingreso. Una cuenta sin el rol autorizado recibe una respuesta HTTP 403.
+
+El servidor determina el rol. Modificar localStorage o el JavaScript del navegador no concede permisos adicionales.
+
+### Cuentas de prueba
+
+Las cuentas están predefinidas en `servidor/cuentas-demo.php`. Sus contraseñas se verifican mediante hashes.
+
+| Rol | Correo | Contraseña de prueba |
+|---|---|---|
+| Superadministrador | superadmin@querybi.test | SuperDemo2026! |
+| Administrador | admin@tienda.test | AdminDemo2026! |
+| Usuario | usuario@tienda.test | UsuarioDemo2026! |
+
+Estas cuentas son exclusivamente de demostración.
+
+El formulario local de usuarios todavía no crea ni modifica las cuentas de acceso.
+
+### Funciones y datos de demostración
+
+Las consultas siguen utilizando resultados preparados en JavaScript. No se genera SQL mediante IA ni se ejecuta contra una base de datos.
+
+Las fuentes, los usuarios de ejemplo, los reportes y el historial utilizan almacenamiento local del navegador.
+
+El espacio local se diferencia por cuenta. Esta separación no sustituye la autorización ni el filtrado de datos en el servidor.
+
+El perfil permite personalizar un nombre de presentación local. El correo y el rol de la cuenta proceden de la sesión.
+
+### Desarrollo pendiente
+
+- Gestión de empresas y administradores desde el panel de plataforma.
+- Integración de los módulos con datos y operaciones del servidor.
+- Aplicación del ámbito de empresa al acceder a sus recursos.
+- Diseño e implementación de MySQL.
+- Persistencia real de registro y consulta.
+- Generación de SQL mediante IA, validación y ejecución controlada.
+
+La integración inicial de MySQL y un flujo persistente siguen siendo necesarios para completar la entrega grupal del primer avance.
+
+## Ejecución de la versión actual
+
+Requisito: PHP 8 o superior.
+
+Desde la carpeta que contiene `index.html`, ejecuta:
+
+```bash
+php -S 127.0.0.1:8000 -t .
+```
+
+Abre:
+
+```text
+http://127.0.0.1:8000/
+```
+
+Para detener el servidor, utiliza `Ctrl+C`.
+
+Las páginas PHP deben abrirse mediante este servidor o uno compatible con PHP. Live Server y el servidor HTTP de Python no ejecutan PHP.
+
+### Comprobaciones del acceso
+
+1. Sin sesión, abre una página interna: debe dirigir al ingreso.
+2. Introduce una contraseña incorrecta: debe mostrar un error.
+3. Ingresa como usuario: debe mostrar las funciones de consulta.
+4. Intenta abrir administración mediante su dirección: debe responder con acceso denegado.
+5. Ingresa como administrador: debe permitir las páginas de administración.
+6. Intenta abrir el panel de plataforma: debe responder con acceso denegado.
+7. Ingresa como superadministrador: debe abrir el panel de plataforma.
+8. Cierra sesión: las páginas protegidas deben volver a solicitar ingreso.
 
 ## Flujo de trabajo con Git y GitHub
 
@@ -97,7 +194,7 @@ En este avance, el acceso, los roles, las conexiones y las consultas son simulac
    git config user.name "Tu Nombre"
    git config user.email "tu-correo@ejemplo.com"
 ```
-4. Abrir `index.html` en el navegador para comprobar que el proyecto se ve bien.
+4. Ejecutar el proyecto siguiendo el apartado «Ejecución de la versión actual» y comprobar que la página de inicio carga correctamente.
 
 ### 2. Ciclo de cada tarea
 

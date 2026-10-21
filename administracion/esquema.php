@@ -1,3 +1,8 @@
+<?php
+require_once __DIR__ . '/../servidor/sesion.php';
+qbi_requerir(['administrador']);
+?>
+
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -20,37 +25,7 @@
             <p class="aviso">Activa JavaScript para usar las consultas de ejemplo, los filtros y los formularios. Los enlaces de navegación siguen disponibles.</p>
         </noscript>
         <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
-        <header class="encabezado-app">
-            <a href="../aplicacion/panel.html">
-                <img class="logo" src="../assets/imagenes/logo.svg" alt="QueryBI AI" width="155" height="40">
-            </a>
-            <nav class="enlaces-cuenta" aria-label="Cuenta">
-                <span class="etiqueta">Demo local / sin backend</span>
-                <a href="../aplicacion/perfil.html">Mi perfil</a>
-                <a href="../index.html">Volver al sitio público</a>
-            </nav>
-        </header>
-        <div class="estructura-app">
-            <nav class="menu-lateral" aria-label="Menú de la aplicación">
-                <h2>Análisis</h2>
-                <div class="grupo-menu">
-                    <a href="../aplicacion/panel.html">Panel</a>
-                    <a href="../aplicacion/consultas.html">Consultas</a>
-                    <a href="../aplicacion/historial.html">Historial</a>
-                    <a href="../aplicacion/reportes.html">Reportes</a>
-                </div>
-                <h2>Administración</h2>
-                <div class="grupo-menu">
-                    <a href="../administracion/fuentes.html">Fuentes de datos</a>
-                    <a href="../administracion/esquema.html" aria-current="page">Esquema y permisos</a>
-                    <a href="../administracion/usuarios.html">Usuarios y roles</a>
-                </div>
-                <h2>Cuenta</h2>
-                <div class="grupo-menu">
-                    <a href="../aplicacion/perfil.html">Mi perfil</a>
-                    <a href="../paginas/ayuda.html">Ayuda</a>
-                </div>
-            </nav>
+        <?php require __DIR__ . '/../servidor/navegacion.php'; ?>
             <main id="contenido" class="contenido-app">
                 <div class="cabecera-seccion">
                     <div>
@@ -142,7 +117,7 @@
                     </div>
                     <div class="acciones">
                         <button id="guardar-esquema" class="boton" type="button">Guardar selección local</button>
-                        <a href="fuentes.html">Volver a fuentes</a>
+                        <a href="fuentes.php">Volver a fuentes</a>
                     </div>
                 </section>
                 <p id="mensaje-esquema" class="mensaje" role="status" hidden></p>

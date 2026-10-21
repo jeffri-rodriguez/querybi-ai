@@ -44,6 +44,6 @@ const datosDemo = {
     ],
     usuarios: [
         { id: 'admin', nombre: 'Administrador Demo', correo: 'admin@ejemplo.test', rol: 'Administrador', activo: true },
-        { id: 'analista', nombre: 'Analista Demo', correo: 'analista@ejemplo.test', rol: 'Analista', activo: true }
+        { id: 'usuario', nombre: 'Usuario Demo', correo: 'usuario@ejemplo.test', rol: 'Usuario', activo: true }
     ]
 };

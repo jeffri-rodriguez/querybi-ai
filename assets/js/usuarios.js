@@ -11,7 +11,7 @@ function abrirFormulario(usuario = null) {
     document.getElementById('titulo-usuario').textContent = usuario ? 'Editar usuario' : 'Nuevo usuario';
     document.getElementById('nombre-usuario').value = usuario ? usuario.nombre : '';
     document.getElementById('correo-usuario').value = usuario ? usuario.correo : '';
-    document.getElementById('rol-usuario').value = usuario ? usuario.rol : 'Analista';
+    document.getElementById('rol-usuario').value = usuario ? usuario.rol : 'Usuario';
     document.getElementById('activo-usuario').checked = usuario ? usuario.activo : true;
     dialogo.showModal();
     document.getElementById('nombre-usuario').focus();
