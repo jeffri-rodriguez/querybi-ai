@@ -42,8 +42,32 @@ const datosDemo = {
         { id: 'tienda', nombre: 'Tienda Demo', motor: 'MySQL', servidor: 'db.ejemplo.test', puerto: 3306, base: 'tienda_demo', usuario: 'lector_demo', habilitada: true },
         { id: 'almacen', nombre: 'Almacén Demo', motor: 'MySQL', servidor: 'almacen.ejemplo.test', puerto: 3306, base: 'almacen_demo', usuario: 'lector', habilitada: false }
     ],
+    empresas: [
+        {
+            id: 'tienda',
+            nombre: 'Tienda Demo',
+            correo: 'contacto@tienda.test',
+            activo: true
+        }
+    ],
+    administradores: [
+        {
+            id: 'admin-tienda',
+            nombre: 'Administrador Demo',
+            correo: 'admin@tienda.test',
+            empresaId: 'tienda',
+            rol: 'Administrador',
+            activo: true
+        }
+    ],
     usuarios: [
-        { id: 'admin', nombre: 'Administrador Demo', correo: 'admin@ejemplo.test', rol: 'Administrador', activo: true },
-        { id: 'analista', nombre: 'Analista Demo', correo: 'analista@ejemplo.test', rol: 'Analista', activo: true }
+        {
+            id: 'usuario-tienda',
+            nombre: 'Usuario Demo',
+            correo: 'usuario@tienda.test',
+            empresaId: 'tienda',
+            rol: 'Usuario',
+            activo: true
+        }
     ]
 };

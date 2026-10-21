@@ -1,6 +1,8 @@
 // Funciones compartidas. localStorage pertenece al navegador, no a un servidor.
 const QBI = {
-    prefijo: 'querybi-demo-v2-',
+    prefijo: 'querybi-demo-v3-'
+    + (window.QBI_SESION ? window.QBI_SESION.id : 'visitante')
+    + '-',
     temporal: {},
 
     leer: function (clave, valorInicial) {
@@ -118,15 +120,86 @@ const QBI = {
     },
 
     historial: function () {
-        return this.leer('historial', []);
+        const datos = this.leer('historial', []);
+
+        if (!Array.isArray(datos)) return [];
+
+        return datos.filter(function (consulta) {
+            return consulta
+                && typeof consulta.id === 'string'
+                && typeof consulta.pregunta === 'string';
+        }).map(function (consulta) {
+            const ejemplo =
+                consulta.tipo === 'ejemplo'
+                || Boolean(consulta.ejemploId);
+
+            const sinResultados =
+                consulta.estado === 'Sin resultados'
+                || consulta.estado === 'Ejemplo sin resultados';
+
+            return {
+                ...consulta,
+                tipo: ejemplo ? 'ejemplo' : 'pregunta',
+                fuenteId: consulta.fuenteId
+                    || (ejemplo ? 'tienda' : ''),
+                fuenteNombre: consulta.fuenteNombre
+                    || (ejemplo ? 'Tienda Demo' : 'Sin fuente'),
+                estado: ejemplo
+                    ? (
+                        sinResultados
+                            ? 'Ejemplo sin resultados'
+                            : 'Ejemplo listo'
+                    )
+                    : (consulta.estado || 'Pendiente')
+            };
+        });
     },
 
     reportes: function () {
-        return this.leer('reportes', []);
+        const datos = this.leer('reportes', []);
+
+        return Array.isArray(datos)
+            ? JSON.parse(JSON.stringify(datos))
+            : [];
+    },
+
+    guardarLista: function (clave, lista) {
+        const anteriores = JSON.parse(
+            JSON.stringify(this.leer(clave, []))
+        );
+
+        if (this.guardar(clave, lista)) return true;
+
+        this.temporal[clave] = anteriores;
+
+        return false;
     },
 
     perfil: function () {
-        return this.leer('perfil', { nombre: 'Visitante Demo', correo: 'visitante@ejemplo.test', rol: 'Analista' });
+        const cuenta = window.QBI_SESION;
+
+        if (!cuenta) {
+            return {
+                nombre: 'Visitante',
+                correo: '',
+                rol: 'Sin sesión'
+            };
+        }
+
+        const preferencias = this.leer('perfil', null);
+
+        const alias = preferencias
+            && typeof preferencias.nombre === 'string'
+                ? preferencias.nombre.trim()
+                : '';
+
+        return {
+            nombre: alias.length >= 2 && alias.length <= 80
+                ? alias
+                : cuenta.nombre,
+            correo: cuenta.correo,
+            rol: cuenta.nombre_rol
+        };
     },
 
     fuentes: function () {

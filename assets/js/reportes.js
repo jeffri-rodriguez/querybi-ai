@@ -10,7 +10,7 @@ function mostrarReportes() {
     const reportes = QBI.reportes();
     const contenedor = document.getElementById('lista-reportes');
     if (!reportes.length) {
-        contenedor.textContent = 'Todavía no tienes reportes. Ejecuta una consulta y pulsa Guardar reporte.';
+        contenedor.textContent = 'Todavía no tienes reportes. Abre Ejemplos y pulsa Guardar reporte.';
         document.getElementById('vista-previa').hidden = true;
         return;
     }
