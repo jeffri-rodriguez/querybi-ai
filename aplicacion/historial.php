@@ -26,32 +26,63 @@ qbi_requerir(['administrador', 'usuario']);
         <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
         <?php require __DIR__ . '/../servidor/navegacion.php'; ?>
             <main id="contenido" class="contenido-app">
-                <span class="rotulo">Archivo / consultas</span>
+                <span class="rotulo">Archivo / historial</span>
+
                 <div class="cabecera-seccion">
                     <div>
                         <h1>Vuelve a tus preguntas.</h1>
-                        <p class="texto-secundario">Historial de la demostración guardado en este navegador.</p>
+
+                        <p class="texto-secundario">
+                            Preguntas pendientes y ejemplos guardados
+                            en este navegador.
+                        </p>
                     </div>
                 </div>
+
                 <section class="tarjeta">
                     <div class="dos-columnas">
                         <div class="campo">
                             <label for="buscar">Buscar por pregunta</label>
-                            <input type="text" id="buscar" name="buscar" value="" placeholder="Escribe para filtrar…">
+
+                            <input
+                                id="buscar"
+                                type="search"
+                                placeholder="Escribe para filtrar"
+                            >
                         </div>
+
                         <div class="campo">
                             <label for="filtro-estado">Estado</label>
-                            <select id="filtro-estado" name="filtro-estado">
-                                <option>Todos</option>
-                                <option>Completada</option>
-                                <option>Sin resultados</option>
+
+                            <select id="filtro-estado">
+                                <option value="Todos">Todos</option>
+                                <option value="Pendiente">Pendiente</option>
+
+                                <option value="Ejemplo listo">
+                                    Ejemplo listo
+                                </option>
+
+                                <option value="Ejemplo sin resultados">
+                                    Ejemplo sin resultados
+                                </option>
                             </select>
                         </div>
                     </div>
-                    <p id="cantidad-historial" class="texto-secundario" role="status"></p>
+
+                    <p
+                        id="cantidad-historial"
+                        class="texto-secundario"
+                        role="status"
+                    ></p>
+
                     <div id="lista-historial"></div>
+
                     <div class="acciones">
-                        <a href="consultas.php" class="boton">Nueva consulta</a>
+                        <a href="consultas.php" class="boton">
+                            Nueva pregunta
+                        </a>
+
+                        <a href="ejemplos.php">Explorar ejemplos</a>
                     </div>
                 </section>
             </main>

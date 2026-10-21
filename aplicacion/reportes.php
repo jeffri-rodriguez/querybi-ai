@@ -31,11 +31,11 @@ qbi_requerir(['administrador', 'usuario']);
                 <div class="cabecera-seccion">
                     <div>
                         <h1>Análisis para compartir.</h1>
-                        <p class="texto-secundario">Guarda una consulta y descarga sus resultados como CSV.</p>
+                        <p class="texto-secundario">Guarda un resultado de ejemplo y descárgalo como CSV.</p>
                     </div>
                 </div>
                 <section class="tarjeta">
-                    <h2>Reportes guardados</h2>
+                    <h2>Reportes de ejemplo guardados</h2>
                     <div id="lista-reportes"></div>
                     <p id="mensaje-reportes" class="mensaje" role="status" hidden></p>
                 </section>

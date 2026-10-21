@@ -120,11 +120,59 @@ const QBI = {
     },
 
     historial: function () {
-        return this.leer('historial', []);
+        const datos = this.leer('historial', []);
+
+        if (!Array.isArray(datos)) return [];
+
+        return datos.filter(function (consulta) {
+            return consulta
+                && typeof consulta.id === 'string'
+                && typeof consulta.pregunta === 'string';
+        }).map(function (consulta) {
+            const ejemplo =
+                consulta.tipo === 'ejemplo'
+                || Boolean(consulta.ejemploId);
+
+            const sinResultados =
+                consulta.estado === 'Sin resultados'
+                || consulta.estado === 'Ejemplo sin resultados';
+
+            return {
+                ...consulta,
+                tipo: ejemplo ? 'ejemplo' : 'pregunta',
+                fuenteId: consulta.fuenteId
+                    || (ejemplo ? 'tienda' : ''),
+                fuenteNombre: consulta.fuenteNombre
+                    || (ejemplo ? 'Tienda Demo' : 'Sin fuente'),
+                estado: ejemplo
+                    ? (
+                        sinResultados
+                            ? 'Ejemplo sin resultados'
+                            : 'Ejemplo listo'
+                    )
+                    : (consulta.estado || 'Pendiente')
+            };
+        });
     },
 
     reportes: function () {
-        return this.leer('reportes', []);
+        const datos = this.leer('reportes', []);
+
+        return Array.isArray(datos)
+            ? JSON.parse(JSON.stringify(datos))
+            : [];
+    },
+
+    guardarLista: function (clave, lista) {
+        const anteriores = JSON.parse(
+            JSON.stringify(this.leer(clave, []))
+        );
+
+        if (this.guardar(clave, lista)) return true;
+
+        this.temporal[clave] = anteriores;
+
+        return false;
     },
 
     perfil: function () {

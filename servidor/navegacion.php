@@ -19,6 +19,7 @@ if ($cuenta['rol'] === 'superadministrador') {
     $grupos['Análisis'] = [
         ['aplicacion/panel.php', 'Panel'],
         ['aplicacion/consultas.php', 'Consultas'],
+        ['aplicacion/ejemplos.php', 'Ejemplos'],
         ['aplicacion/historial.php', 'Historial'],
         ['aplicacion/reportes.php', 'Reportes']
     ];
@@ -65,7 +66,12 @@ $grupos['Cuenta'] = [
             <?= qbi_texto(qbi_nombre_rol($cuenta['rol'])) ?>
         </span>
 
-        <span><?= qbi_texto($cuenta['empresa_nombre']) ?></span>
+        <a
+            href="<?= qbi_texto(qbi_url(qbi_inicio())) ?>"
+            title="Ir al panel"
+        >
+            <?= qbi_texto($cuenta['empresa_nombre']) ?>
+        </a>
 
         <a href="<?= qbi_texto(qbi_url('aplicacion/perfil.php')) ?>">
             Mi perfil

@@ -77,3 +77,8 @@ section[id] {
     align-items: center;
     flex-wrap: wrap;
 }
+
+.pregunta-registrada {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}

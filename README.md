@@ -22,10 +22,12 @@ querybi-ai/
 │
 ├── aplicacion/
 │   ├── panel.php                    # Inicio del espacio de trabajo
-│   ├── consultas.php                # Preguntas, resultados, gráficos y SQL
+│   ├── consultas.php                # Registra preguntas pendientes
 │   ├── historial.php                # Consultas anteriores de ejemplo
 │   ├── reportes.php                 # Listado y vista previa de reportes
 │   └── perfil.php                   # Datos del usuario y contraseña
+│   └── ejemplos.php
+│   └── detalle-consulta.php
 │
 ├── administracion/
 │   ├── fuentes.php                  # Listado de fuentes de datos
@@ -48,7 +50,7 @@ querybi-ai/
 │   │   ├── principal.js              # Comportamientos generales y navegación
 │   │   ├── acceso.js                 # Validaciones y acceso simulado
 │   │   ├── panel.js                  # Presentación del resumen inicial
-│   │   ├── consultas.js              # Consultas simuladas y sus estados
+│   │   ├── consultas.js              # Registra consultas pendientes
 │   │   ├── graficos.js               # Representación de datos de ejemplo
 │   │   ├── historial.js              # Búsqueda y detalle de consultas
 │   │   ├── reportes.js               # Vista previa y acciones de reportes
@@ -57,6 +59,8 @@ querybi-ai/
 │   │   ├── esquema.js                # Selección visual de tablas y campos
 │   │   ├── usuarios.js               # Formularios y roles simulados
 │   │   └── validaciones.js           # Validaciones reutilizables
+│   │   └── ejemplos.js
+│   │   └── detalle-consulta.js
 │   │
 │   ├── datos/
 │   │   └── datos-demo.js             # Datos ficticios compartidos
@@ -158,6 +162,31 @@ La contraseña de prueba se descarta. No se almacena ni se envía.
 El botón «Revisar datos» valida el formulario; no comprueba conexiones.
 
 Solo Tienda Demo tiene un esquema de ejemplo preparado.
+
+### Preguntas, ejemplos e historial
+
+El módulo Consultas permite registrar preguntas propias:
+
+- Requiere una fuente habilitada en el catálogo local.
+- Admite preguntas de entre 5 y 1000 caracteres.
+- Guarda pregunta, fuente, fecha y estado Pendiente.
+- No genera SQL ni obtiene resultados.
+- Abre una pantalla de detalle después del registro.
+
+La sección Ejemplos conserva las tablas, gráficos y SQL preparados.
+Sus registros se identifican como Ejemplo listo o Ejemplo sin resultados.
+
+El historial distingue preguntas propias y ejemplos y permite buscar
+y filtrar por estado.
+
+Los ejemplos registrados anteriormente siguen disponibles.
+
+El panel muestra el total de registros, las preguntas pendientes
+y los reportes de ejemplo.
+
+Los datos continúan almacenándose por cuenta en el navegador.
+Todavía no existe una cola de procesamiento en el servidor ni persistencia
+en MySQL.
 
 ### Desarrollo pendiente
 
