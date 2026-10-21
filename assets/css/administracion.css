@@ -49,3 +49,35 @@ dialog {
 dialog::backdrop {
     background: rgb(20 32 23 / 55%);
 }
+
+.acciones-tabla {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.detalle-fuente {
+    display: grid;
+    grid-template-columns: minmax(140px, 190px) minmax(0, 1fr);
+    gap: 14px 22px;
+}
+
+.detalle-fuente dt {
+    font-weight: bold;
+}
+
+.detalle-fuente dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+    .detalle-fuente {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    .detalle-fuente dd {
+        margin-bottom: 14px;
+    }
+}

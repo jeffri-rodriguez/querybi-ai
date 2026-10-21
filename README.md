@@ -32,6 +32,7 @@ querybi-ai/
 │   ├── configurar-fuente.php        # Formulario de configuración de fuente
 │   ├── esquema.php                  # Tablas, campos, relaciones y permisos
 │   └── usuarios.php                 # Listado, creación y edición de usuarios
+│   └── detalle-fuente.php                 # Listado, creación y edición de usuarios
 │
 ├── assets/
 │   │
@@ -134,6 +135,29 @@ Las fuentes, los usuarios de ejemplo, los reportes y el historial utilizan almac
 El espacio local se diferencia por cuenta. Esta separación no sustituye la autorización ni el filtrado de datos en el servidor.
 
 El perfil permite personalizar un nombre de presentación local. El correo y el rol de la cuenta proceden de la sesión.
+
+### Módulo de fuentes de datos
+
+El administrador dispone de:
+
+- Listado con búsqueda por nombre, base de datos o servidor.
+- Filtro por estado habilitado o deshabilitado.
+- Registro de fuentes de demostración.
+- Edición conservando el identificador.
+- Pantalla de detalle.
+- Validación de campos, puerto y nombres duplicados.
+- Mensajes para fuentes inexistentes y errores de almacenamiento.
+
+Las tres páginas del módulo comprueban el rol en PHP.
+
+El catálogo continúa almacenándose en el navegador de cada cuenta.
+Los cambios del administrador todavía no se comparten con otras cuentas.
+
+La contraseña de prueba se descarta. No se almacena ni se envía.
+
+El botón «Revisar datos» valida el formulario; no comprueba conexiones.
+
+Solo Tienda Demo tiene un esquema de ejemplo preparado.
 
 ### Desarrollo pendiente
 
