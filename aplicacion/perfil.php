@@ -120,7 +120,7 @@ $cuenta = qbi_usuario();
             <h2>Contraseña y recuperación</h2>
 
             <p>
-                Esta versión utiliza cuentas fijas de prueba.
+                Esta versión utiliza cuentas de demostración registradas en MariaDB.
                 El cambio de contraseña y la recuperación por correo
                 estarán disponibles cuando se integre la gestión de cuentas.
             </p>

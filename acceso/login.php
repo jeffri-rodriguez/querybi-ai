@@ -1,30 +1,39 @@
 <?php
 require_once __DIR__ . '/../servidor/sesion.php';
 
-if (qbi_usuario() !== null) {
-    qbi_redirigir(qbi_inicio());
-}
-
 $error = '';
 $correo = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $correo = is_string($_POST['correo'] ?? null)
-        ? trim($_POST['correo'])
-        : '';
-
-    $clave = is_string($_POST['clave'] ?? null)
-        ? $_POST['clave']
-        : '';
-
-    if (!qbi_token_valido($_POST['token'] ?? null)) {
-        http_response_code(400);
-        $error = 'La solicitud no es válida. Vuelve a intentarlo.';
-    } elseif (qbi_entrar($correo, $clave)) {
+try {
+    if (qbi_usuario() !== null && qbi_refrescar_usuario()) {
         qbi_redirigir(qbi_inicio());
-    } else {
-        $error = 'El correo o la contraseña no son correctos.';
     }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $correo = is_string($_POST['correo'] ?? null)
+            ? trim($_POST['correo'])
+            : '';
+
+        $clave = is_string($_POST['clave'] ?? null)
+            ? $_POST['clave']
+            : '';
+
+        if (!qbi_token_valido($_POST['token'] ?? null)) {
+            http_response_code(400);
+
+            $error = 'La solicitud no es válida. Vuelve a intentarlo.';
+        } elseif (qbi_entrar($correo, $clave)) {
+            qbi_redirigir(qbi_inicio());
+        } else {
+            $error = 'No se pudo iniciar sesión. Revisa tus credenciales y que tu cuenta esté habilitada.';
+        }
+    }
+} catch (Throwable $errorBD) {
+    qbi_registrar_error_bd($errorBD);
+
+    http_response_code(503);
+
+    $error = 'No se pudo conectar con el servicio de acceso. Revisa MariaDB y la configuración local.';
 }
 ?>
 

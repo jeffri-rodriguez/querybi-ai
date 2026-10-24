@@ -8,6 +8,8 @@ if (realpath($_SERVER['SCRIPT_FILENAME'] ?? '') === __FILE__) {
 
 define('QBI_SERVIDOR', true);
 
+require_once __DIR__ . '/base-datos.php';
+
 session_name('QUERYBI_SESION');
 
 session_start([
@@ -28,9 +30,12 @@ function qbi_texto(string $texto): string
 
 function qbi_url(string $ruta): string
 {
-    // Las páginas PHP están a un nivel de la raíz del proyecto.
     $base = rtrim(
-        str_replace('\\', '/', dirname(dirname($_SERVER['SCRIPT_NAME']))),
+        str_replace(
+            '\\',
+            '/',
+            dirname(dirname($_SERVER['SCRIPT_NAME']))
+        ),
         '/'
     );
 
@@ -39,6 +44,11 @@ function qbi_url(string $ruta): string
 
 function qbi_usuario(): ?array
 {
+    // Las sesiones del login anterior deben volver a autenticarse.
+    if (($_SESSION['origen_auth'] ?? '') !== 'mariadb-v1') {
+        return null;
+    }
+
     return $_SESSION['usuario'] ?? null;
 }
 
@@ -79,53 +89,218 @@ function qbi_token_valido($token): bool
         && hash_equals(qbi_token(), $token);
 }
 
-function qbi_requerir(array $roles): void
+function qbi_buscar_cuenta(
+    string $valor,
+    bool $porId = false
+): ?array {
+    // La columna se elige en el servidor.
+    // El valor siempre se envia como parametro.
+    $condicion = $porId
+        ? 'u.id = :valor'
+        : 'u.email = :valor';
+
+    $consulta = qbi_bd()->prepare(
+        'SELECT
+            u.id,
+            u.empresa_id,
+            u.nombre,
+            u.email,
+            u.password,
+            u.rol,
+            u.activo,
+            e.nombre_empresa,
+            e.estado AS empresa_estado
+         FROM usuarios u
+         LEFT JOIN empresas e ON e.id = u.empresa_id
+         WHERE ' . $condicion . '
+         LIMIT 1'
+    );
+
+    $consulta->execute(['valor' => $valor]);
+
+    $cuenta = $consulta->fetch();
+
+    if (
+        !$cuenta
+        || (int) $cuenta['activo'] !== 1
+        || !in_array(
+            $cuenta['rol'],
+            ['superadministrador', 'administrador', 'usuario'],
+            true
+        )
+    ) {
+        return null;
+    }
+
+    if ($cuenta['rol'] === 'superadministrador') {
+        return $cuenta['empresa_id'] === null
+            ? $cuenta
+            : null;
+    }
+
+    if (
+        $cuenta['empresa_id'] === null
+        || $cuenta['empresa_estado'] !== 'Activo'
+    ) {
+        return null;
+    }
+
+    return $cuenta;
+}
+
+function qbi_contexto_cuenta(array $cuenta): array
 {
-    $usuario = qbi_usuario();
-
-    if ($usuario === null) {
-        qbi_redirigir('acceso/login.php');
-    }
-
-    if (!in_array($usuario['rol'], $roles, true)) {
-        http_response_code(403);
-
-        $estilos = qbi_texto(qbi_url('assets/css/estilos.css'));
-        $inicio = qbi_texto(qbi_url(qbi_inicio()));
-
-        echo '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">';
-        echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
-        echo '<title>Acceso denegado | QueryBI AI</title>';
-        echo '<link rel="stylesheet" href="' . $estilos . '"></head>';
-        echo '<body><main class="contenedor tarjeta espacio-superior">';
-        echo '<h1>Acceso denegado</h1>';
-        echo '<p>Tu cuenta no tiene permiso para abrir esta sección.</p>';
-        echo '<a class="boton" href="' . $inicio . '">Volver a mi panel</a>';
-        echo '</main></body></html>';
-
-        exit;
-    }
+    // El hash no se guarda en la sesion ni se envia a JavaScript.
+    return [
+        'id' => (string) $cuenta['id'],
+        'nombre' => $cuenta['nombre'],
+        'correo' => $cuenta['email'],
+        'rol' => $cuenta['rol'],
+        'empresa_id' => $cuenta['empresa_id'] === null
+            ? null
+            : (string) $cuenta['empresa_id'],
+        'empresa_nombre' => $cuenta['rol'] === 'superadministrador'
+            ? 'Plataforma QueryBI'
+            : $cuenta['nombre_empresa']
+    ];
 }
 
 function qbi_entrar(string $correo, string $clave): bool
 {
-    $cuentas = require __DIR__ . '/cuentas-demo.php';
+    $correo = strtolower(trim($correo));
 
-    foreach ($cuentas as $cuenta) {
-        if (
-            $cuenta['correo'] === strtolower(trim($correo))
-            && password_verify($clave, $cuenta['hash'])
-        ) {
-            session_regenerate_id(true);
+    if (
+        strlen($correo) > 120
+        || !filter_var($correo, FILTER_VALIDATE_EMAIL)
+        || $clave === ''
+        || strlen($clave) > 4096
+    ) {
+        return false;
+    }
 
-            unset($cuenta['hash']);
+    $cuenta = qbi_buscar_cuenta($correo);
 
-            $_SESSION['usuario'] = $cuenta;
-            $_SESSION['token'] = bin2hex(random_bytes(32));
+    if (
+        $cuenta === null
+        || !password_verify($clave, $cuenta['password'])
+    ) {
+        return false;
+    }
 
-            return true;
+    session_regenerate_id(true);
+
+    $_SESSION = [
+        'origen_auth' => 'mariadb-v1',
+        'usuario' => qbi_contexto_cuenta($cuenta),
+        'token' => bin2hex(random_bytes(32))
+    ];
+
+    return true;
+}
+
+function qbi_refrescar_usuario(): bool
+{
+    $usuario = qbi_usuario();
+
+    if ($usuario === null) {
+        return false;
+    }
+
+    $cuenta = qbi_buscar_cuenta(
+        (string) $usuario['id'],
+        true
+    );
+
+    if ($cuenta === null) {
+        $_SESSION = [];
+        session_regenerate_id(true);
+
+        return false;
+    }
+
+    $_SESSION['usuario'] = qbi_contexto_cuenta($cuenta);
+
+    return true;
+}
+
+function qbi_registrar_error_bd(Throwable $error): void
+{
+    // No registrar credenciales ni mensajes SQL completos.
+    error_log(
+        'QueryBI: fallo de acceso a BD. Tipo='
+        . get_class($error)
+        . '; codigo='
+        . $error->getCode()
+    );
+}
+
+function qbi_pagina_error(
+    int $codigo,
+    string $titulo,
+    string $mensaje,
+    string $destino
+): void {
+    http_response_code($codigo);
+
+    echo '<!DOCTYPE html><html lang="es"><head>';
+    echo '<meta charset="UTF-8">';
+    echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
+
+    echo '<title>'
+        . qbi_texto($titulo)
+        . ' | QueryBI AI</title>';
+
+    echo '<link rel="stylesheet" href="'
+        . qbi_texto(qbi_url('assets/css/estilos.css'))
+        . '"></head>';
+
+    echo '<body><main class="contenedor tarjeta espacio-superior">';
+
+    echo '<h1>' . qbi_texto($titulo) . '</h1>';
+    echo '<p>' . qbi_texto($mensaje) . '</p>';
+
+    echo '<a class="boton" href="'
+        . qbi_texto(qbi_url($destino))
+        . '">Volver</a>';
+
+    echo '</main></body></html>';
+
+    exit;
+}
+
+function qbi_requerir(array $roles): void
+{
+    static $revisado = false;
+
+    if (qbi_usuario() === null) {
+        qbi_redirigir('acceso/login.php');
+    }
+
+    if (!$revisado) {
+        try {
+            if (!qbi_refrescar_usuario()) {
+                qbi_redirigir('acceso/login.php');
+            }
+
+            $revisado = true;
+        } catch (Throwable $error) {
+            qbi_registrar_error_bd($error);
+
+            qbi_pagina_error(
+                503,
+                'Servicio no disponible',
+                'No se pudo verificar tu cuenta. Intenta nuevamente en unos momentos.',
+                'index.html'
+            );
         }
     }
 
-    return false;
+    if (!in_array(qbi_usuario()['rol'], $roles, true)) {
+        qbi_pagina_error(
+            403,
+            'Acceso denegado',
+            'Tu cuenta no tiene permiso para abrir esta sección.',
+            qbi_inicio()
+        );
+    }
 }

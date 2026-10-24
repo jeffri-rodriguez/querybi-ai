@@ -42,9 +42,11 @@ const datosDemo = {
         { id: 'tienda', nombre: 'Tienda Demo', motor: 'MySQL', servidor: 'db.ejemplo.test', puerto: 3306, base: 'tienda_demo', usuario: 'lector_demo', habilitada: true },
         { id: 'almacen', nombre: 'Almacén Demo', motor: 'MySQL', servidor: 'almacen.ejemplo.test', puerto: 3306, base: 'almacen_demo', usuario: 'lector', habilitada: false }
     ],
+    // Estos catalogos siguen siendo locales.
+    // Los IDs iniciales coinciden con los datos de prueba del SQL.
     empresas: [
         {
-            id: 'tienda',
+            id: '1',
             nombre: 'Tienda Demo',
             correo: 'contacto@tienda.test',
             activo: true
@@ -52,20 +54,20 @@ const datosDemo = {
     ],
     administradores: [
         {
-            id: 'admin-tienda',
+            id: '2',
             nombre: 'Administrador Demo',
             correo: 'admin@tienda.test',
-            empresaId: 'tienda',
+            empresaId: '1',
             rol: 'Administrador',
             activo: true
         }
     ],
     usuarios: [
         {
-            id: 'usuario-tienda',
+            id: '3',
             nombre: 'Usuario Demo',
             correo: 'usuario@tienda.test',
-            empresaId: 'tienda',
+            empresaId: '1',
             rol: 'Usuario',
             activo: true
         }

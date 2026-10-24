@@ -1,5 +1,3 @@
-
-
 SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
 SET SESSION foreign_key_checks = 1;
 SET SESSION check_constraint_checks = 1;
