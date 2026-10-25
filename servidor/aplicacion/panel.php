@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../servidor/compartido/sesion.php';
+require_once __DIR__ . '/../compartido/sesion.php';
 qbi_requerir(['administrador', 'usuario']);
 ?>
 
@@ -22,18 +22,18 @@ qbi_requerir(['administrador', 'usuario']);
 
     <link
         rel="icon"
-        href="../assets/imagenes/favicon.svg"
+        href="../../cliente/assets/imagenes/favicon.svg"
         type="image/svg+xml"
     >
 
-    <link rel="stylesheet" href="../assets/css/estilos.css">
-    <link rel="stylesheet" href="../assets/css/aplicacion.css">
+    <link rel="stylesheet" href="../../cliente/assets/css/estilos.css">
+    <link rel="stylesheet" href="../../cliente/assets/css/aplicacion.css">
 
-    <script src="../assets/datos/datos-demo.js" defer></script>
-    <script src="../assets/js/principal.js" defer></script>
-    <script src="../assets/js/validaciones.js" defer></script>
-    <script src="../assets/js/graficos.js" defer></script>
-    <script src="../assets/js/panel.js" defer></script>
+    <script src="../../cliente/assets/datos/datos-demo.js" defer></script>
+    <script src="../../cliente/assets/js/principal.js" defer></script>
+    <script src="../../cliente/assets/js/validaciones.js" defer></script>
+    <script src="../../cliente/assets/js/graficos.js" defer></script>
+    <script src="../../cliente/assets/js/panel.js" defer></script>
 </head>
 
 <body>
@@ -49,7 +49,7 @@ qbi_requerir(['administrador', 'usuario']);
         Saltar al contenido
     </a>
 
-    <?php require __DIR__ . '/../servidor/compartido/navegacion.php'; ?>
+    <?php require __DIR__ . '/../compartido/navegacion.php'; ?>
 
     <main id="contenido" class="contenido-app">
         <span class="rotulo">

@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../servidor/compartido/sesion.php';
+require_once __DIR__ . '/../compartido/sesion.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -27,4 +27,4 @@ setcookie(session_name(), '', [
 
 session_destroy();
 
-qbi_redirigir('acceso/login.php');
+qbi_redirigir('servidor/acceso/login.php');

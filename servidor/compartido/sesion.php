@@ -25,7 +25,9 @@ function qbi_texto(string $texto): string
 
 function qbi_url(string $ruta): string
 {
-    $base = rtrim(str_replace('\\', '/', dirname(dirname($_SERVER['SCRIPT_NAME']))), '/');
+    $script = str_replace('\\', '/', $_SERVER['SCRIPT_NAME']);
+    $base = rtrim(dirname($script, 3), '/');
+
     return $base . '/' . ltrim($ruta, '/');
 }
 
@@ -48,7 +50,7 @@ function qbi_nombre_rol(string $rol): string
 function qbi_inicio(): string
 {
     return (qbi_usuario()['rol'] ?? '') === 'superadministrador'
-        ? 'plataforma/panel.php' : 'aplicacion/panel.php';
+        ? 'servidor/plataforma/panel.php' : 'servidor/aplicacion/panel.php';
 }
 
 function qbi_redirigir(string $ruta): void
@@ -177,7 +179,7 @@ function qbi_pagina_error(int $codigo, string $titulo, string $mensaje, string $
     echo '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">';
     echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
     echo '<title>' . qbi_texto($titulo) . ' | QueryBI AI</title>';
-    echo '<link rel="stylesheet" href="' . qbi_texto(qbi_url('assets/css/estilos.css')) . '"></head>';
+    echo '<link rel="stylesheet" href="' . qbi_texto(qbi_url('cliente/assets/css/estilos.css')) . '"></head>';
     echo '<body><main class="contenedor tarjeta espacio-superior">';
     echo '<h1>' . qbi_texto($titulo) . '</h1><p>' . qbi_texto($mensaje) . '</p>';
     echo '<a class="boton" href="' . qbi_texto(qbi_url($destino)) . '">Volver</a>';
@@ -188,17 +190,17 @@ function qbi_pagina_error(int $codigo, string $titulo, string $mensaje, string $
 function qbi_requerir(array $roles): void
 {
     static $revisado = false;
-    if (qbi_usuario() === null) qbi_redirigir('acceso/login.php');
+    if (qbi_usuario() === null) qbi_redirigir('servidor/acceso/login.php');
 
     if (!$revisado) {
         try {
-            if (!qbi_refrescar_usuario()) qbi_redirigir('acceso/login.php');
+            if (!qbi_refrescar_usuario()) qbi_redirigir('servidor/acceso/login.php');
             qbi_fuentes_contexto();
             $revisado = true;
         } catch (Throwable $error) {
             qbi_registrar_error_bd($error);
             qbi_pagina_error(503, 'Servicio no disponible',
-                'No se pudo verificar tu cuenta. Intenta nuevamente en unos momentos.', 'index.html');
+                'No se pudo verificar tu cuenta. Intenta nuevamente en unos momentos.', 'cliente/index.html');
         }
     }
     if (!in_array(qbi_usuario()['rol'], $roles, true)) {

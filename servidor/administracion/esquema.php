@@ -1,13 +1,13 @@
 <?php
-require_once __DIR__ . '/../servidor/compartido/sesion.php';
+require_once __DIR__ . '/../compartido/sesion.php';
 
 qbi_requerir(['administrador']);
-require_once __DIR__ . '/../servidor/compartido/fuentes.php';
+require_once __DIR__ . '/../compartido/fuentes.php';
 try {
     $esquemas = qbi_fuentes_esquemas();
 } catch (Throwable $error) {
     qbi_registrar_error_bd($error);
-    qbi_pagina_error(503, 'Servicio no disponible', 'No se pudo cargar el esquema.', 'administracion/fuentes.php');
+    qbi_pagina_error(503, 'Servicio no disponible', 'No se pudo cargar el esquema.', 'servidor/administracion/fuentes.php');
 }
 ?>
 <!DOCTYPE html>
@@ -18,15 +18,15 @@ try {
 
     <title>Esquema y permisos | QueryBI AI</title>
 
-    <link rel="icon" href="../assets/imagenes/favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="../assets/css/estilos.css">
-    <link rel="stylesheet" href="../assets/css/aplicacion.css">
-    <link rel="stylesheet" href="../assets/css/administracion.css">
+    <link rel="icon" href="../../cliente/assets/imagenes/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../../cliente/assets/css/estilos.css">
+    <link rel="stylesheet" href="../../cliente/assets/css/aplicacion.css">
+    <link rel="stylesheet" href="../../cliente/assets/css/administracion.css">
 
-    <script src="../assets/datos/datos-demo.js" defer></script>
-    <script src="../assets/datos/esquema-demo.js" defer></script>
-    <script src="../assets/js/principal.js" defer></script>
-    <script src="../assets/js/esquema.js" defer></script>
+    <script src="../../cliente/assets/datos/datos-demo.js" defer></script>
+    <script src="../../cliente/assets/datos/esquema-demo.js" defer></script>
+    <script src="../../cliente/assets/js/principal.js" defer></script>
+    <script src="../../cliente/assets/js/esquema.js" defer></script>
 </head>
 <body>
     <noscript>
@@ -37,7 +37,7 @@ try {
 
     <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
 
-    <?php require __DIR__ . '/../servidor/compartido/navegacion.php'; ?>
+    <?php require __DIR__ . '/../compartido/navegacion.php'; ?>
     <script>
         window.QBI_ESQUEMAS = <?= json_encode((object) $esquemas,
             JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) ?>;

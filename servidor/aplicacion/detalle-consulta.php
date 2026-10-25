@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../servidor/compartido/sesion.php';
+require_once __DIR__ . '/../compartido/sesion.php';
 qbi_requerir(['administrador', 'usuario']);
 ?>
 
@@ -13,17 +13,17 @@ qbi_requerir(['administrador', 'usuario']);
 
     <link
         rel="icon"
-        href="../assets/imagenes/favicon.svg"
+        href="../../cliente/assets/imagenes/favicon.svg"
         type="image/svg+xml"
     >
 
-    <link rel="stylesheet" href="../assets/css/estilos.css">
-    <link rel="stylesheet" href="../assets/css/aplicacion.css">
-    <link rel="stylesheet" href="../assets/css/consultas.css">
+    <link rel="stylesheet" href="../../cliente/assets/css/estilos.css">
+    <link rel="stylesheet" href="../../cliente/assets/css/aplicacion.css">
+    <link rel="stylesheet" href="../../cliente/assets/css/consultas.css">
 
-    <script src="../assets/datos/datos-demo.js" defer></script>
-    <script src="../assets/js/principal.js" defer></script>
-    <script src="../assets/js/detalle-consulta.js" defer></script>
+    <script src="../../cliente/assets/datos/datos-demo.js" defer></script>
+    <script src="../../cliente/assets/js/principal.js" defer></script>
+    <script src="../../cliente/assets/js/detalle-consulta.js" defer></script>
 </head>
 
 <body>
@@ -38,7 +38,7 @@ qbi_requerir(['administrador', 'usuario']);
         Saltar al contenido
     </a>
 
-    <?php require __DIR__ . '/../servidor/compartido/navegacion.php'; ?>
+    <?php require __DIR__ . '/../compartido/navegacion.php'; ?>
 
     <main id="contenido" class="contenido-app">
         <a href="historial.php">Volver al historial</a>

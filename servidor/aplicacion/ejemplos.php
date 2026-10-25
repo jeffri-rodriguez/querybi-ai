@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../servidor/compartido/sesion.php';
+require_once __DIR__ . '/../compartido/sesion.php';
 qbi_requerir(['administrador', 'usuario']);
 ?>
 
@@ -10,22 +10,22 @@ qbi_requerir(['administrador', 'usuario']);
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="QueryBI AI: prototipo académico de consulta y análisis de datos empresariales.">
         <title>Ejemplos | QueryBI AI</title>
-        <link rel="icon" href="../assets/imagenes/favicon.svg" type="image/svg+xml">
-        <link rel="stylesheet" href="../assets/css/estilos.css">
-        <link rel="stylesheet" href="../assets/css/aplicacion.css">
-        <link rel="stylesheet" href="../assets/css/consultas.css">
-        <script src="../assets/datos/datos-demo.js" defer></script>
-        <script src="../assets/js/principal.js" defer></script>
-        <script src="../assets/js/validaciones.js" defer></script>
-        <script src="../assets/js/graficos.js" defer></script>
-        <script src="../assets/js/ejemplos.js" defer></script>
+        <link rel="icon" href="../../cliente/assets/imagenes/favicon.svg" type="image/svg+xml">
+        <link rel="stylesheet" href="../../cliente/assets/css/estilos.css">
+        <link rel="stylesheet" href="../../cliente/assets/css/aplicacion.css">
+        <link rel="stylesheet" href="../../cliente/assets/css/consultas.css">
+        <script src="../../cliente/assets/datos/datos-demo.js" defer></script>
+        <script src="../../cliente/assets/js/principal.js" defer></script>
+        <script src="../../cliente/assets/js/validaciones.js" defer></script>
+        <script src="../../cliente/assets/js/graficos.js" defer></script>
+        <script src="../../cliente/assets/js/ejemplos.js" defer></script>
     </head>
     <body>
         <noscript>
             <p class="aviso">Activa JavaScript para usar las consultas de ejemplo, los filtros y los formularios. Los enlaces de navegación siguen disponibles.</p>
         </noscript>
         <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
-        <?php require __DIR__ . '/../servidor/compartido/navegacion.php'; ?>
+        <?php require __DIR__ . '/../compartido/navegacion.php'; ?>
             <main id="contenido" class="contenido-app">
                 <span class="rotulo">Demostración / Tienda Demo</span>
                 <a href="consultas.php">

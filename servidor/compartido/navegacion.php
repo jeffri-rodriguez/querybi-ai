@@ -13,31 +13,31 @@ $grupos = [];
 
 if ($cuenta['rol'] === 'superadministrador') {
     $grupos['Plataforma'] = [
-        ['plataforma/panel.php', 'Panel general'],
-        ['plataforma/empresas.php', 'Empresas'],
-        ['plataforma/administradores.php', 'Administradores']
+        ['servidor/plataforma/panel.php', 'Panel general'],
+        ['servidor/plataforma/empresas.php', 'Empresas'],
+        ['servidor/plataforma/administradores.php', 'Administradores']
     ];
 } else {
     $grupos['Análisis'] = [
-        ['aplicacion/panel.php', 'Panel'],
-        ['aplicacion/consultas.php', 'Consultas'],
-        ['aplicacion/ejemplos.php', 'Ejemplos'],
-        ['aplicacion/historial.php', 'Historial'],
-        ['aplicacion/reportes.php', 'Reportes']
+        ['servidor/aplicacion/panel.php', 'Panel'],
+        ['servidor/aplicacion/consultas.php', 'Consultas'],
+        ['servidor/aplicacion/ejemplos.php', 'Ejemplos'],
+        ['servidor/aplicacion/historial.php', 'Historial'],
+        ['servidor/aplicacion/reportes.php', 'Reportes']
     ];
 }
 
 if ($cuenta['rol'] === 'administrador') {
     $grupos['Administración'] = [
-        ['administracion/fuentes.php', 'Fuentes de datos'],
-        ['administracion/esquema.php', 'Esquema y permisos'],
-        ['administracion/usuarios.php', 'Usuarios']
+        ['servidor/administracion/fuentes.php', 'Fuentes de datos'],
+        ['servidor/administracion/esquema.php', 'Esquema y permisos'],
+        ['servidor/administracion/usuarios.php', 'Usuarios']
     ];
 }
 
 $grupos['Cuenta'] = [
-    ['aplicacion/perfil.php', 'Mi perfil'],
-    ['paginas/ayuda.html', 'Ayuda']
+    ['servidor/aplicacion/perfil.php', 'Mi perfil'],
+    ['cliente/paginas/ayuda.html', 'Ayuda']
 ];
 ?>
 
@@ -65,7 +65,7 @@ $grupos['Cuenta'] = [
     <a href="<?= qbi_texto(qbi_url(qbi_inicio())) ?>">
         <img
             class="logo"
-            src="<?= qbi_texto(qbi_url('assets/imagenes/logo.svg')) ?>"
+            src="<?= qbi_texto(qbi_url('cliente/assets/imagenes/logo.svg')) ?>"
             alt="QueryBI AI"
             width="155"
             height="40"
@@ -84,12 +84,12 @@ $grupos['Cuenta'] = [
             <?= qbi_texto($cuenta['empresa_nombre']) ?>
         </a>
 
-        <a href="<?= qbi_texto(qbi_url('aplicacion/perfil.php')) ?>">
+        <a href="<?= qbi_texto(qbi_url('servidor/aplicacion/perfil.php')) ?>">
             Mi perfil
         </a>
 
         <form
-            action="<?= qbi_texto(qbi_url('acceso/salir.php')) ?>"
+            action="<?= qbi_texto(qbi_url('servidor/acceso/salir.php')) ?>"
             method="post"
         >
             <input

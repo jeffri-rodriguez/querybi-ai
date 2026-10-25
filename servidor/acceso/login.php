@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../servidor/compartido/sesion.php';
+require_once __DIR__ . '/../compartido/sesion.php';
 
 $error = '';
 $correo = '';
@@ -47,13 +47,13 @@ try {
 
     <link
         rel="icon"
-        href="../assets/imagenes/favicon.svg"
+        href="../../cliente/assets/imagenes/favicon.svg"
         type="image/svg+xml"
     >
 
-    <link rel="stylesheet" href="../assets/css/estilos.css">
-    <link rel="stylesheet" href="../assets/css/publico.css">
-    <link rel="stylesheet" href="../assets/css/acceso.css">
+    <link rel="stylesheet" href="../../cliente/assets/css/estilos.css">
+    <link rel="stylesheet" href="../../cliente/assets/css/publico.css">
+    <link rel="stylesheet" href="../../cliente/assets/css/acceso.css">
 </head>
 
 <body>
@@ -63,17 +63,17 @@ try {
 
     <header class="encabezado-publico">
         <div class="contenedor barra-publica">
-            <a href="../index.html">
+            <a href="../../cliente/index.html">
                 <img
                     class="logo"
-                    src="../assets/imagenes/logo.svg"
+                    src="../../cliente/assets/imagenes/logo.svg"
                     alt="QueryBI AI"
                     width="155"
                     height="40"
                 >
             </a>
 
-            <a href="../index.html">Volver al inicio</a>
+            <a href="../../cliente/index.html">Volver al inicio</a>
         </div>
     </header>
 
@@ -132,7 +132,7 @@ try {
             </form>
 
             <a
-                href="recuperar-contrasena.html"
+                href="../../cliente/paginas/recuperar-contrasena.html"
                 class="enlace-regreso"
             >
                 Recuperar acceso

@@ -146,7 +146,7 @@ function qbi_preparar_fuentes(string $pantalla): array
     $metodos = $pantalla === 'formulario' ? ['GET', 'POST'] : ['GET'];
     if (!in_array($_SERVER['REQUEST_METHOD'], $metodos, true)) {
         header('Allow: ' . implode(', ', $metodos));
-        qbi_pagina_error(405, 'Método no permitido', 'Utiliza los enlaces y formularios de la página.', 'administracion/fuentes.php');
+        qbi_pagina_error(405, 'Método no permitido', 'Utiliza los enlaces y formularios de la página.', 'servidor/administracion/fuentes.php');
     }
     $vista = ['pantalla' => $pantalla, 'error' => '', 'guardada' => false];
     try {
@@ -155,7 +155,7 @@ function qbi_preparar_fuentes(string $pantalla): array
             $estado = qbi_fuentes_texto($_GET, 'estado') ?: 'todos';
             if (qbi_fuentes_largo($buscar) < 0 || qbi_fuentes_largo($buscar) > 100
                 || !in_array($estado, ['todos', 'habilitadas', 'deshabilitadas'], true)) {
-                qbi_pagina_error(400, 'Filtros no válidos', 'Revisa los filtros del listado.', 'administracion/fuentes.php');
+                qbi_pagina_error(400, 'Filtros no válidos', 'Revisa los filtros del listado.', 'servidor/administracion/fuentes.php');
             }
             $vista += ['titulo' => 'Fuentes de datos', 'buscar' => $buscar, 'estado' => $estado,
                 'fuentes' => qbi_fuentes_lista($buscar, $estado)];
@@ -171,12 +171,12 @@ function qbi_preparar_fuentes(string $pantalla): array
             $id = filter_var($valor, FILTER_VALIDATE_INT,
                 ['options' => ['min_range' => 1, 'max_range' => 4294967295]]);
             if ($id === false) {
-                qbi_pagina_error(400, 'Identificador no válido', 'Revisa la dirección solicitada.', 'administracion/fuentes.php');
+                qbi_pagina_error(400, 'Identificador no válido', 'Revisa la dirección solicitada.', 'servidor/administracion/fuentes.php');
             }
         }
         $actual = $id === null ? null : qbi_fuentes_buscar($id);
         if (($id !== null && $actual === null) || ($pantalla === 'detalle' && $id === null)) {
-            qbi_pagina_error(404, 'Fuente no disponible', 'No se encontró una fuente accesible para tu empresa.', 'administracion/fuentes.php');
+            qbi_pagina_error(404, 'Fuente no disponible', 'No se encontró una fuente accesible para tu empresa.', 'servidor/administracion/fuentes.php');
         }
         if ($pantalla === 'detalle') {
             $vista += ['titulo' => $actual['nombre'], 'datos' => $actual];
@@ -199,7 +199,7 @@ function qbi_preparar_fuentes(string $pantalla): array
         $vista += ['titulo' => $actual === null ? 'Nueva fuente' : 'Editar fuente'];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!qbi_token_valido($_POST['token'] ?? null)) {
-                qbi_pagina_error(403, 'Solicitud no válida', 'Vuelve al formulario e inténtalo otra vez.', 'administracion/fuentes.php');
+                qbi_pagina_error(403, 'Solicitud no válida', 'Vuelve al formulario e inténtalo otra vez.', 'servidor/administracion/fuentes.php');
             }
             foreach (['nombre', 'motor', 'servidor', 'puerto', 'base', 'usuario', 'descripcion'] as $campo) {
                 $datos[$campo] = qbi_fuentes_texto($_POST, $campo);
@@ -211,7 +211,7 @@ function qbi_preparar_fuentes(string $pantalla): array
                 try {
                     $guardado = qbi_fuentes_guardar($datos, $actual);
                     $_SESSION['fuente_guardada'] = $guardado;
-                    qbi_redirigir('administracion/detalle-fuente.php?id=' . $guardado);
+                    qbi_redirigir('servidor/administracion/detalle-fuente.php?id=' . $guardado);
                 } catch (PDOException $error) {
                     if ((int) ($error->errorInfo[1] ?? 0) !== 1062) throw $error;
                     $vista['error'] = 'Ya existe una fuente con ese nombre en tu empresa.';
@@ -224,6 +224,6 @@ function qbi_preparar_fuentes(string $pantalla): array
         return $vista;
     } catch (Throwable $error) {
         qbi_registrar_error_bd($error);
-        qbi_pagina_error(503, 'Servicio no disponible', 'No se pudo consultar o guardar la fuente. Inténtalo nuevamente.', 'administracion/fuentes.php');
+        qbi_pagina_error(503, 'Servicio no disponible', 'No se pudo consultar o guardar la fuente. Inténtalo nuevamente.', 'servidor/administracion/fuentes.php');
     }
 }

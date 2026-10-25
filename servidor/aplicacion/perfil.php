@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../servidor/compartido/sesion.php';
+require_once __DIR__ . '/../compartido/sesion.php';
 
 qbi_requerir(['superadministrador', 'administrador', 'usuario']);
 
@@ -13,12 +13,12 @@ $cuenta = qbi_usuario();
 
     <title>Mi perfil | QueryBI AI</title>
 
-    <link rel="icon" href="../assets/imagenes/favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="../assets/css/estilos.css">
-    <link rel="stylesheet" href="../assets/css/aplicacion.css">
+    <link rel="icon" href="../../cliente/assets/imagenes/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../../cliente/assets/css/estilos.css">
+    <link rel="stylesheet" href="../../cliente/assets/css/aplicacion.css">
 
-    <script src="../assets/js/principal.js" defer></script>
-    <script src="../assets/js/perfil.js" defer></script>
+    <script src="../../cliente/assets/js/principal.js" defer></script>
+    <script src="../../cliente/assets/js/perfil.js" defer></script>
 </head>
 <body>
     <noscript>
@@ -30,7 +30,7 @@ $cuenta = qbi_usuario();
 
     <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
 
-    <?php require __DIR__ . '/../servidor/compartido/navegacion.php'; ?>
+    <?php require __DIR__ . '/../compartido/navegacion.php'; ?>
 
     <main id="contenido" class="contenido-app">
         <div class="cabecera-seccion">
@@ -125,7 +125,7 @@ $cuenta = qbi_usuario();
                 estarán disponibles cuando se integre la gestión de cuentas.
             </p>
 
-            <a href="../acceso/recuperar-contrasena.html">
+            <a href="../../cliente/paginas/recuperar-contrasena.html">
                 Consultar información de acceso
             </a>
         </section>

@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../servidor/compartido/sesion.php';
+require_once __DIR__ . '/../compartido/sesion.php';
 
 qbi_requerir(['superadministrador']);
 ?>
@@ -11,18 +11,18 @@ qbi_requerir(['superadministrador']);
 
     <title>Plataforma | QueryBI AI</title>
 
-    <link rel="icon" href="../assets/imagenes/favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="../assets/css/estilos.css">
-    <link rel="stylesheet" href="../assets/css/aplicacion.css">
+    <link rel="icon" href="../../cliente/assets/imagenes/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../../cliente/assets/css/estilos.css">
+    <link rel="stylesheet" href="../../cliente/assets/css/aplicacion.css">
 
-    <script src="../assets/datos/datos-demo.js" defer></script>
-    <script src="../assets/js/principal.js" defer></script>
-    <script src="../assets/js/plataforma.js" defer></script>
+    <script src="../../cliente/assets/datos/datos-demo.js" defer></script>
+    <script src="../../cliente/assets/js/principal.js" defer></script>
+    <script src="../../cliente/assets/js/plataforma.js" defer></script>
 </head>
 <body>
     <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
 
-    <?php require __DIR__ . '/../servidor/compartido/navegacion.php'; ?>
+    <?php require __DIR__ . '/../compartido/navegacion.php'; ?>
 
     <main id="contenido" class="contenido-app">
         <div class="cabecera-seccion">
