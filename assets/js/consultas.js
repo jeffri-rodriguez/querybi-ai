@@ -47,7 +47,7 @@ botonGuardar.disabled = fuentes.length === 0;
 if (!fuentes.length) {
     QBI.mensaje(
         'estado-consulta',
-        'No hay fuentes habilitadas en el catálogo local de esta cuenta.',
+        'No hay fuentes habilitadas para tu empresa.',
         true
     );
 }

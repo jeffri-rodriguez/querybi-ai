@@ -143,6 +143,7 @@ $cuenta = qbi_usuario();
             <p class="texto-secundario">
                 Se recuperan los valores iniciales.
                 Tu sesión y tus credenciales no cambian.
+                Las fuentes guardadas en MariaDB se conservan.
             </p>
 
             <button

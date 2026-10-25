@@ -63,7 +63,7 @@
     if (!Object.prototype.hasOwnProperty.call(esquemasDemo, fuente.id)) {
         QBI.mensaje(
             'estado-esquema',
-            'No hay un esquema de demostración disponible para '
+            'No hay un esquema registrado para '
                 + fuente.nombre + '.'
         );
 

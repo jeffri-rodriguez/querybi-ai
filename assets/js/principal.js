@@ -203,7 +203,9 @@ const QBI = {
     },
 
     fuentes: function () {
-        return this.leer('fuentes', datosDemo.fuentes);
+        return Array.isArray(window.QBI_FUENTES)
+            ? JSON.parse(JSON.stringify(window.QBI_FUENTES))
+            : [];
     },
 
     // Escapa las celdas y neutraliza fórmulas al abrir CSV en una hoja de cálculo.

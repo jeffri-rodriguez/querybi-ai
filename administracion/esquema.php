@@ -2,6 +2,13 @@
 require_once __DIR__ . '/../servidor/sesion.php';
 
 qbi_requerir(['administrador']);
+require_once __DIR__ . '/../servidor/fuentes.php';
+try {
+    $esquemas = qbi_fuentes_esquemas();
+} catch (Throwable $error) {
+    qbi_registrar_error_bd($error);
+    qbi_pagina_error(503, 'Servicio no disponible', 'No se pudo cargar el esquema.', 'administracion/fuentes.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -24,20 +31,24 @@ qbi_requerir(['administrador']);
 <body>
     <noscript>
         <p class="aviso">
-            Activa JavaScript para consultar el esquema de demostración.
+            Activa JavaScript para consultar el esquema registrado.
         </p>
     </noscript>
 
     <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
 
     <?php require __DIR__ . '/../servidor/navegacion.php'; ?>
+    <script>
+        window.QBI_ESQUEMAS = <?= json_encode((object) $esquemas,
+            JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) ?>;
+    </script>
 
     <main id="contenido" class="contenido-app">
         <div class="cabecera-seccion">
             <div>
                 <h1>Esquema y permisos</h1>
                 <p class="texto-secundario">
-                    Selección de tablas y campos de demostración.
+                    Metadatos registrados; selección local de tablas y campos.
                 </p>
             </div>
 
@@ -104,7 +115,7 @@ qbi_requerir(['administrador']);
                 <div id="relaciones-esquema"></div>
 
                 <p class="texto-secundario">
-                    Estas relaciones describen el ejemplo y no cambian
+                    Estas relaciones describen el esquema registrado y no cambian
                     al marcar las casillas.
                 </p>
             </section>

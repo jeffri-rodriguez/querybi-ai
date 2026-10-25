@@ -6,27 +6,27 @@ QueryBI AI es una aplicación web orientada a facilitar la consulta y el anális
 
 Actualmente se encuentra en desarrollo para el primer hito. Esta versión implementa la navegación, el acceso mediante sesiones PHP, las restricciones por rol y los principales flujos de interfaz con datos de demostración.
 
-La integración con MySQL y el procesamiento de preguntas mediante inteligencia artificial todavía están pendientes.
+La autenticación y la gestión de fuentes ya utilizan MariaDB mediante PDO. Las preguntas, reportes y los otros catálogos de la interfaz siguen siendo locales hasta sus bloques de integración. El procesamiento mediante inteligencia artificial está pendiente.
 
 ## 1. Estado actual del proyecto
 
 | Componente | Estado actual |
 |---|---|
 | Páginas públicas | Implementadas |
-| Inicio y cierre de sesión | Implementados en PHP con cuentas fijas de prueba |
-| Restricción de acceso por rol | Aplicada en el servidor |
+| Inicio y cierre de sesión | Implementados en PHP con usuarios consultados en MariaDB |
+| Restricción de acceso por rol | Aplicada en PHP; cuenta, empresa y rol se revisan en cada solicitud protegida |
 | Panel empresarial | Implementado con indicadores de registros locales |
 | Registro de preguntas libres | Implementado; las preguntas quedan pendientes |
 | Ejemplos de consultas | Resultados, gráficos y SQL preparados previamente |
 | Historial y detalle | Implementados con almacenamiento local |
 | Reportes | Vista previa y exportación CSV de datos de ejemplo |
-| Fuentes de datos | Catálogo local con creación, edición y detalle |
+| Fuentes de datos | Registro, listado, filtros, detalle y edición persistentes en MariaDB, por empresa |
 | Empresas y administradores | Catálogos locales para el superadministrador |
 | Usuarios de empresa | Catálogo local para el administrador empresarial |
 | Esquema y permisos | Selección local de tablas y campos por fuente; aplicación de permisos en el servidor pendiente |
 | Perfil | Datos de sesión y nombre de presentación local |
 | Recuperación y cambio de contraseña | Pendientes; se informa su disponibilidad |
-| Base de datos MySQL | Pendiente de diseño e integración |
+| Base de datos (MariaDB en XAMPP) | Autenticación y fuentes conectadas; flujo de registro y consulta persistente implementado |
 | Generación de SQL mediante IA | Pendiente |
 | Ejecución de consultas contra bases empresariales | Pendiente |
 
@@ -50,7 +50,10 @@ El navegador se encarga de:
 
 PHP se encarga de:
 
-- Validar las credenciales de las cuentas de prueba.
+- Consultar las cuentas de MariaDB y verificar sus contraseñas con password_verify.
+- Comprobar que el usuario y su empresa estén activos.
+- Validar, registrar y editar fuentes mediante consultas preparadas y protección CSRF.
+- Limitar el acceso a las fuentes a la empresa de la sesión.
 - Crear y mantener la sesión.
 - Comprobar el rol antes de entregar una página protegida.
 - Generar la navegación correspondiente al usuario.
@@ -60,17 +63,18 @@ El acceso a una página protegida no depende únicamente de que su enlace aparez
 
 ### Almacenamiento actual
 
-Se utilizan tres mecanismos diferentes:
+Se utilizan estos mecanismos:
 
 | Mecanismo | Finalidad |
 |---|---|
 | Sesión PHP | Mantener la identidad autenticada y su rol |
-| Archivos de datos de prueba | Proporcionar cuentas y ejemplos iniciales |
+| MariaDB | Cuentas, empresas y fuentes utilizadas por la aplicación; metadatos iniciales del SQL |
+| Archivos de datos de prueba | Proporcionar ejemplos y catálogos locales iniciales |
 | localStorage | Conservar registros de demostración en el navegador |
 
 localStorage proporciona almacenamiento local entre visitas, pero no sustituye una base de datos compartida en el servidor.
 
-Actualmente no existe conexión con MySQL.
+La conexión PDO consulta `querybi_ai_pagina` para autenticar cuentas. El catálogo de fuentes ya utiliza MariaDB. Los demás módulos se integrarán progresivamente.
 
 ## 3. Tecnologías utilizadas
 
@@ -153,6 +157,7 @@ querybi-ai/
     index.html
     README.md
     .gitignore
+    QueryBI_AI_hito1_XAMPP.sql
 
     paginas/
         nosotros.html
@@ -187,9 +192,12 @@ querybi-ai/
 
     servidor/
         sesion.php
-        cuentas-demo.php
+        base-datos.php
+        configuracion.local.php
         navegacion.php
         vista-gestion.php
+        fuentes.php
+        vista-fuentes.php
 
     assets/
         css/
@@ -210,7 +218,6 @@ querybi-ai/
             historial.js
             reportes.js
             perfil.js
-            fuentes.js
             esquema.js
             gestion.js
             plataforma.js
@@ -243,7 +250,10 @@ querybi-ai/
 ### Archivos compartidos principales
 
 - `servidor/sesion.php`: manejo de sesiones, comprobación de roles y funciones auxiliares.
-- `servidor/cuentas-demo.php`: cuentas fijas utilizadas para probar el ingreso.
+- `servidor/base-datos.php`: conexión PDO compartida.
+- `servidor/configuracion.local.php`: único archivo de configuración, incluido en Git por acuerdo del grupo. Debe ajustarse al entorno local o al servidor del curso.
+- `servidor/fuentes.php`: validación y operaciones persistentes de fuentes.
+- `servidor/vista-fuentes.php`: vista compartida de listado, formulario y detalle.
 - `servidor/navegacion.php`: encabezado y menú según el rol autenticado.
 - `servidor/vista-gestion.php`: presentación compartida de empresas, administradores y usuarios.
 - `assets/js/principal.js`: utilidades de almacenamiento, tablas, mensajes y navegación.
@@ -254,11 +264,21 @@ querybi-ai/
 
 ### Requisitos
 
-- PHP con soporte de sesiones. Las pruebas de desarrollo se realizaron con PHP 8.3.
+- PHP con sesiones, PDO y pdo_mysql habilitados.
+- MariaDB 10.4.32, utilizado en XAMPP para este proyecto.
 - Un navegador con JavaScript, cookies y localStorage habilitados.
 - Git, si se trabajará con el repositorio.
 
-Para esta versión no es necesario iniciar MySQL.
+### Configuración de MariaDB
+
+1. Iniciar el módulo MySQL de XAMPP, que ejecuta MariaDB.
+2. Si las bases todavía no existen, importar `QueryBI_AI_hito1_XAMPP.sql` desde phpMyAdmin. Si ya se importó, no ejecutarlo otra vez.
+3. Utilizar el único archivo `servidor/configuracion.local.php` incluido en el proyecto.
+4. Configurar host, puerto, nombre de base, usuario y contraseña en el archivo local.
+5. El valor de `nombre` corresponde a la base de la plataforma: localmente `querybi_ai_pagina`. La tienda `db_empresa_demo` es una fuente independiente.
+6. El grupo incluye esta configuración en Git y FTP. En el servidor del profesor se deben colocar los datos de conexión que corresponden a esa instalación.
+
+MariaDB debe estar iniciado tanto al ingresar como al abrir páginas protegidas.
 
 ### Opción A: servidor integrado de PHP
 
@@ -308,7 +328,7 @@ http://localhost/querybi-ai/
 
 Estas credenciales corresponden únicamente al entorno académico de demostración.
 
-Las cuentas se definen en `servidor/cuentas-demo.php`. El servidor comprueba la contraseña y obtiene el rol desde esa configuración.
+Las cuentas iniciales se insertan mediante el SQL y se leen desde `usuarios`, junto con el estado de `empresas`. PHP verifica el hash de la contraseña y obtiene el rol desde MariaDB. No existe un acceso alternativo mediante cuentas fijas en archivos.
 
 El usuario no selecciona ni modifica su rol desde el formulario de ingreso.
 
@@ -328,13 +348,15 @@ Incluyen:
 
 ### 8.2. Autenticación y sesiones
 
-El ingreso se valida en PHP utilizando las cuentas de prueba.
+El ingreso se valida en PHP mediante PDO y consultas preparadas sobre MariaDB. Las cuentas iniciales son de demostración, pero su autenticación utiliza los registros de la base de datos.
 
 Las páginas protegidas comprueban la sesión y el rol:
 
 - Sin sesión, se redirige al formulario de ingreso.
 - Con un rol no autorizado, se responde con acceso denegado.
-- El cierre de sesión se procesa mediante una solicitud POST.
+- Cada solicitud protegida vuelve a comprobar la cuenta, su rol y el estado de su empresa.
+- Si la base no está disponible, se responde con un mensaje controlado y código 503.
+- El cierre de sesión se procesa mediante una solicitud POST y sigue disponible aunque falle la BD.
 - Los formularios de ingreso y salida utilizan un token de protección CSRF.
 
 La información disponible en JavaScript se utiliza como contexto de la interfaz. La autorización de las páginas se decide en el servidor.
@@ -401,22 +423,30 @@ Los reportes se conservan localmente y no representan información obtenida de u
 
 ### 8.8. Fuentes de datos
 
-El administrador puede:
+El administrador puede crear, listar, filtrar, consultar el detalle y editar
+fuentes de su empresa. Estas operaciones guardan y leen datos de MariaDB.
 
-- Consultar el catálogo.
-- Buscar y filtrar fuentes.
-- Crear una fuente.
-- Editar sus datos.
-- Consultar su detalle.
-- Habilitarla o deshabilitarla en el catálogo local.
+- La empresa se obtiene de la sesión; no de un campo del formulario.
+- El servidor valida nombre, motor, servidor, puerto, base, usuario y descripción.
+- Los nombres de fuente no se repiten dentro de la misma empresa.
+- Los formularios POST comprueban el token CSRF.
+- Después de guardar se redirige al detalle para evitar reenviar el formulario al recargar.
+- Los registros inaccesibles para la empresa responden con el mismo error 404 que un registro inexistente.
+- El detalle muestra también el resumen de tablas y campos registrados en el esquema.
+- El catálogo funciona sin JavaScript. JavaScript se mantiene para la navegación y otros módulos.
 
-El formulario valida los datos de configuración, incluidos el nombre y el puerto.
+Guardar configura una fuente; no comprueba la conexión con la base empresarial,
+no ejecuta SQL y no descubre automáticamente su esquema. La habilitación es
+un estado del catálogo, no una prueba de conectividad.
 
-Esta funcionalidad registra una configuración de demostración. No abre conexiones, no verifica credenciales de MySQL ni descubre tablas.
+El formulario no solicita contraseñas ni permite asignar referencias de credenciales.
+Si cambian los datos de conexión, se desvincula su referencia de credencial
+para revisarla antes de utilizar la fuente. El esquema registrado no se actualiza
+automáticamente y tendrá que revisarse al integrar su módulo.
 
-La contraseña de prueba introducida en el formulario no se conserva.
-
-La vista de esquema disponible corresponde al ejemplo preparado de Tienda Demo. Crear otra fuente no genera automáticamente un esquema para ella.
+El selector de Nueva pregunta obtiene un resumen de las fuentes de la empresa
+desde PHP y deja de utilizar el catálogo de fuentes de localStorage.
+Las preguntas todavía se guardan localmente; su persistencia es otro bloque.
 
 ### 8.9. Empresas y administradores
 
@@ -437,7 +467,7 @@ Reglas del catálogo:
 - La edición conserva el identificador del registro.
 - Se utiliza activación y desactivación, sin eliminación de registros.
 
-Estas reglas afectan al catálogo local. Sus cambios no bloquean sesiones ni modifican las cuentas fijas de ingreso.
+Estas reglas afectan al catálogo local. Sus cambios no bloquean sesiones ni modifican las cuentas de ingreso en MariaDB.
 
 ### 8.10. Usuarios de empresa
 
@@ -454,8 +484,12 @@ La pantalla está protegida por PHP. Los registros que muestra siguen siendo dat
 
 ### 8.11. Esquema y permisos
 
-El administrador puede seleccionar una fuente del catálogo y consultar
-su esquema de demostración cuando esté disponible.
+El selector de fuentes y los metadatos de tablas, campos y relaciones ya se
+leen desde MariaDB, limitados a la empresa de la sesión. El detalle de una
+fuente muestra un resumen de sus tablas y campos.
+
+Las casillas del editor todavía se guardan localmente. Guardar y recuperar
+sus marcas desde MariaDB, y aplicarlas como permisos, es el siguiente bloque.
 
 La pantalla permite:
 
@@ -464,7 +498,6 @@ La pantalla permite:
 - Ver la cantidad de tablas y campos seleccionados.
 - Guardar la selección localmente por fuente, tabla y campo.
 - Descartar cambios sin guardar.
-- Recuperar las selecciones guardadas en la versión anterior.
 
 Al desmarcar una tabla, sus campos quedan deshabilitados en el formulario
 y dejan de contar en el resumen. Sus marcas se conservan para cuando
@@ -476,12 +509,11 @@ no editar su selección.
 Se muestran mensajes específicos cuando la fuente no existe, no tiene
 un esquema disponible o el catálogo está vacío.
 
-Los metadatos ilustrativos se encuentran en
-`assets/datos/esquema-demo.js`. Actualmente corresponden al ejemplo
-de Tienda Demo y no constituyen el diseño definitivo de la base de datos.
+El archivo `assets/datos/esquema-demo.js` recibe los metadatos enviados por
+PHP; ya no contiene un esquema fijo asociado al identificador ficticio tienda.
 
 La selección no modifica estructuras de MySQL ni aplica restricciones
-a las consultas. Su validación y aplicación en el servidor están pendientes.
+a las consultas. Su guardado persistente como permisos y su aplicación a consultas en el servidor están pendientes.
 
 ### 8.12. Perfil y recuperación de acceso
 
@@ -527,7 +559,7 @@ Desde Mi perfil se pueden restablecer los datos locales de la cuenta actual.
 
 La acción elimina sus registros locales y permite volver a cargar los valores iniciales.
 
-No modifica las cuentas fijas de acceso ni elimina los datos locales correspondientes a otras cuentas.
+No modifica las cuentas ni las fuentes de MariaDB, ni elimina los datos locales correspondientes a otras cuentas.
 
 ## 10. Comprobación manual
 
@@ -544,7 +576,7 @@ Antes de guardar un bloque de cambios, revisar lo siguiente:
 | Registrar una pregunta vacía | Se rechaza |
 | Abrir un ejemplo | Se presentan sus datos preparados |
 | Guardar un reporte de ejemplo | Aparece en Reportes |
-| Crear y editar una fuente | Los cambios aparecen en su catálogo |
+| Crear y editar una fuente | Los cambios se guardan en MariaDB y aparecen en otra sesión autorizada |
 | Crear una empresa y su administrador | Ambos registros quedan asociados |
 | Repetir un nombre de empresa | Se rechaza el duplicado |
 | Desactivar una empresa con administradores activos | Se impide la operación |
@@ -566,19 +598,14 @@ También deben revisarse los mensajes de error, los botones de cancelar, los enl
 
 La base de datos MySQL y al menos un flujo de registro y consulta
 persistente son obligatorios para la entrega del primer hito.
-Actualmente están pendientes por la organización del trabajo del grupo.
+Las bases están creadas, el login está conectado y el catálogo de fuentes ya
+demuestra el flujo de registro y consulta persistente. Los otros módulos siguen
+pendientes de integración. localStorage no sustituye la persistencia de esos módulos.
 
-Cuando esté disponible el diseño de la base de datos, será necesario
-programar la conexión desde PHP y demostrar ese flujo. localStorage
-no sustituye esta evidencia.
-
-- Diseñar la base de datos.
-- Crear e integrar el esquema en MySQL.
 - Guardar y recuperar registros mediante PHP y MySQL.
 - Incorporar validaciones del lado del servidor para las operaciones de datos.
 - Aplicar la separación de datos por empresa en el servidor.
 - Integrar la gestión de usuarios y administradores con las cuentas de acceso.
-- Vincular la activación y desactivación de cuentas con la autenticación.
 - Implementar el cambio y la recuperación reales de contraseña.
 - Guardar la configuración de tablas y campos en MySQL.
 - Validar y aplicar en el servidor los permisos sobre los datos consultados.
@@ -720,7 +747,6 @@ No se deben descartar cambios de otro integrante sin revisarlos.
 
 ### Archivos que no deben subirse
 
-- Credenciales reales.
 - Datos personales o empresariales reales.
 - Archivos temporales.
 - Registros de ejecución.
@@ -744,7 +770,12 @@ Para publicar:
 
 GitHub se utiliza para el repositorio. GitHub Pages no ejecuta PHP y, por tanto, no permite utilizar por sí solo las funciones de sesión de esta versión.
 
-La publicación no incorpora automáticamente la base de datos ni convierte los catálogos locales en datos compartidos.
+El grupo subirá el proyecto mediante FTP, incluido `servidor/configuracion.local.php`,
+y entregará al profesor el SQL completo de las dos bases. El SQL debe ejecutarse
+mediante una herramienta de administración; transferirlo por FTP no lo ejecuta.
+Se confirmará el motor y versión del servidor del curso antes de importar el script.
+La configuración se ajustará con los nombres y credenciales de esa instalación.
+Los catálogos que siguen en localStorage no se convierten automáticamente en datos compartidos.
 
 ## 14. Equipo
 

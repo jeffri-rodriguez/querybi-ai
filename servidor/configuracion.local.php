@@ -4,8 +4,6 @@ if (!defined('QBI_SERVIDOR')) {
     exit;
 }
 
-// Copiar como configuracion.local.php y ajustar solo ese archivo.
-// Valores habituales de XAMPP local; no utilizar en produccion.
 return [
     'host' => '127.0.0.1',
     'puerto' => 3306,

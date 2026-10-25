@@ -50,6 +50,15 @@ $grupos['Cuenta'] = [
         | JSON_HEX_QUOT
         | JSON_UNESCAPED_UNICODE
     ) ?>;
+
+        window.QBI_FUENTES = <?= json_encode(
+        qbi_fuentes_contexto(),
+        JSON_HEX_TAG
+        | JSON_HEX_AMP
+        | JSON_HEX_APOS
+        | JSON_HEX_QUOT
+        | JSON_UNESCAPED_UNICODE
+    ) ?>;
 </script>
 
 <header class="encabezado-app">
