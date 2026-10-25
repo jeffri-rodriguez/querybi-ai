@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../servidor/sesion.php';
+require_once __DIR__ . '/../servidor/compartido/sesion.php';
 
 qbi_requerir(['superadministrador']);
 ?>
@@ -22,7 +22,7 @@ qbi_requerir(['superadministrador']);
 <body>
     <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
 
-    <?php require __DIR__ . '/../servidor/navegacion.php'; ?>
+    <?php require __DIR__ . '/../servidor/compartido/navegacion.php'; ?>
 
     <main id="contenido" class="contenido-app">
         <div class="cabecera-seccion">

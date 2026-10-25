@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../servidor/sesion.php';
+require_once __DIR__ . '/../servidor/compartido/sesion.php';
 qbi_requerir(['administrador', 'usuario']);
 ?>
 
@@ -38,7 +38,7 @@ qbi_requerir(['administrador', 'usuario']);
         Saltar al contenido
     </a>
 
-    <?php require __DIR__ . '/../servidor/navegacion.php'; ?>
+    <?php require __DIR__ . '/../servidor/compartido/navegacion.php'; ?>
 
     <main id="contenido" class="contenido-app">
         <a href="historial.php">Volver al historial</a>

@@ -12,7 +12,7 @@ function qbi_bd(): PDO
         return $conexion;
     }
 
-    $ruta = __DIR__ . '/configuracion.local.php';
+    $ruta = __DIR__ . '/../configuracion.local.php';
 
     if (!is_file($ruta)) {
         throw new RuntimeException(

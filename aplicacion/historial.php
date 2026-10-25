@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../servidor/sesion.php';
+require_once __DIR__ . '/../servidor/compartido/sesion.php';
 qbi_requerir(['administrador', 'usuario']);
 ?>
 
@@ -24,7 +24,7 @@ qbi_requerir(['administrador', 'usuario']);
             <p class="aviso">Activa JavaScript para usar las consultas de ejemplo, los filtros y los formularios. Los enlaces de navegación siguen disponibles.</p>
         </noscript>
         <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
-        <?php require __DIR__ . '/../servidor/navegacion.php'; ?>
+        <?php require __DIR__ . '/../servidor/compartido/navegacion.php'; ?>
             <main id="contenido" class="contenido-app">
                 <span class="rotulo">Archivo / historial</span>
 

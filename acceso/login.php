@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../servidor/sesion.php';
+require_once __DIR__ . '/../servidor/compartido/sesion.php';
 
 $error = '';
 $correo = '';

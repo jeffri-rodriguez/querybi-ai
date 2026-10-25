@@ -1,8 +1,8 @@
 <?php
-require_once __DIR__ . '/../servidor/sesion.php';
+require_once __DIR__ . '/../servidor/compartido/sesion.php';
 
 qbi_requerir(['administrador']);
-require_once __DIR__ . '/../servidor/fuentes.php';
+require_once __DIR__ . '/../servidor/compartido/fuentes.php';
 try {
     $esquemas = qbi_fuentes_esquemas();
 } catch (Throwable $error) {
@@ -37,7 +37,7 @@ try {
 
     <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
 
-    <?php require __DIR__ . '/../servidor/navegacion.php'; ?>
+    <?php require __DIR__ . '/../servidor/compartido/navegacion.php'; ?>
     <script>
         window.QBI_ESQUEMAS = <?= json_encode((object) $esquemas,
             JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) ?>;
