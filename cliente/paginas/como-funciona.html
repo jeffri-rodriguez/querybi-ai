@@ -1,69 +1,169 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="QueryBI AI: consulta y analiza los datos de tu empresa haciendo preguntas en lenguaje natural.">
-        <title>Cómo funciona | QueryBI AI</title>
-        <link rel="icon" href="../assets/imagenes/favicon.svg" type="image/svg+xml">
-        <link rel="stylesheet" href="../assets/css/estilos.css">
-        <link rel="stylesheet" href="../assets/css/publico.css">
-        <script src="../assets/datos/datos-demo.js" defer></script>
-        <script src="../assets/js/principal.js" defer></script>
-        <script src="../assets/js/validaciones.js" defer></script>
-        <script src="../assets/js/graficos.js" defer></script>
-    </head>
-    <body>
-        <noscript>
-            <p class="aviso">Activa JavaScript para usar las consultas de ejemplo, los filtros y los formularios. Los enlaces de navegación siguen disponibles.</p>
-        </noscript>
-        <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
-        <header class="encabezado-publico">
-            <div class="contenedor barra-publica">
-                <a href="../index.html">
-                    <img class="logo" src="../assets/imagenes/logo.svg" alt="QueryBI AI" width="155" height="40">
-                </a>
-                <nav class="menu-publico" aria-label="Navegación principal">
-                    <a href="../index.html">Inicio</a>
-                    <a href="../paginas/nosotros.html">Nosotros</a>
-                    <a href="../paginas/como-funciona.html" aria-current="page">Cómo funciona</a>
-                    <a href="../paginas/ayuda.html">Ayuda</a>
-                    <a href="../../servidor/acceso/login.php" class="boton">Ingresar</a>
-                </nav>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Así funciona QueryBI AI: conecta tu fuente, configura el esquema, pregunta en lenguaje natural y explora resultados con SQL validado.">
+    <title>Cómo funciona | QueryBI AI</title>
+    <link rel="icon" href="../assets/imagenes/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../assets/css/sitio-publico.css">
+    <script src="../assets/js/sitio-publico.js" defer></script>
+</head>
+<body class="web-publica">
+    <a class="pub-saltar" href="#contenido">Saltar al contenido</a>
+    <header class="pub-encabezado">
+        <div class="pub-contenedor pub-barra">
+            <a class="pub-logo" href="../index.html" aria-label="QueryBI AI, inicio"><img src="../assets/imagenes/logo.svg" alt="QueryBI AI" width="190" height="44"></a>
+            <button class="pub-menu-boton" id="boton-menu-publico" type="button" aria-controls="navegacion-publica" aria-expanded="false" hidden>Menú <span aria-hidden="true">☰</span></button>
+            <nav class="pub-nav" id="navegacion-publica" aria-label="Navegación principal">
+                <a href="../index.html">Inicio</a>
+                <a href="producto.html">Producto</a>
+                <a href="como-funciona.html" aria-current="page">Cómo funciona</a>
+                <a href="nosotros.html">Nosotros</a>
+                <a href="ayuda.html">Ayuda</a>
+                <a class="pub-boton pub-boton-principal" href="../../servidor/acceso/login.php">Acceder <span aria-hidden="true">↗</span></a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="contenido">
+        <section class="pub-interior" aria-labelledby="titulo-funcionamiento">
+            <div class="pub-contenedor">
+                <nav class="pub-migas" aria-label="Ruta de navegación"><a href="../index.html">Inicio</a><span aria-hidden="true">/</span><span aria-current="page">Cómo funciona</span></nav>
+                <div class="pub-hero-grid">
+                    <div>
+                        <span class="pub-rotulo">Un proceso que puedes seguir</span>
+                        <h1 id="titulo-funcionamiento">Tu próxima respuesta,<br><span>a cuatro pasos.</span></h1>
+                        <p class="pub-intro">El administrador prepara las fuentes y su contexto. Tu equipo hace preguntas, QueryBI genera y valida el SQL, y los resultados llegan en una forma clara de explorar.</p>
+                        <div class="pub-acciones"><a class="pub-boton pub-boton-principal" href="#recorrido">Explorar el recorrido <span aria-hidden="true">↓</span></a><a class="pub-boton pub-boton-secundario" href="../index.html#ejemplo">Ver un ejemplo</a></div>
+                    </div>
+                    <aside class="pub-vista" aria-labelledby="titulo-flujo">
+                        <span class="pub-vista-rotulo">De la configuración al análisis</span>
+                        <h2 id="titulo-flujo">Un contexto. Muchas preguntas.</h2>
+                        <ol class="pub-flujo">
+                            <li><span class="pub-flujo-numero" aria-hidden="true">01</span><div><strong>Conecta</strong><p>Una fuente empresarial autorizada.</p></div></li>
+                            <li><span class="pub-flujo-numero" aria-hidden="true">02</span><div><strong>Configura</strong><p>Tablas, campos y relaciones.</p></div></li>
+                            <li><span class="pub-flujo-numero" aria-hidden="true">03</span><div><strong>Pregunta</strong><p>Lenguaje natural y SQL validado.</p></div></li>
+                            <li><span class="pub-flujo-numero" aria-hidden="true">04</span><div><strong>Explora</strong><p>Resultados, gráficos y reportes.</p></div></li>
+                        </ol>
+                    </aside>
+                </div>
             </div>
-        </header>
-        <main id="contenido" class="contenedor">
-            <section class="seccion-publica">
-                <h1>De una pregunta a un resultado</h1>
-                <p>Así obtienes una respuesta en QueryBI AI, paso a paso.</p>
-                <div class="tres-columnas">
-                    <article class="tarjeta">
-                        <span class="numero-paso">01</span>
-                        <h2>Selecciona una fuente</h2>
-                        <p>Elige la información que tu organización te ha autorizado a consultar.</p>
+        </section>
+
+        <section class="pub-seccion" id="recorrido" aria-labelledby="titulo-recorrido">
+            <div class="pub-contenedor">
+                <div class="pub-seccion-titulo"><span class="pub-rotulo">Así se utiliza QueryBI</span><h2 id="titulo-recorrido">Cada respuesta tiene un recorrido.</h2><p>Desde la fuente de información hasta el resultado que ayuda a tu equipo a tomar una decisión.</p></div>
+                <div class="pub-recorrido">
+                    <article class="pub-etapa" aria-labelledby="paso-conectar">
+                        <span class="pub-etapa-numero" aria-hidden="true">01</span>
+                        <div class="pub-etapa-texto">
+                            <span class="pub-etapa-rol">Administrador de empresa</span>
+                            <h3 id="paso-conectar">Conecta la fuente de datos.</h3>
+                            <p>Registra el servidor, el puerto, el nombre de la base y sus credenciales de conexión. Comprueba el acceso y guarda la fuente dentro del espacio de tu empresa.</p>
+                            <p>La base permanece en su servidor de origen. QueryBI se conecta con los permisos de lectura que tu organización autoriza.</p>
+                        </div>
+                        <div class="pub-etapa-vista">
+                            <p class="pub-vista-subtitulo">Fuente empresarial</p>
+                            <dl class="pub-datos-fuente"><div><dt>Nombre</dt><dd>Tienda Demo</dd></div><div><dt>Motor</dt><dd>MariaDB</dd></div><div><dt>Base</dt><dd><code>db_empresa_demo</code></dd></div><div><dt>Acceso</dt><dd>Solo lectura</dd></div></dl>
+                            <p class="pub-demo-nota">Ejemplo de configuración de una fuente.</p>
+                        </div>
                     </article>
-                    <article class="tarjeta">
-                        <span class="numero-paso">02</span>
-                        <h2>Escribe una pregunta</h2>
-                        <p>Indica qué necesitas saber y el período que quieres analizar.</p>
+
+                    <article class="pub-etapa" aria-labelledby="paso-configurar">
+                        <span class="pub-etapa-numero" aria-hidden="true">02</span>
+                        <div class="pub-etapa-texto">
+                            <span class="pub-etapa-rol">Administrador de empresa</span>
+                            <h3 id="paso-configurar">Define el contexto y el acceso.</h3>
+                            <p>Selecciona las tablas y los campos disponibles para las consultas. Revisa sus relaciones para que QueryBI comprenda cómo se conecta la información.</p>
+                            <p>Este esquema proporciona el contexto que utiliza la IA para generar consultas sobre los datos autorizados.</p>
+                        </div>
+                        <div class="pub-etapa-vista">
+                            <p class="pub-vista-subtitulo">Un esquema que representa tu negocio</p>
+                            <ul class="pub-tablas-fuente"><li><span><strong>ventas</strong><small>fecha_venta · total_importe · cliente_id</small></span></li><li><span><strong>clientes</strong><small>id · nombre · ciudad</small></span></li></ul>
+                            <p class="pub-relacion"><code>ventas.cliente_id</code><span>se relaciona con</span><code>clientes.id</code></p>
+                            <p class="pub-demo-nota">Relación ilustrativa entre ventas y clientes.</p>
+                        </div>
                     </article>
-                    <article class="tarjeta">
-                        <span class="numero-paso">03</span>
-                        <h2>Revisa los resultados</h2>
-                        <p>Explora la tabla, el gráfico y el SQL correspondiente.</p>
+
+                    <article class="pub-etapa" aria-labelledby="paso-preguntar">
+                        <span class="pub-etapa-numero" aria-hidden="true">03</span>
+                        <div class="pub-etapa-texto">
+                            <span class="pub-etapa-rol">Administrador o usuario</span>
+                            <h3 id="paso-preguntar">Haz tu pregunta en lenguaje natural.</h3>
+                            <p>Elige la fuente y describe qué necesitas saber. Incluye el período y la forma de agrupar la información cuando sean relevantes.</p>
+                            <p>La IA genera el SQL utilizando el esquema configurado. Antes de ejecutarlo, QueryBI revisa las operaciones solicitadas y los elementos de la base que utiliza.</p>
+                        </div>
+                        <div class="pub-etapa-vista">
+                            <p class="pub-vista-subtitulo">Tu pregunta</p>
+                            <blockquote class="pub-cita-pregunta">¿Cuánto vendimos por mes entre enero y marzo de 2025?</blockquote>
+                            <details class="pub-sql pub-sql-recorrido">
+                                <summary>Revisar el SQL del ejemplo</summary>
+                                <pre><code>SELECT DATE_FORMAT(fecha_venta, '%Y-%m') AS mes,
+       SUM(total_importe) AS total
+FROM ventas
+WHERE fecha_venta &gt;= '2025-01-01'
+  AND fecha_venta &lt; '2025-04-01'
+GROUP BY mes
+ORDER BY mes;</code></pre>
+                            </details>
+                        </div>
+                    </article>
+
+                    <article class="pub-etapa" aria-labelledby="paso-explorar">
+                        <span class="pub-etapa-numero" aria-hidden="true">04</span>
+                        <div class="pub-etapa-texto">
+                            <span class="pub-etapa-rol">Administrador o usuario</span>
+                            <h3 id="paso-explorar">Explora los resultados y conserva el análisis.</h3>
+                            <p>La consulta validada se ejecuta sobre la fuente. Revisa la tabla, los indicadores y el gráfico para comprender la información obtenida.</p>
+                            <p>Guarda un reporte o vuelve al historial para consultar la pregunta, el SQL y el resultado de tus análisis.</p>
+                        </div>
+                        <div class="pub-etapa-vista">
+                            <p class="pub-vista-subtitulo">Ventas del primer trimestre</p>
+                            <table class="pub-tabla"><caption>Ejemplo de resultados · Tienda Demo</caption><thead><tr><th scope="col">Mes</th><th scope="col" class="pub-tabla-numero">Total vendido</th></tr></thead><tbody><tr><th scope="row">Enero</th><td class="pub-tabla-numero">S/ 347</td></tr><tr><th scope="row">Febrero</th><td class="pub-tabla-numero">S/ 844</td></tr><tr><th scope="row">Marzo</th><td class="pub-tabla-numero">S/ 1,214</td></tr></tbody><tfoot><tr><th scope="row">Total del trimestre</th><td class="pub-tabla-numero">S/ 2,405</td></tr></tfoot></table>
+                            <p class="pub-demo-nota">Datos ilustrativos de una tienda ficticia.</p>
+                        </div>
                     </article>
                 </div>
-                <section class="tarjeta espacio-superior">
-                    <h2>Ejemplo de pregunta</h2>
-                    <p>¿Cuál fue el total vendido por mes entre enero y marzo de 2025?</p>
-                    <p>La IA propone la consulta SQL correspondiente y el sistema la valida antes de ejecutarla, para que solo se consulten datos autorizados.</p>
-                    <a href="../../servidor/aplicacion/ejemplos.php?ejemplo=mensual" class="boton">Probar consulta de ejemplo</a>
-                </section>
-            </section>
-        </main>
-        <footer class="pie">
-            <p>© 2026 QueryBI AI · Todos los derechos reservados</p>
-            <small>Análisis de datos empresariales en lenguaje natural.</small>
-        </footer>
-    </body>
+            </div>
+        </section>
+
+        <section class="pub-seccion pub-seccion-suave" aria-labelledby="titulo-validacion">
+            <div class="pub-contenedor">
+                <div class="pub-seccion-titulo"><span class="pub-rotulo">Antes de consultar tus datos</span><h2 id="titulo-validacion">La generación de SQL tiene una etapa de validación.</h2><p>El resultado de la IA pasa por controles del servidor antes de llegar a la base empresarial.</p></div>
+                <div class="pub-funciones">
+                    <article class="pub-funcion"><span class="pub-icono" aria-hidden="true">01</span><h3>Esquema autorizado</h3><p>Se comprueba que la consulta utilice las tablas y los campos disponibles en la fuente seleccionada.</p></article>
+                    <article class="pub-funcion"><span class="pub-icono" aria-hidden="true">02</span><h3>Operaciones de lectura</h3><p>Se revisa que el SQL corresponda a una consulta de información y respete las operaciones permitidas.</p></article>
+                    <article class="pub-funcion"><span class="pub-icono" aria-hidden="true">03</span><h3>Revisión del resultado</h3><p>La pregunta, el SQL y los resultados se presentan juntos para que puedas comprender qué se consultó.</p></article>
+                </div>
+            </div>
+        </section>
+
+        <section class="pub-seccion" aria-labelledby="titulo-dudas">
+            <div class="pub-contenedor pub-casos">
+                <div class="pub-seccion-titulo"><span class="pub-rotulo">Antes de comenzar</span><h2 id="titulo-dudas">Unas respuestas para dar el primer paso.</h2><p>Conoce qué necesita tu equipo para trabajar con QueryBI.</p><a class="pub-enlace" href="ayuda.html">Visitar el centro de ayuda <span aria-hidden="true">→</span></a></div>
+                <div class="pub-faq">
+                    <details><summary>¿Necesito saber SQL para hacer preguntas?</summary><p>Puedes preguntar en lenguaje natural. El SQL está disponible para que las personas con conocimientos técnicos puedan revisarlo y comprender el análisis.</p></details>
+                    <details><summary>¿Tengo que copiar mi base de datos a QueryBI?</summary><p>Conectas una base existente mediante sus datos de acceso. La información permanece en su servidor de origen, que debe permitir una conexión autorizada desde el servidor de QueryBI.</p></details>
+                    <details><summary>¿Todos los usuarios pueden configurar las fuentes?</summary><p>La configuración de fuentes, esquema y usuarios corresponde al administrador de empresa. El equipo de consulta trabaja con la información que tiene autorizada.</p></details>
+                </div>
+            </div>
+        </section>
+
+        <section class="pub-cta" aria-labelledby="titulo-empezar">
+            <div class="pub-contenedor"><div class="pub-cta-interior"><div><h2 id="titulo-empezar">Haz la pregunta que tu negocio necesita responder.</h2><p>Un mismo espacio para conectar, consultar y comprender la información de tu empresa.</p></div><a class="pub-boton" href="../../servidor/acceso/login.php">Acceder a QueryBI <span aria-hidden="true">→</span></a></div></div>
+        </section>
+    </main>
+
+    <footer class="pub-pie">
+        <div class="pub-contenedor">
+            <div class="pub-pie-grid">
+                <div class="pub-pie-marca"><a class="pub-logo" href="../index.html" aria-label="QueryBI AI, inicio"><img src="../assets/imagenes/logo.svg" alt="QueryBI AI" width="190" height="44"></a><p class="pub-pie-descripcion">Inteligencia de negocios en tus propias palabras. Conecta, pregunta y comprende.</p></div>
+                <div><h2>Plataforma</h2><nav class="pub-pie-enlaces" aria-label="Plataforma"><a href="producto.html">Producto</a><a href="como-funciona.html">Cómo funciona</a><a href="../../servidor/acceso/login.php">Acceder</a></nav></div>
+                <div><h2>Conoce QueryBI</h2><nav class="pub-pie-enlaces" aria-label="Información y ayuda"><a href="nosotros.html">Nosotros</a><a href="ayuda.html">Centro de ayuda</a><a href="../index.html#ejemplo">Ver un ejemplo</a></nav></div>
+            </div>
+            <div class="pub-pie-final"><p>© 2026 QueryBI AI. Todos los derechos reservados.</p><p>Hecho para acercar los datos a las personas.</p></div>
+        </div>
+    </footer>
+</body>
 </html>

@@ -180,3 +180,104 @@
 @media (prefers-reduced-motion: reduce) {
     .web-publica *, .web-publica *::before, .web-publica *::after { transition: none !important; }
 }
+
+/* Páginas interiores: Producto y Cómo funciona. */
+.pub-interior { padding: 34px 0 64px; background: linear-gradient(135deg, white 35%, #f1f8f3); }
+.pub-migas { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 42px; color: var(--pub-texto); font-size: 12px; }
+.pub-migas a { text-decoration: none; }
+.pub-migas a:hover { color: var(--pub-verde); text-decoration: underline; }
+.pub-interior h1 { font-size: clamp(38px, 4.5vw, 60px); font-weight: 700; letter-spacing: -2.4px; line-height: 1.08; }
+.pub-interior h1 span { color: var(--pub-verde); }
+.pub-interior .pub-intro { font-size: 16px; }
+
+.pub-vista { min-width: 0; padding: 28px; border: 1px solid var(--pub-borde); border-radius: 16px; background: white; box-shadow: 0 18px 60px rgb(21 55 45 / 7%); }
+.pub-vista-cabecera { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+.pub-vista-rotulo { display: block; color: var(--pub-texto); font-size: 12px; }
+.pub-vista > h2 { margin-top: 12px; font-size: 24px; letter-spacing: -.5px; }
+.pub-vista-cabecera + h2 { margin-top: 0; }
+.pub-vista-descripcion { margin-top: 8px !important; color: var(--pub-texto); font-size: 14px; }
+.pub-estado { display: inline-flex; width: fit-content; padding: 5px 10px; border-radius: 20px; background: var(--pub-menta); color: var(--pub-verde-oscuro); font-size: 11px; font-weight: 650; }
+.pub-datos-fuente { display: grid; gap: 10px; margin: 20px 0 0; }
+.pub-datos-fuente > div { display: flex; justify-content: space-between; align-items: baseline; gap: 18px; font-size: 13px; }
+.pub-datos-fuente dt { flex-shrink: 0; color: var(--pub-texto); }
+.pub-datos-fuente dd { min-width: 0; margin: 0; text-align: right; overflow-wrap: anywhere; }
+.pub-datos-fuente code { font-size: 12px; }
+.pub-vista-subtitulo { margin-top: 24px !important; font-size: 12px; font-weight: 650; }
+.pub-tablas-fuente { display: grid; gap: 0; padding: 0; margin: 12px 0 0; list-style: none; }
+.pub-tablas-fuente li { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 13px 0; border-bottom: 1px solid var(--pub-borde); }
+.pub-tablas-fuente strong { display: block; font: 600 13px/1.5 ui-monospace, Consolas, monospace; }
+.pub-tablas-fuente small { display: block; margin-top: 4px; color: var(--pub-texto); font-size: 12px; overflow-wrap: anywhere; }
+.pub-tabla-marca { color: var(--pub-verde); font-weight: 700; }
+
+.pub-dos-columnas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.pub-rol { min-width: 0; padding: 32px; border: 1px solid var(--pub-borde); border-radius: 13px; background: white; }
+.pub-rol h3 { margin-top: 22px; font-size: 24px; letter-spacing: -.6px; }
+.pub-lista-check { display: grid; gap: 14px; margin: 24px 0 0; padding: 0; list-style: none; color: var(--pub-texto); font-size: 14px; }
+.pub-lista-check li { position: relative; padding-left: 24px; }
+.pub-lista-check li::before { position: absolute; left: 0; top: 0; color: var(--pub-verde); content: "✓"; }
+
+.pub-flujo { display: grid; gap: 0; margin: 24px 0 0; padding: 0; list-style: none; }
+.pub-flujo li { display: flex; align-items: center; gap: 16px; padding: 17px 0; }
+.pub-flujo li + li { border-top: 1px solid var(--pub-borde); }
+.pub-flujo-numero { display: grid; flex-shrink: 0; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--pub-menta); color: var(--pub-verde-oscuro); font-size: 11px; font-weight: 700; }
+.pub-flujo strong { font-size: 14px; font-weight: 650; }
+.pub-flujo p { margin-top: 2px; color: var(--pub-texto); font-size: 13px; }
+
+.pub-recorrido { display: grid; gap: 60px; }
+.pub-etapa { display: grid; grid-template-columns: 52px minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+.pub-etapa-numero { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 12px; background: var(--pub-menta); color: var(--pub-verde-oscuro); font-size: 18px; font-weight: 700; }
+.pub-etapa-rol { display: block; margin-bottom: 13px; color: var(--pub-verde); font-size: 11px; font-weight: 700; }
+.pub-etapa-texto h3 { font-size: 25px; letter-spacing: -.7px; }
+.pub-etapa-texto p { margin-top: 16px; color: var(--pub-texto); font-size: 14px; }
+.pub-etapa-vista { min-width: 0; padding: 24px; border: 1px solid var(--pub-borde); border-radius: 13px; background: var(--pub-suave); }
+.pub-etapa-vista > .pub-vista-subtitulo:first-child { margin-top: 0 !important; }
+.pub-etapa-vista .pub-sql pre { background: white; }
+.pub-etapa-vista .pub-demo-nota { margin-top: 18px !important; }
+.pub-relacion { display: grid; justify-items: start; gap: 6px; margin-top: 18px !important; }
+.pub-relacion code { font-size: 12px; overflow-wrap: anywhere; }
+.pub-relacion span { color: var(--pub-texto); font-size: 11px; }
+.pub-cita-pregunta { margin: 16px 0 0; padding: 16px; border-radius: 8px; background: white; font-size: 15px; font-weight: 600; }
+.pub-sql-recorrido { margin-top: 18px; }
+
+.pub-tabla { width: 100%; margin-top: 16px; border-collapse: collapse; font-size: 12px; }
+.pub-tabla caption { margin-bottom: 12px; color: var(--pub-texto); font-size: 11px; text-align: left; }
+.pub-tabla th, .pub-tabla td { padding: 11px 7px; border-bottom: 1px solid var(--pub-borde); text-align: left; }
+.pub-tabla th { font-weight: 600; }
+.pub-tabla thead { background: var(--pub-menta); }
+.pub-tabla tfoot { font-weight: 700; }
+.pub-tabla .pub-tabla-numero { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.pub-faq { min-width: 0; }
+.pub-faq details { border-bottom: 1px solid var(--pub-borde); }
+.pub-faq summary { padding: 22px 4px; font-size: 15px; font-weight: 650; cursor: pointer; }
+.pub-faq details:first-child summary { padding-top: 0; }
+.pub-faq details > p { padding: 0 4px 22px; color: var(--pub-texto); font-size: 14px; }
+
+@media (max-width: 980px) {
+    .pub-vista { padding: 24px; }
+    .pub-etapa { grid-template-columns: 44px minmax(0, 1fr) minmax(0, 1fr); gap: 20px; }
+    .pub-etapa-numero { width: 44px; height: 44px; font-size: 16px; }
+    .pub-etapa-vista { padding: 20px; }
+}
+
+@media (max-width: 820px) {
+    .pub-interior { padding-bottom: 48px; }
+    .pub-migas { margin-bottom: 32px; }
+    .pub-interior h1 { max-width: 650px; font-size: clamp(38px, 7vw, 56px); }
+    .pub-vista { max-width: 620px; }
+    .pub-dos-columnas { grid-template-columns: 1fr; }
+    .pub-etapa { grid-template-columns: 44px minmax(0, 1fr); gap: 20px; }
+    .pub-etapa-vista { grid-column: 2; }
+    .pub-recorrido { gap: 46px; }
+}
+
+@media (max-width: 520px) {
+    .pub-interior { padding-top: 24px; padding-bottom: 36px; }
+    .pub-interior h1 { font-size: 38px; letter-spacing: -1.7px; }
+    .pub-vista { padding: 22px; }
+    .pub-rol { padding: 24px; }
+    .pub-etapa { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+    .pub-etapa-vista { grid-column: auto; padding: 20px; }
+    .pub-datos-fuente > div { font-size: 12px; gap: 12px; }
+    .pub-datos-fuente code { font-size: 11px; }
+    .pub-tabla th, .pub-tabla td { padding-inline: 5px; }
+}
