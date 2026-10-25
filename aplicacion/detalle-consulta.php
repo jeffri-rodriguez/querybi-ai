@@ -116,7 +116,7 @@ qbi_requerir(['administrador', 'usuario']);
 
     <small>
         Registros locales de demostración ·
-        Sin procesamiento de IA ni conexión con MySQL.
+        Acceso y fuentes en MariaDB · Sin procesamiento de IA.
     </small>
 </footer>
 </body>

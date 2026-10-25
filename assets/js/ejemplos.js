@@ -56,14 +56,16 @@ formularioConsulta.addEventListener('submit', function (evento) {
     if (botonConsulta.disabled) return;
     seccionResultados.hidden = true;
     resultadoActual = null;
-    const fuente = QBI.fuentes().find(function (item) { return item.id === 'tienda'; });
+    const fuente = QBI.fuentes().find(function (item) {
+        return item.id === datosDemo.fuenteEjemplosId;
+    });
     if (!fuente || !fuente.habilitada) {
-        QBI.mensaje('estado-consulta', 'Tienda Demo está deshabilitada en el catálogo local. Actívala en Fuentes de datos.', true);
+        QBI.mensaje('estado-consulta', 'La fuente inicial Tienda Demo no está disponible o está deshabilitada para tu empresa. Un administrador puede revisarla en Fuentes de datos.', true);
         return;
     }
     const ejemplo = Validaciones.reconocerEjemplo(pregunta.value);
     if (!ejemplo) {
-        QBI.mensaje('estado-consulta', 'Esta demostración solo reconoce las preguntas del selector. Elige un ejemplo; la interpretación libre llegará con el backend y la IA.', true);
+        QBI.mensaje('estado-consulta', 'Esta demostración solo reconoce las preguntas del selector. Elige un ejemplo; la interpretación libre mediante IA está pendiente.', true);
         return;
     }
     botonConsulta.disabled = true;

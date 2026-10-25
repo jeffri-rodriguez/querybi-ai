@@ -377,7 +377,7 @@ Los indicadores corresponden a los datos locales de la cuenta que está utilizan
 
 La pantalla Consultas permite:
 
-1. Seleccionar una fuente habilitada en el catálogo local.
+1. Seleccionar una fuente habilitada del catálogo de su empresa, obtenido desde MariaDB.
 2. Escribir una pregunta de entre 5 y 1000 caracteres.
 3. Guardarla.
 4. Abrir su detalle.
@@ -400,7 +400,9 @@ Según el ejemplo seleccionado, muestra:
 - El SQL de referencia.
 - Un estado sin resultados cuando corresponde.
 
-Los datos y el SQL ya están definidos en el proyecto. Mostrar un ejemplo no implica ejecutar ese SQL contra una base de datos.
+Los datos y el SQL ya están definidos en el proyecto y coinciden con el esquema y los datos sintéticos del script inicial. Mostrar un ejemplo no implica ejecutar ese SQL contra una base de datos. Si se modifica la tienda, estos resultados preparados no se actualizan automáticamente.
+
+Los ejemplos utilizan la fuente inicial con ID `1`, incluida en el SQL. El catálogo recibido desde PHP debe contenerla y mostrarla habilitada para la empresa de la sesión. Otra fuente registrada no sustituye automáticamente a Tienda Demo en estos ejemplos.
 
 ### 8.6. Historial y detalle
 
@@ -489,7 +491,7 @@ leen desde MariaDB, limitados a la empresa de la sesión. El detalle de una
 fuente muestra un resumen de sus tablas y campos.
 
 Las casillas del editor todavía se guardan localmente. Guardar y recuperar
-sus marcas desde MariaDB, y aplicarlas como permisos, es el siguiente bloque.
+sus marcas desde MariaDB y aplicarlas al ejecutar consultas quedan pendientes para un avance posterior.
 
 La pantalla permite:
 
@@ -587,38 +589,42 @@ Antes de guardar un bloque de cambios, revisar lo siguiente:
 
 También deben revisarse los mensajes de error, los botones de cancelar, los enlaces de retorno y la consola del navegador.
 
-## 11. Trabajo pendiente
+## 11. Cierre del primer hito y desarrollo posterior
 
-### Aplicación e interfaces
+### Para cerrar el primer hito
 
-- Completar la revisión de navegación y adaptación a pantallas pequeñas.
-- Actualizar la documentación conforme se incorporen cambios.
+- Comprobar en XAMPP la navegación, los formularios y las restricciones reales por rol.
+- Demostrar el registro y la consulta de una fuente persistida en MariaDB.
+- Verificar el script inicial, sus tablas, relaciones y datos de prueba.
+- Preparar las evidencias de navegación, validación y persistencia.
+- Mantener el README y el repositorio actualizados.
+- Completar el informe, ERD, diccionario de datos y propuesta de investigación
+  con el alcance y los entregables exigidos por el curso.
 
-### Persistencia e integración
+La autenticación y las fuentes están conectadas a MariaDB. Los otros catálogos,
+las preguntas, el historial y los reportes conservan el alcance de prototipo local.
+La selección del esquema también se guarda localmente. Estas limitaciones deben
+explicarse en el informe y en la demostración.
 
-La base de datos MySQL y al menos un flujo de registro y consulta
-persistente son obligatorios para la entrega del primer hito.
-Las bases están creadas, el login está conectado y el catálogo de fuentes ya
-demuestra el flujo de registro y consulta persistente. Los otros módulos siguen
-pendientes de integración. localStorage no sustituye la persistencia de esos módulos.
+### Desarrollo posterior según la priorización de hitos
 
-- Guardar y recuperar registros mediante PHP y MySQL.
-- Incorporar validaciones del lado del servidor para las operaciones de datos.
-- Aplicar la separación de datos por empresa en el servidor.
-- Integrar la gestión de usuarios y administradores con las cuentas de acceso.
-- Implementar el cambio y la recuperación reales de contraseña.
-- Guardar la configuración de tablas y campos en MySQL.
-- Validar y aplicar en el servidor los permisos sobre los datos consultados.
+El primer hito requiere al menos un flujo de registro y consulta persistente;
+no exige completar todos los módulos. Las siguientes tareas describen evolución
+pendiente del producto y no una lista de requisitos obligatorios del primer hito:
 
-### Procesamiento de consultas
+- Integrar los catálogos de empresas, administradores y usuarios con MariaDB.
+- Guardar preguntas, historial y reportes desde PHP con separación por empresa.
+- Guardar la selección de tablas y campos y aplicarla al ejecutar consultas.
+- Integrar el procesamiento de lenguaje natural, la generación y validación SQL
+  y las consultas de lectura autorizadas en los hitos que exigen IA real.
+- Incorporar resultados y reportes a partir de consultas ejecutadas.
+- Desarrollar la gestión de contraseñas y recuperación conforme al alcance acordado.
+- Adaptar la aplicación a Laravel/MVC para el segundo hito.
 
-- Integrar el procesamiento de lenguaje natural.
-- Generar y validar SQL.
-- Ejecutar consultas de lectura autorizadas.
-- Aplicar restricciones sobre las fuentes, tablas y campos.
-- Obtener resultados y reportes a partir de datos reales.
-
-La planificación de estos trabajos debe ajustarse al alcance de cada hito del curso.
+Se conserva la arquitectura cliente-servidor para el primer avance, según
+la indicación oral del docente comunicada al grupo. El plan de investigación
+debe proponer desde este hito cómo se evaluará la IA; su integración funcional
+corresponde al segundo avance y su evaluación completa al trabajo final.
 
 ## 12. Trabajo con Git y GitHub
 

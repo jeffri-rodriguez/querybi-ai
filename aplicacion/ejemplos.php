@@ -44,7 +44,7 @@ qbi_requerir(['administrador', 'usuario']);
                             <div class="campo">
                                 <label for="fuente">Fuente de datos</label>
                                 <select id="fuente">
-                                    <option value="tienda">Tienda Demo</option>
+                                    <option value="1">Tienda Demo</option>
                                 </select>
                             </div>
                             <div class="campo">
@@ -98,7 +98,7 @@ qbi_requerir(['administrador', 'usuario']);
         </div>
         <footer class="pie">
             <p>QueryBI AI · Grupo 04 · Aplicaciones Distribuidas I</p>
-            <small>Datos ficticios · Sin IA ni base de datos · Los cambios locales no se comparten con otros usuarios.</small>
+            <small>Datos ficticios · Acceso y fuentes en MariaDB · Ejemplos sin IA · Los cambios locales no se comparten con otros usuarios.</small>
         </footer>
     </body>
 </html>

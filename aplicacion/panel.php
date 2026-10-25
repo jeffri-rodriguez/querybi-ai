@@ -146,7 +146,7 @@ qbi_requerir(['administrador', 'usuario']);
     </p>
 
     <small>
-        Datos ficticios · Sin IA ni base de datos ·
+        Datos ficticios · Acceso y fuentes en MariaDB · Ejemplos sin IA ·
         Los cambios locales no se comparten con otros usuarios.
     </small>
 </footer>
