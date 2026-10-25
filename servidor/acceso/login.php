@@ -33,7 +33,7 @@ try {
 
     http_response_code(503);
 
-    $error = 'No se pudo conectar con el servicio de acceso. Revisa MariaDB y la configuración local.';
+    $error = 'No se pudo conectar con el servicio de acceso. Inténtalo nuevamente en unos minutos.';
 }
 ?>
 
