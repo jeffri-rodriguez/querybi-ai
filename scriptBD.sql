@@ -1,3 +1,11 @@
+-- QueryBI AI - Grupo 04 - Instalacion inicial del primer hito.
+-- Compatible con MariaDB 10.4.32 de XAMPP.
+-- Crea querybi_ai_pagina y db_empresa_demo sin borrar bases existentes.
+-- Usar solamente en una instalacion nueva. No reimportar sobre las bases actuales.
+-- La estructura conserva las entidades previstas para el producto completo.
+-- Solo se precargan cuentas, empresa, fuente, metadatos y datos sinteticos de tienda.
+-- Historial, resultados y reportes quedan vacios: la web aun usa localStorage para ellos.
+
 SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
 SET SESSION foreign_key_checks = 1;
 SET SESSION check_constraint_checks = 1;
@@ -355,9 +363,11 @@ INSERT INTO usuarios (id,empresa_id,nombre,email,password,rol) VALUES
 (3,1,'Usuario Demo','usuario@tienda.test','$2y$10$3SMLsJx3gBL/b0hMTYIvBOcW5gGSuklIBunhLYuyXgbCmBgtv0Hfy','usuario');
 
 INSERT INTO fuentes_datos
-(id,empresa_id,nombre_conexion,host,nombre_bd,usuario_db,referencia_credencial,descripcion)
-VALUES (1,1,'Tienda Demo','127.0.0.1','db_empresa_demo','querybi_lector_demo','EMPRESA_DEMO',
-'Fuente sintetica de ventas. La referencia de credencial se configurara en el servidor PHP.');
+(id,empresa_id,nombre_conexion,host,nombre_bd,usuario_db,descripcion)
+VALUES (1,1,'Tienda Demo','127.0.0.1','db_empresa_demo','querybi_lector_demo',
+'Fuente sintetica preparada para consultas futuras. Esta version registra su configuracion, pero no abre una conexion de lectura a la tienda.');
+-- usuario_db es un dato del catalogo; no crea un usuario del servidor MariaDB.
+-- referencia_credencial queda NULL hasta implementar y configurar la conexion externa.
 
 -- Estos metadatos se registran durante la instalacion usando INFORMATION_SCHEMA.
 -- No se almacenan filas comerciales en las tablas de metadatos.
@@ -390,22 +400,9 @@ JOIN esquema_columnas cr ON cr.tabla_id=tr.id AND cr.nombre_columna=k.REFERENCED
 WHERE k.TABLE_SCHEMA='db_empresa_demo' AND k.REFERENCED_TABLE_SCHEMA='db_empresa_demo'
 ORDER BY k.CONSTRAINT_NAME,k.ORDINAL_POSITION;
 
--- Pregunta libre real como registro, pero todavia SIN procesamiento de IA.
-INSERT INTO historial_consultas
-(id,empresa_id,usuario_id,fuente_id,preguntaUsuario,tipo,estado,estado_validacion)
-VALUES (1,1,3,1,'Que clientes compraron mas durante marzo de 2025?','pregunta','Pendiente','Pendiente');
-
--- Ejemplo preparado. SQL ejecutado solo para comprobacion de datos sinteticos.
--- No se presenta como SQL generado por IA ni como una validacion automatica.
-SET @sql_ejemplo = 'SELECT DATE_FORMAT(fecha_venta, ''%Y-%m'') AS mes, SUM(total_importe) AS ventas FROM db_empresa_demo.ventas WHERE fecha_venta >= ''2025-01-01'' AND fecha_venta < ''2025-04-01'' GROUP BY DATE_FORMAT(fecha_venta, ''%Y-%m'') ORDER BY mes';
-INSERT INTO historial_consultas
-(id,empresa_id,usuario_id,fuente_id,preguntaUsuario,tipo,sqlGenerado,estado,estado_validacion,fecha_finalizacion)
-VALUES (2,1,3,1,'Cual fue el total vendido por mes entre enero y marzo de 2025?',
-        'ejemplo',@sql_ejemplo,'Completada','No aplica',CURRENT_TIMESTAMP);
-INSERT INTO resultados_consulta (consulta_id,columnas,filas,filas_guardadas) VALUES
-(2,'["Mes", "Ventas (S/)"]','[["2025-01", 347], ["2025-02", 844], ["2025-03", 1214]]',3);
-INSERT INTO reportes (consulta_id,titulo,descripcion) VALUES
-(2,'Ventas mensuales de ejemplo','Datos sinteticos. Resultado preparado, sin IA.');
+-- Sin actividad operativa precargada:
+-- historial_consultas, resultados_consulta y reportes permanecen vacios.
+-- Los registros del navegador no se sincronizan con estas tablas en el primer hito.
 COMMIT;
 
 -- 4. COMPROBACIONES DE INSTALACION (no son evidencia de integracion web).
@@ -443,7 +440,7 @@ LEFT JOIN db_empresa_demo.detalle_ventas d ON d.venta_id=v.id
 GROUP BY v.id,v.total_importe
 HAVING v.total_importe <> COALESCE(SUM(d.subtotal),0);
 
--- Consulta preparada adaptada a los nombres de la tienda.
+-- Comprobacion manual del dataset sintetico; no es una consulta ejecutada por la web.
 SELECT DATE_FORMAT(fecha_venta,'%Y-%m') AS mes,SUM(total_importe) AS ventas
 FROM db_empresa_demo.ventas
 WHERE fecha_venta >= '2025-01-01' AND fecha_venta < '2025-04-01'
@@ -456,8 +453,10 @@ JOIN db_empresa_demo.ventas v ON v.id=d.venta_id
 WHERE v.fecha_venta >= '2025-01-01' AND v.fecha_venta < '2025-04-01'
 GROUP BY p.id,p.nombre_producto ORDER BY unidades DESC,p.nombre_producto LIMIT 5;
 
-SELECT h.id,u.email,f.nombre_conexion,h.tipo,h.estado,h.sqlGenerado
-FROM querybi_ai_pagina.historial_consultas h
-JOIN querybi_ai_pagina.usuarios u ON u.id=h.usuario_id
-JOIN querybi_ai_pagina.fuentes_datos f ON f.id=h.fuente_id
-ORDER BY h.id;
+-- Estas tres cantidades deben ser 0 al terminar una instalacion nueva.
+SELECT 'historial_consultas' AS tabla,COUNT(*) AS registros
+FROM querybi_ai_pagina.historial_consultas
+UNION ALL
+SELECT 'resultados_consulta',COUNT(*) FROM querybi_ai_pagina.resultados_consulta
+UNION ALL
+SELECT 'reportes',COUNT(*) FROM querybi_ai_pagina.reportes;
