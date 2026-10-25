@@ -122,6 +122,6 @@ $v = $vistaFuentes;
         <?php endif; ?>
     </main>
     </div>
-    <footer class="pie"><p>QueryBI AI · Grupo 04 · Aplicaciones Distribuidas I</p><small>Catálogo persistente de fuentes.</small></footer>
+    <footer class="pie"><?php require dirname(__DIR__) . '/compartido/pie-marca.php'; ?><small>Catálogo persistente de fuentes.</small></footer>
 </body>
 </html>

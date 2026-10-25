@@ -68,7 +68,7 @@ qbi_requerir(['superadministrador']);
     </div>
 
     <footer class="pie">
-        <p>QueryBI AI · Grupo 04 · Aplicaciones Distribuidas I</p>
+        <?php require dirname(__DIR__) . '/compartido/pie-marca.php'; ?>
     </footer>
 </body>
 </html>

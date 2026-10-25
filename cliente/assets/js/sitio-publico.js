@@ -34,6 +34,67 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Búsqueda local del centro de ayuda, independiente del ejemplo de Inicio.
+    const formularioAyuda = document.getElementById('ayuda-formulario');
+
+    if (formularioAyuda) {
+        const campoAyuda = document.getElementById('ayuda-busqueda');
+        const resultadoAyuda = document.getElementById('ayuda-resultado');
+        const limpiarAyuda = document.getElementById('ayuda-limpiar');
+        const sinResultadosAyuda = document.getElementById('ayuda-sin-resultados');
+        const temasAyuda = document.getElementById('ayuda-temas');
+        const categoriasAyuda = document.querySelectorAll('[data-ayuda-categoria]');
+        const enlacesAyuda = document.querySelectorAll('[data-ayuda-enlace]');
+        const normalizar = texto => texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+        const preguntasAyuda = Array.from(document.querySelectorAll('[data-ayuda-pregunta]'), detalle => ({
+            detalle,
+            texto: normalizar(detalle.textContent)
+        }));
+
+        function filtrarAyuda() {
+            const palabras = normalizar(campoAyuda.value).trim().split(/\s+/).filter(Boolean);
+            let coincidencias = 0;
+
+            preguntasAyuda.forEach(function ({ detalle, texto }) {
+                const coincide = palabras.every(palabra => texto.includes(palabra));
+                detalle.hidden = !coincide;
+                detalle.open = palabras.length > 0 && coincide;
+                if (coincide) coincidencias++;
+            });
+
+            categoriasAyuda.forEach(function (categoria) {
+                categoria.hidden = !categoria.querySelector('[data-ayuda-pregunta]:not([hidden])');
+            });
+
+            enlacesAyuda.forEach(function (enlace) {
+                const categoria = document.getElementById(enlace.dataset.ayudaEnlace);
+                enlace.hidden = categoria.hidden;
+            });
+
+            temasAyuda.hidden = coincidencias === 0;
+            sinResultadosAyuda.hidden = coincidencias > 0;
+            limpiarAyuda.hidden = campoAyuda.value.length === 0;
+            resultadoAyuda.textContent = palabras.length === 0
+                ? 'Explora ' + preguntasAyuda.length + ' respuestas organizadas por tema.'
+                : coincidencias + (coincidencias === 1 ? ' respuesta encontrada.' : ' respuestas encontradas.');
+        }
+
+        formularioAyuda.addEventListener('submit', function (evento) {
+            evento.preventDefault();
+            filtrarAyuda();
+        });
+
+        campoAyuda.addEventListener('input', filtrarAyuda);
+        limpiarAyuda.addEventListener('click', function () {
+            campoAyuda.value = '';
+            filtrarAyuda();
+            campoAyuda.focus();
+        });
+
+        formularioAyuda.hidden = false;
+        filtrarAyuda();
+    }
+
     // Ejemplos preparados para la presentación comercial del producto.
     const ejemplos = {
         ventas: {

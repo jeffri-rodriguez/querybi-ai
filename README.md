@@ -2,155 +2,132 @@
 
 Proyecto académico del Grupo 04 para el curso de Aplicaciones Distribuidas I de la Universidad Nacional del Santa.
 
-QueryBI AI es una aplicación web orientada a facilitar la consulta y el análisis de información empresarial mediante preguntas en lenguaje natural.
+QueryBI AI es una aplicación web orientada a consultar y analizar información empresarial mediante preguntas en lenguaje natural. Su propuesta comprende fuentes de datos autorizadas, configuración del esquema, generación de SQL mediante IA, validación en el servidor, visualizaciones, historial y reportes.
 
-Actualmente se encuentra en desarrollo para el primer hito. Esta versión implementa la navegación, el acceso mediante sesiones PHP, las restricciones por rol y los principales flujos de interfaz con datos de demostración.
+Este repositorio corresponde al primer hito. La aplicación utiliza una arquitectura cliente-servidor con HTML, CSS, JavaScript, PHP y MariaDB. La autenticación, las restricciones de acceso por rol y la gestión persistente de fuentes están implementadas. Otras funciones conservan almacenamiento local o resultados preparados.
 
-La autenticación y la gestión de fuentes ya utilizan MariaDB mediante PDO. Las preguntas, reportes y los otros catálogos de la interfaz siguen siendo locales hasta sus bloques de integración. El procesamiento mediante inteligencia artificial está pendiente.
+La web pública presenta la experiencia del producto completo, con una identidad de marca y textos orientados a empresas. Este README documenta el estado técnico real del avance: la generación de SQL mediante IA y la ejecución sobre bases empresariales todavía están pendientes.
 
 ## 1. Estado actual del proyecto
 
-| Componente | Estado actual |
+| Componente | Estado técnico del primer hito |
 |---|---|
-| Páginas públicas | Implementadas |
-| Inicio y cierre de sesión | Implementados en PHP con usuarios consultados en MariaDB |
-| Restricción de acceso por rol | Aplicada en PHP; cuenta, empresa y rol se revisan en cada solicitud protegida |
-| Panel empresarial | Implementado con indicadores de registros locales |
-| Registro de preguntas libres | Implementado; las preguntas quedan pendientes |
-| Ejemplos de consultas | Resultados, gráficos y SQL preparados previamente |
-| Historial y detalle | Implementados con almacenamiento local |
-| Reportes | Vista previa y exportación CSV de datos de ejemplo |
-| Fuentes de datos | Registro, listado, filtros, detalle y edición persistentes en MariaDB, por empresa |
-| Empresas y administradores | Catálogos locales para el superadministrador |
-| Usuarios de empresa | Catálogo local para el administrador empresarial |
-| Esquema y permisos | Selección local de tablas y campos por fuente; aplicación de permisos en el servidor pendiente |
-| Perfil | Datos de sesión y nombre de presentación local |
-| Recuperación y cambio de contraseña | Pendientes; se informa su disponibilidad |
-| Base de datos (MariaDB en XAMPP) | Autenticación y fuentes conectadas; flujo de registro y consulta persistente implementado |
-| Generación de SQL mediante IA | Pendiente |
-| Ejecución de consultas contra bases empresariales | Pendiente |
+| Sitio público principal | Inicio, Producto, Cómo funciona, Nosotros y Ayuda renovados |
+| Navegación pública | Enlaces, menú móvil y accesos al login |
+| Ejemplo público de Inicio | Tres ejemplos ilustrativos: ventas, productos y ciudades; resultados y SQL preparados |
+| Centro de ayuda | 20 preguntas por temas, búsqueda local, coincidencias sin distinguir tildes o mayúsculas y mensaje sin resultados |
+| Inicio y cierre de sesión | Sesiones PHP con cuentas verificadas en MariaDB |
+| Restricción de acceso por rol | Validación en PHP; cuenta, rol y estado de la empresa revisados en cada solicitud protegida |
+| Panel empresarial | Indicadores y actividad correspondientes a los registros locales de la cuenta |
+| Apariencia del acceso y los paneles | Colores y tipografía alineados con la web pública; avisos técnicos conservados |
+| Preguntas libres | Registro local; quedan con estado Pendiente |
+| Ejemplos internos | Resultados, gráficos y SQL preparados; sujetos a la disponibilidad de la fuente inicial |
+| Historial y detalle | Almacenamiento local en el navegador |
+| Reportes | Guardado local, vista previa y exportación CSV de ejemplos |
+| Fuentes de datos | Registro, listado, filtros, detalle, edición y estado persistentes en MariaDB, por empresa |
+| Esquema | Metadatos leídos desde MariaDB; selección de tablas y campos guardada localmente |
+| Permisos sobre consultas SQL | Aplicación durante la ejecución pendiente; el control de acceso a las páginas por rol sí funciona |
+| Empresas y administradores | Catálogos locales del superadministrador; no modifican las cuentas reales de ingreso |
+| Usuarios empresariales | Catálogo local del administrador; no crea cuentas de acceso en MariaDB |
+| Mi perfil | Datos de sesión y preferencias locales de presentación |
+| Recuperación y cambio de contraseña | Pendientes; la página de recuperación informa sobre su disponibilidad |
+| Registro autónomo de empresas | Pendiente |
+| Conexión efectiva a fuentes empresariales | Pendiente; guardar una fuente registra su configuración |
+| Generación de SQL con IA y validación en el servidor | Pendientes de integración funcional |
+| Ejecución SQL contra la tienda u otras bases empresariales | Pendiente |
 
-Este README describe el estado del código. La entrega completa del primer hito debe verificarse también contra los documentos del curso y sus entregables.
+El rediseño público no cambia las funciones de los paneles ni añade por sí mismo integración con IA. La entrega completa del hito debe incluir además el informe, el diseño de datos y las evidencias exigidas por el curso.
 
-## 2. Arquitectura
+## 2. Arquitectura cliente-servidor
 
-La aplicación utiliza una arquitectura cliente-servidor.
+Se mantiene la arquitectura cliente-servidor indicada por el docente para el primer avance. La organización de carpetas distingue los recursos estáticos del código procesado en el servidor.
 
 ### Cliente
 
-El navegador se encarga de:
+El navegador:
 
-- Mostrar las páginas HTML y los estilos CSS.
-- Ejecutar JavaScript.
-- Gestionar formularios, filtros, tablas y gráficos.
-- Mantener los registros de demostración en localStorage.
-- Mostrar mensajes de validación, estados vacíos y resultados preparados.
+- Muestra el HTML y los estilos CSS.
+- Ejecuta JavaScript para menús, formularios, filtros, gráficos y búsqueda de ayuda.
+- Mantiene en `localStorage` los registros de los módulos que todavía son locales.
+- Presenta los resultados preparados de demostración.
 
 ### Servidor
 
-PHP se encarga de:
+PHP:
 
-- Consultar las cuentas de MariaDB y verificar sus contraseñas con password_verify.
-- Comprobar que el usuario y su empresa estén activos.
-- Validar, registrar y editar fuentes mediante consultas preparadas y protección CSRF.
-- Limitar el acceso a las fuentes a la empresa de la sesión.
-- Crear y mantener la sesión.
-- Comprobar el rol antes de entregar una página protegida.
-- Generar la navegación correspondiente al usuario.
-- Procesar el cierre de sesión.
+- Consulta las cuentas de MariaDB y verifica sus contraseñas con `password_verify`.
+- Crea, mantiene y cierra la sesión.
+- Comprueba la identidad, el rol y el estado de la empresa antes de entregar páginas protegidas.
+- Valida, registra y edita fuentes mediante PDO, consultas preparadas y protección CSRF.
+- Restringe las fuentes y sus metadatos a la empresa de la sesión.
+- Genera la navegación y el contexto de las pantallas internas.
 
-El acceso a una página protegida no depende únicamente de que su enlace aparezca en el menú. La comprobación también se realiza en PHP cuando se solicita la dirección directamente.
+Las páginas PHP están dentro de `servidor/`: se procesan allí y entregan HTML al navegador. Su ubicación no impide que formen parte de la interfaz visible.
 
-### Almacenamiento actual
+Las comprobaciones por rol se realizan también al solicitar directamente una URL; ocultar un enlace del menú no es el mecanismo de autorización.
 
-Se utilizan estos mecanismos:
+### Almacenamiento
 
-| Mecanismo | Finalidad |
+| Mecanismo | Uso actual |
 |---|---|
-| Sesión PHP | Mantener la identidad autenticada y su rol |
-| MariaDB | Cuentas, empresas y fuentes utilizadas por la aplicación; metadatos iniciales del SQL |
-| Archivos de datos de prueba | Proporcionar ejemplos y catálogos locales iniciales |
-| localStorage | Conservar registros de demostración en el navegador |
+| Sesión PHP | Identidad y contexto de la cuenta autenticada |
+| MariaDB de la plataforma | Cuentas, estado de empresas, fuentes y metadatos registrados |
+| Archivos JavaScript de datos | Conjuntos de ejemplo y catálogos locales iniciales |
+| `localStorage` | Preguntas, historial, reportes, catálogos locales, selección del esquema y preferencias |
 
-localStorage proporciona almacenamiento local entre visitas, pero no sustituye una base de datos compartida en el servidor.
+`localStorage` conserva información entre visitas en un mismo navegador, pero no proporciona almacenamiento compartido entre dispositivos ni constituye una autoridad para autenticar o autorizar usuarios.
 
-La conexión PDO consulta `querybi_ai_pagina` para autenticar cuentas. El catálogo de fuentes ya utiliza MariaDB. Los demás módulos se integrarán progresivamente.
+## 3. Tecnologías
 
-## 3. Tecnologías utilizadas
+- HTML5 para las páginas y la estructura de las interfaces.
+- CSS3 en archivos externos para la presentación.
+- JavaScript para las interacciones y el almacenamiento local.
+- PHP para las sesiones, las páginas protegidas y las operaciones del servidor.
+- PDO y `pdo_mysql` para acceder a MariaDB.
+- MariaDB 10.4.32, utilizado en el entorno XAMPP del proyecto.
+- Git y GitHub para el control de versiones y la integración del código.
 
-- HTML5 para la estructura de las interfaces.
-- CSS3 en archivos externos para el diseño.
-- JavaScript para las interacciones del navegador.
-- PHP para las sesiones y el control de acceso.
-- localStorage para los datos locales de demostración.
-- Git para el control de versiones.
-- GitHub para el repositorio y la colaboración.
-
-El proyecto se desarrolla sin un framework de aplicación y no necesita instalar dependencias con npm o Composer para ejecutarse en su estado actual.
+La versión del primer hito se ejecuta sin un framework de aplicación y no requiere instalar dependencias mediante npm o Composer. Laravel/MVC se contempla para el segundo avance.
 
 ## 4. Roles y acceso
 
 ### Superadministrador
 
-Administra el catálogo de la plataforma:
+Accede al panel general, Empresas, Administradores, Mi perfil y Ayuda. Su función es la gestión de la plataforma; no recibe acceso automático al espacio de análisis ni a la administración interna de las empresas.
 
-- Panel general.
-- Empresas.
-- Administradores de empresa.
-- Su perfil.
-
-No tiene acceso automático al espacio de consultas ni a la administración interna de las empresas.
+Empresas y Administradores son catálogos locales de demostración. Su creación o edición no modifica las tablas de cuentas ni el estado de las empresas en MariaDB.
 
 ### Administrador de empresa
 
-Accede al espacio de trabajo empresarial y a sus pantallas administrativas:
+Accede al panel empresarial, Consultas, Ejemplos, Historial, Reportes, Fuentes de datos, Esquema y permisos, Usuarios, Mi perfil y Ayuda.
 
-- Panel empresarial.
-- Consultas.
-- Ejemplos.
-- Historial.
-- Reportes.
-- Fuentes de datos.
-- Esquema y permisos.
-- Usuarios de empresa.
-- Su perfil.
+Las fuentes se gestionan con persistencia y separación por empresa. Los registros de Usuarios son locales, tienen el rol Usuario y se asocian a la empresa de la sesión; todavía no generan cuentas reales de ingreso.
 
-Los registros creados desde Usuarios tienen el rol Usuario y se asocian a la empresa de la sesión.
+### Usuario de empresa
 
-### Usuario
-
-Accede a las funciones de consulta:
-
-- Panel empresarial.
-- Consultas.
-- Ejemplos.
-- Historial.
-- Reportes.
-- Su perfil.
-
-No puede acceder a las pantallas de administración de fuentes, esquema, usuarios o plataforma.
+Accede al panel empresarial, Consultas, Ejemplos, Historial, Reportes, Mi perfil y Ayuda. No puede abrir las páginas administrativas de fuentes, esquema, usuarios o plataforma.
 
 ### Matriz de acceso
 
 | Área | Superadministrador | Administrador | Usuario |
 |---|---|---|---|
-| Páginas públicas | Sí | Sí | Sí |
+| Páginas públicas y Ayuda | Sí | Sí | Sí |
 | Panel de plataforma | Sí | No | No |
 | Empresas | Sí | No | No |
 | Administradores de empresa | Sí | No | No |
 | Panel empresarial | No | Sí | Sí |
-| Consultas y ejemplos | No | Sí | Sí |
-| Historial y reportes | No | Sí | Sí |
+| Consultas y Ejemplos | No | Sí | Sí |
+| Historial y Reportes | No | Sí | Sí |
 | Fuentes de datos | No | Sí | No |
 | Esquema y permisos | No | Sí | No |
 | Usuarios de empresa | No | Sí | No |
 | Mi perfil | Sí | Sí | Sí |
 
-Las páginas públicas también se pueden visitar sin iniciar sesión.
+Las páginas públicas también están disponibles sin sesión. El rol de la cuenta autenticada se obtiene desde MariaDB, no desde un selector del formulario de ingreso ni desde `localStorage`.
 
-## 5. Estructura del proyecto
+## 5. Estructura de carpetas
 
-Las rutas siguientes son relativas a la raíz del proyecto:
+Las rutas siguientes se interpretan desde la raíz del proyecto:
 
 ```text
 querybi-ai/
@@ -163,16 +140,45 @@ querybi-ai/
         index.html
 
         paginas/
-            nosotros.html
+            producto.html
             como-funciona.html
+            nosotros.html
             ayuda.html
             recuperar-contrasena.html
 
         assets/
             css/
+                sitio-publico.css
+                estilos.css
+                publico.css
+                acceso.css
+                aplicacion.css
+                consultas.css
+                administracion.css
+
             js/
+                sitio-publico.js
+                principal.js
+                panel.js
+                consultas.js
+                detalle-consulta.js
+                ejemplos.js
+                graficos.js
+                historial.js
+                reportes.js
+                perfil.js
+                esquema.js
+                gestion.js
+                plataforma.js
+                validaciones.js
+
             datos/
+                datos-demo.js
+                esquema-demo.js
+
             imagenes/
+                logo.svg
+                favicon.svg
 
     servidor/
         configuracion.local.php
@@ -184,6 +190,7 @@ querybi-ai/
             navegacion.php
             vista-fuentes.php
             vista-gestion.php
+            pie-marca.php
 
         acceso/
             login.php
@@ -211,137 +218,177 @@ querybi-ai/
             administradores.php
 ```
 
-### Responsabilidad de las carpetas
+### Responsabilidades
 
-| Ruta | Responsabilidad |
+| Ubicación | Responsabilidad |
 |---|---|
-| `index.php` | Entrada del proyecto; redirige a la portada del cliente |
+| `index.php` | Punto de entrada que redirige a `cliente/index.html` |
 | `cliente/index.html` | Portada pública |
-| `cliente/paginas` | Páginas HTML públicas e información de recuperación de acceso |
-| `cliente/assets/css` | Estilos de las interfaces |
-| `cliente/assets/js` | Comportamiento ejecutado en el navegador |
-| `cliente/assets/datos` | Ejemplos preparados y datos iniciales de demostración |
-| `cliente/assets/imagenes` | Logo, favicon y recursos gráficos |
-| `servidor/acceso` | Inicio y cierre de sesión |
-| `servidor/aplicacion` | Páginas PHP del espacio de consultas y análisis |
-| `servidor/administracion` | Páginas PHP del administrador empresarial |
-| `servidor/plataforma` | Páginas PHP del superadministrador |
-| `servidor/compartido` | Funciones y vistas PHP compartidas |
+| `cliente/paginas/` | Producto, funcionamiento, empresa, ayuda y recuperación informativa |
+| `cliente/assets/` | CSS, JavaScript, datos ilustrativos e imágenes |
+| `servidor/acceso/` | Procesamiento del ingreso y la salida |
+| `servidor/aplicacion/` | Páginas PHP del espacio empresarial y del perfil |
+| `servidor/administracion/` | Administración de fuentes, esquema y usuarios de empresa |
+| `servidor/plataforma/` | Páginas del superadministrador |
+| `servidor/compartido/` | Sesiones, conexión PDO, operaciones de fuentes y vistas compartidas |
+| `servidor/configuracion.local.php` | Configuración única de la conexión de la plataforma |
 
-Las páginas PHP se ejecutan en el servidor y generan HTML para el navegador.
-Por eso se encuentran dentro de `servidor/`, aunque presenten formularios,
-listados y otras partes de la interfaz.
+### Archivos principales
 
-La arquitectura es cliente-servidor: el navegador presenta la interfaz y
-ejecuta JavaScript; PHP procesa sesiones, permisos, validaciones y operaciones
-con MariaDB.
-
-### Archivos compartidos principales
-
-- `servidor/compartido/sesion.php`: sesiones, comprobación de roles,
-  generación de URL y funciones auxiliares.
-- `servidor/compartido/base-datos.php`: conexión PDO a la base de la plataforma.
-- `servidor/configuracion.local.php`: único archivo de configuración.
-  Se incluye en Git y FTP por acuerdo del grupo y se ajusta al entorno.
-- `servidor/compartido/fuentes.php`: validaciones, operaciones persistentes
-  de fuentes y lectura de metadatos del esquema.
-- `servidor/compartido/vista-fuentes.php`: listado, formulario y detalle de fuentes.
+- `servidor/compartido/sesion.php`: sesión, comprobación de roles, contexto y utilidades de URL.
+- `servidor/compartido/base-datos.php`: conexión PDO; carga la configuración desde la carpeta superior.
+- `servidor/compartido/fuentes.php`: validaciones y operaciones persistentes de fuentes; lectura del esquema registrado.
 - `servidor/compartido/navegacion.php`: encabezado y menú según el rol.
-- `servidor/compartido/vista-gestion.php`: presentación de los catálogos
-  locales de empresas, administradores y usuarios.
-- `cliente/assets/js/principal.js`: utilidades de tablas, mensajes
-  y almacenamiento local.
-- `cliente/assets/js/gestion.js`: comportamiento de los catálogos locales.
-- `cliente/assets/datos/datos-demo.js`: resultados preparados y datos ficticios.
-- `cliente/assets/datos/esquema-demo.js`: recibe los metadatos enviados por PHP.
+- `servidor/compartido/vista-fuentes.php`: listado, formulario y detalle de fuentes.
+- `servidor/compartido/vista-gestion.php`: presentación de catálogos administrativos locales.
+- `servidor/compartido/pie-marca.php`: fragmento de marca compartido por el pie del login y de los módulos internos; se inserta dentro del footer existente y conserva sus notas técnicas.
+- `cliente/assets/css/sitio-publico.css`: diseño exclusivo de las cinco páginas públicas principales.
+- `cliente/assets/js/sitio-publico.js`: menú público, ejemplos de Inicio y búsqueda en Ayuda.
+- `cliente/assets/js/principal.js`: utilidades y almacenamiento de los módulos internos.
+- `cliente/assets/datos/esquema-demo.js`: recibe los metadatos enviados por PHP para el editor del esquema.
 
-## 6. Ejecución local
+`publico.css` se conserva porque la página de recuperación todavía utiliza ese diseño. Los estilos de acceso y de los paneles mantienen sus archivos propios.
 
-### Requisitos
+## 6. Instalación y ejecución
 
-- PHP con sesiones, PDO y pdo_mysql habilitados.
-- MariaDB 10.4.32, utilizado en XAMPP para este proyecto.
-- Un navegador con JavaScript, cookies y localStorage habilitados.
-- Git, si se trabajará con el repositorio.
+### 6.1. Requisitos
 
-### Configuración de MariaDB
+- Un servidor que procese PHP y permita sesiones.
+- Extensiones `PDO` y `pdo_mysql` habilitadas.
+- MariaDB 10.4.32 para utilizar el SQL del entorno XAMPP preparado para el curso.
+- Navegador con JavaScript, cookies y `localStorage` disponibles para los módulos que los utilizan.
+- Git, si se obtiene o actualiza el código desde el repositorio.
 
-1. Iniciar el módulo MySQL de XAMPP, que ejecuta MariaDB.
-2. Si las bases todavía no existen, importar `QueryBI_AI_hito1_XAMPP.sql` desde phpMyAdmin. Si ya se importó, no ejecutarlo otra vez.
-3. Utilizar el único archivo `servidor/configuracion.local.php` incluido en el proyecto.
-4. Configurar host, puerto, nombre de base, usuario y contraseña en el archivo local.
-5. El valor de `nombre` corresponde a la base de la plataforma: localmente `querybi_ai_pagina`. La tienda `db_empresa_demo` es una fuente independiente.
-6. El grupo incluye esta configuración en Git y FTP. En el servidor del profesor se deben colocar los datos de conexión que corresponden a esa instalación.
+### 6.2. Preparar las bases de datos
 
-MariaDB debe estar iniciado tanto al ingresar como al abrir páginas protegidas.
+1. Iniciar el módulo MySQL de XAMPP, que en este entorno ejecuta MariaDB.
+2. Abrir phpMyAdmin.
+3. Si las dos bases todavía no existen, importar `QueryBI_AI_hito1_XAMPP.sql` desde el nivel del servidor.
+4. Comprobar que aparecen `querybi_ai_pagina` y `db_empresa_demo`.
+5. Revisar las tablas, las cuentas iniciales, la fuente y los metadatos creados por el script.
 
-### Uso actual de las dos bases de datos
+El script es de instalación inicial. Crea las bases y tablas; no es una migración ni está diseñado para ejecutarse repetidamente. No contiene instrucciones de borrado de las bases existentes.
 
-| Base | Uso actual |
-|---|---|
-| `querybi_ai_pagina` | Autenticación, consulta del estado de la empresa, gestión persistente de fuentes y lectura de metadatos |
-| `db_empresa_demo` | Dataset sintético preparado para consultas empresariales posteriores |
+**Si las bases ya están creadas, continuar con la configuración y omitir la importación.** Actualizar el archivo SQL del repositorio no modifica automáticamente una base ya instalada ni elimina los registros que tenía.
 
-La conexión PDO de la aplicación utiliza `querybi_ai_pagina`.
+### 6.3. Qué contiene y cómo se utiliza cada base
 
-Durante la instalación, el SQL consulta la estructura de `db_empresa_demo`
-y registra sus metadatos en la base de la plataforma. La aplicación todavía
-no abre una conexión para consultar las ventas de la tienda.
+| Base | Contenido | Uso actual |
+|---|---|---|
+| `querybi_ai_pagina` | Empresas, cuentas, fuentes, esquema, historial, resultados y reportes | PHP utiliza cuentas, estado de empresas, fuentes y metadatos. La persistencia de historial, resultados y reportes aún no está integrada. |
+| `db_empresa_demo` | Datos sintéticos de una tienda: sucursales, empleados, proveedores, clientes, productos, inventario, ventas y detalle | Se crea como conjunto de prueba; su esquema se registra durante la instalación y sus datos sirven como referencia de los ejemplos. La aplicación todavía no ejecuta consultas sobre sus ventas. |
 
-Los resultados de Ejemplos están preparados en JavaScript y coinciden con
-los datos del script inicial. No se actualizan automáticamente al modificar
-la tienda.
+La plataforma contiene nueve tablas:
 
-En una instalación nueva con el SQL revisado, las tablas
-`historial_consultas`, `resultados_consulta` y `reportes` quedan vacías.
-Estos módulos todavía almacenan sus registros en el navegador.
+- `empresas`
+- `usuarios`
+- `fuentes_datos`
+- `esquema_tablas`
+- `esquema_columnas`
+- `esquema_relaciones`
+- `historial_consultas`
+- `resultados_consulta`
+- `reportes`
 
-El script es de instalación inicial. Actualizar su archivo en el repositorio
-no modifica las bases ya creadas y no requiere reimportarlo.
+La tienda contiene ocho tablas:
 
-### Opción A: servidor integrado de PHP
+- `sucursales`
+- `empleados`
+- `proveedores`
+- `clientes`
+- `productos`
+- `inventario`
+- `ventas`
+- `detalle_ventas`
 
-Abre una terminal en la raíz del proyecto, donde están `index.php`,
-`cliente/`, `servidor/` y `README.md`, y ejecuta:
+El SQL actualizado precarga una empresa, tres cuentas web, una fuente, metadatos del esquema y datos ficticios de la tienda. En una instalación nueva, `historial_consultas`, `resultados_consulta` y `reportes` quedan vacías: las acciones de esos módulos todavía se conservan en el navegador.
 
-```bash
-php -S localhost:8000
-```
+Durante la importación, el script consulta `INFORMATION_SCHEMA` para registrar las tablas, columnas y relaciones de la tienda en la base de la plataforma. En ejecución, la pantalla Esquema lee ese catálogo registrado; no descubre automáticamente una base externa.
 
-Luego abre:
+El valor inicial `querybi_lector_demo` de la fuente es un dato de catálogo. El script no crea con ese nombre una cuenta del servidor MariaDB ni configura una conexión empresarial efectiva.
+
+### 6.4. Configuración única
+
+Utilizar el archivo existente:
 
 ```text
-http://localhost:8000/
+servidor/configuracion.local.php
 ```
 
-El archivo `index.php` de la raíz redirige a `cliente/index.html`.
+El proyecto mantiene este archivo incluido en Git y en la publicación por FTP, según el acuerdo del grupo. Debe contener los datos correspondientes al entorno donde se ejecuta PHP.
 
-El servidor debe iniciarse desde la raíz del proyecto para que estén
-disponibles tanto los recursos del cliente como las páginas PHP del servidor.
+La estructura de configuración es la siguiente; sustituir los valores de usuario y contraseña por los de la instalación:
 
-Para detener el servidor, presiona `Ctrl + C` en la terminal.
+```php
+<?php
+if (!defined('QBI_SERVIDOR')) {
+    http_response_code(403);
+    exit;
+}
 
-El servidor integrado se utiliza para desarrollo local.
+return [
+    'host' => '127.0.0.1',
+    'puerto' => 3306,
+    'nombre' => 'querybi_ai_pagina',
+    'usuario' => 'USUARIO_DE_MARIADB',
+    'clave' => 'CONTRASENA_DE_MARIADB'
+];
+```
 
-### Opción B: Apache con PHP
+- `host`: servidor de la base de la plataforma, visto desde PHP.
+- `puerto`: entero, sin comillas, correspondiente al servicio MariaDB.
+- `nombre`: base interna de QueryBI; localmente `querybi_ai_pagina`.
+- `usuario` y `clave`: credenciales del servidor de bases de datos, distintas de las cuentas web de demostración.
 
-1. Coloca la carpeta del proyecto en el directorio de publicación de Apache.
-2. Comprueba que Apache tenga PHP habilitado.
-3. Inicia el servidor.
-4. Accede a la dirección correspondiente.
+`nombre` no debe cambiarse a `db_empresa_demo` para realizar las pruebas actuales. La conexión de la plataforma y la futura conexión a una fuente empresarial tienen funciones diferentes.
 
-Por ejemplo, si la carpeta se llama `querybi-ai`:
+Los valores incluidos en Git deben corresponder al entorno académico. No incorporar credenciales de servicios reales ajenos al proyecto.
+
+### 6.5. Ejecutar con Apache de XAMPP
+
+1. Colocar la carpeta completa del proyecto en el directorio de publicación de Apache. En XAMPP para Windows, por ejemplo: `C:/xampp/htdocs/querybi-ai/`.
+2. Iniciar Apache y MySQL/MariaDB.
+3. Ajustar `servidor/configuracion.local.php`.
+4. Abrir la raíz del proyecto:
 
 ```text
 http://localhost/querybi-ai/
 ```
 
-### Consideraciones
+El `index.php` de la raíz redirige a `cliente/index.html`.
 
-- No ejecutes la aplicación abriendo los archivos mediante `file://`.
-- Live Server por sí solo no procesa las páginas PHP.
-- Mantén el mismo host y puerto durante las pruebas: localStorage depende del origen utilizado.
-- Si cambias archivos JavaScript o CSS y no ves los cambios, realiza una recarga forzada del navegador.
+Para acceder directamente al ingreso:
+
+```text
+http://localhost/querybi-ai/servidor/acceso/login.php
+```
+
+Los ejemplos de URL suponen que la carpeta se llama `querybi-ai`; adaptar ese segmento al nombre real.
+
+### 6.6. Ejecutar con el servidor integrado de PHP
+
+Con MariaDB iniciado y la configuración preparada, abrir una terminal en la raíz que contiene `index.php`, `cliente/`, `servidor/` y `README.md`:
+
+```bash
+php -S localhost:8000
+```
+
+Abrir:
+
+```text
+http://localhost:8000/
+```
+
+Detener con `Ctrl + C`. Esta alternativa requiere que PHP esté disponible en la terminal y se utiliza para desarrollo local.
+
+### 6.7. Consideraciones de ejecución
+
+- Ejecutar el proyecto completo desde su raíz, conservando ambas carpetas principales.
+- Abrir la aplicación mediante HTTP en el servidor PHP; `file://` no ejecuta PHP.
+- Live Server por sí solo no procesa el login ni las páginas protegidas.
+- Mantener el mismo host y puerto durante las pruebas: `localStorage` depende del origen utilizado.
+- Realizar una recarga forzada cuando se actualicen CSS o JavaScript y el navegador conserve versiones anteriores.
+- MariaDB debe estar disponible al ingresar y al abrir páginas protegidas. Las páginas públicas estáticas no requieren consultar la base.
 
 ## 7. Cuentas de prueba
 
@@ -361,15 +408,29 @@ Crear registros en los catálogos de administradores o usuarios no crea nuevas c
 
 ## 8. Funcionalidades
 
-### 8.1. Páginas públicas
+### 8.1. Sitio público
 
-Incluyen:
+La presentación principal comprende cinco páginas:
 
-- Presentación de QueryBI AI.
-- Información del equipo, misión y visión.
-- Explicación del funcionamiento previsto.
-- Preguntas frecuentes y orientación.
-- Acceso al inicio de sesión.
+| Página | Archivo | Contenido |
+|---|---|---|
+| Inicio | `cliente/index.html` | Propuesta del producto, ejemplo interactivo, funciones, recorrido y casos de uso |
+| Producto | `cliente/paginas/producto.html` | Fuentes, esquema, IA, SQL, visualizaciones, reportes y responsabilidades del equipo |
+| Cómo funciona | `cliente/paginas/como-funciona.html` | Conectar, configurar, preguntar y explorar resultados |
+| Nosotros | `cliente/paginas/nosotros.html` | Propósito de la marca, principios y enfoque de trabajo |
+| Ayuda | `cliente/paginas/ayuda.html` | 20 preguntas en cinco categorías y búsqueda local |
+
+Se utiliza una presentación de producto completo, según el enfoque del frontend solicitado para el curso. La descripción comercial de una función no acredita que su integración de servidor esté terminada en el primer hito; su estado real aparece en este README.
+
+Las cinco páginas cargan `sitio-publico.css` y `sitio-publico.js`, sin depender de los estilos ni de los scripts de los paneles.
+
+El ejemplo de Inicio alterna entre ventas mensuales, productos y ciudades. Utiliza datos y SQL preparados en el JavaScript público; no ejecuta consultas ni depende de la fuente habilitada en el panel. Es independiente de los ejemplos internos sujetos al catálogo empresarial.
+
+Ayuda permite buscar en preguntas y respuestas sin distinguir mayúsculas ni tildes. Filtra las categorías, muestra las coincidencias, despliega las respuestas encontradas, informa cuando no hay resultados y permite limpiar la búsqueda. Este proceso se realiza en el navegador, sin modificar datos empresariales.
+
+La navegación y las preguntas frecuentes se pueden consultar sin JavaScript; el buscador y los selectores interactivos se muestran al habilitar sus funciones.
+
+El acceso y los paneles utilizan sus propias hojas de estilo, ajustadas a la misma identidad visual de la web pública. La actualización conserva la estructura funcional, los formularios y los avisos sobre funciones pendientes. El pie de marca compartido sustituye el crédito académico y mantiene las notas técnicas existentes.
 
 ### 8.2. Autenticación y sesiones
 
@@ -588,31 +649,70 @@ La acción elimina sus registros locales y permite volver a cargar los valores i
 
 No modifica las cuentas ni las fuentes de MariaDB, ni elimina los datos locales correspondientes a otras cuentas.
 
-## 10. Comprobación manual
+## 10. Comprobación manual y evidencias
 
-Antes de guardar un bloque de cambios, revisar lo siguiente:
+Realizar estas comprobaciones en la instalación local y repetir las pertinentes en el servidor del curso. Las filas indican el resultado esperado; no sustituyen la prueba real ni sus evidencias.
+
+### Sitio público
 
 | Prueba | Resultado esperado |
 |---|---|
-| Ingresar con una cuenta válida | Se abre el panel correspondiente a su rol |
-| Ingresar con contraseña incorrecta | Se rechaza el acceso |
-| Abrir una página protegida sin sesión | Se redirige al ingreso |
-| Abrir una página de otro rol mediante su URL | Se muestra acceso denegado |
-| Cerrar sesión | Las páginas protegidas requieren ingresar nuevamente |
-| Registrar una pregunta válida | Se guarda como Pendiente y se abre su detalle |
-| Registrar una pregunta vacía | Se rechaza |
-| Abrir un ejemplo | Se presentan sus datos preparados |
-| Guardar un reporte de ejemplo | Aparece en Reportes |
-| Crear y editar una fuente | Los cambios se guardan en MariaDB y aparecen en otra sesión autorizada |
-| Crear una empresa y su administrador | Ambos registros quedan asociados |
-| Repetir un nombre de empresa | Se rechaza el duplicado |
-| Desactivar una empresa con administradores activos | Se impide la operación |
-| Crear un usuario empresarial | Se asignan el rol Usuario y la empresa de la sesión |
-| Buscar un registro inexistente | Se muestra el estado sin coincidencias |
-| Recargar después de guardar | Los datos permanecen si localStorage está disponible |
-| Consultar desde una pantalla pequeña | La navegación, formularios y tablas siguen siendo utilizables |
+| Abrir la raíz del proyecto | Redirección a Inicio |
+| Navegar por las cinco páginas | Enlaces, imágenes y estilos disponibles |
+| Alternar Ventas, Productos y Ciudades en Inicio | Cambian pregunta, cifras, gráfico y SQL preparados |
+| Desplegar el SQL de un ejemplo | Se muestra la consulta de referencia |
+| Buscar `contraseña` y `contrasena` en Ayuda | Se encuentra la misma pregunta |
+| Buscar un término inexistente | Se muestra el mensaje sin resultados |
+| Limpiar la búsqueda | Reaparecen las 20 preguntas y las cinco categorías |
+| Probar una pantalla estrecha | Menú público utilizable y contenido sin desbordamiento horizontal |
+| Pulsar Acceder | Se abre el login actual |
 
-También deben revisarse los mensajes de error, los botones de cancelar, los enlaces de retorno y la consola del navegador.
+### Acceso y persistencia en MariaDB
+
+| Prueba | Resultado esperado |
+|---|---|
+| Ingresar con cada cuenta de demostración | Panel correspondiente a su rol |
+| Ingresar con contraseña incorrecta | Acceso rechazado |
+| Solicitar una página protegida sin sesión | Redirección al ingreso |
+| Abrir una URL de otro rol | Respuesta de acceso denegado |
+| Cerrar sesión y volver a una página protegida | Se requiere ingresar nuevamente |
+| Registrar una fuente como administrador | Registro guardado en `fuentes_datos` y visible en su listado |
+| Abrir otra sesión autorizada de la misma empresa | La fuente registrada continúa disponible |
+| Editar la fuente y consultar su detalle | Cambios recuperados desde MariaDB |
+| Repetir un nombre de fuente en la misma empresa | Rechazo del duplicado |
+| Consultar una fuente ajena o inexistente | Respuesta que no expone datos de otras empresas |
+| Abrir Esquema de la fuente inicial | Tablas, campos y relaciones registrados disponibles |
+
+Para demostrar el flujo persistente mínimo, registrar una fuente con nombre de prueba, abrir su detalle, verificar el registro en MariaDB y consultarlo en una nueva sesión autorizada. Crear una fuente no carga automáticamente sus metadatos ni prueba la conexión a su base.
+
+### Módulos con almacenamiento local
+
+| Prueba | Resultado esperado |
+|---|---|
+| Registrar una pregunta válida con fuente habilitada | Registro local con estado Pendiente |
+| Registrar una pregunta vacía | Mensaje de validación |
+| Abrir un ejemplo interno disponible | Resultados preparados, tabla, gráfico y SQL |
+| Guardar un reporte de ejemplo | Aparece en Reportes y permite exportar CSV |
+| Crear empresa, administrador o usuario desde su catálogo | Registro guardado localmente; las cuentas de ingreso de MariaDB no cambian |
+| Buscar un registro local inexistente | Mensaje sin coincidencias |
+| Guardar selección del esquema y recargar | Se conservan las marcas en el navegador si el almacenamiento está disponible |
+| Restablecer datos desde Mi perfil | Se eliminan los datos locales de esa cuenta, conservando cuentas y fuentes de MariaDB |
+
+Revisar también validaciones, cancelación de formularios, enlaces de retorno, consola y solicitudes de recursos en el navegador.
+
+### Evidencias de la entrega
+
+Preparar capturas y archivos que documenten:
+
+- Navegación pública y pantallas internas relacionadas con el dominio.
+- Acceso por roles y rechazo de una ruta no autorizada.
+- Registro y consulta persistente de una fuente.
+- Bases y tablas creadas desde el SQL.
+- ERD, diccionario de datos y relaciones.
+- Validaciones y mensajes de los formularios.
+- Historial de Git y forma de ejecución.
+
+Las evidencias deben proceder de la ejecución real. Los ejemplos preparados de consultas y los catálogos locales deben identificarse con su alcance al explicar el producto. El informe y los mockups deben corresponder a las interfaces finales utilizadas en la demostración.
 
 ## 11. Cierre del primer hito y desarrollo posterior
 
@@ -661,6 +761,7 @@ Cada commit debe representar una mejora concreta y comprobable, por ejemplo:
 - Completar la gestión de fuentes.
 - Separar preguntas libres de ejemplos.
 - Incorporar los catálogos administrativos.
+- Renovar Inicio, Producto, Cómo funciona, Nosotros y Ayuda.
 - Actualizar la documentación.
 
 ### Preparación inicial
@@ -683,7 +784,7 @@ Después, iniciar el servidor PHP como se indica en la sección de ejecución lo
 
 ### Ramas de trabajo
 
-La rama `main` mantiene la versión integrada del proyecto.
+Los siguientes ejemplos utilizan `main` como rama principal. Si el repositorio utiliza otro nombre, adaptar los comandos.
 
 Para comenzar una tarea, con el trabajo anterior ya guardado:
 
@@ -753,7 +854,7 @@ En GitHub se abre un Pull Request hacia `main`, indicando:
 - Cómo comprobarlo.
 - Qué limitaciones permanecen.
 
-Otro integrante revisa el cambio antes de integrarlo.
+Revisar el cambio y sus pruebas antes de integrarlo.
 
 ### Después de integrar una rama
 
@@ -786,29 +887,59 @@ No se deben descartar cambios de otro integrante sin revisarlos.
 
 Las cuentas incluidas en este proyecto son exclusivamente de demostración.
 
-## 13. Publicación en el servidor del curso
+## 13. Publicación por FTP en el servidor del curso
 
-El servidor de destino debe procesar PHP y permitir el uso de sesiones.
+El servidor del profesor debe procesar PHP, permitir sesiones y disponer de un motor de bases de datos compatible con el script. La compatibilidad preparada corresponde a MariaDB 10.4.32; confirmar el motor y la versión del destino antes de importar.
 
-Para publicar:
+### Preparación de datos
 
-1. Verificar que la versión local funcione.
-2. Transferir los archivos mediante el mecanismo indicado por el docente.
-3. Mantener la estructura de carpetas y los nombres de archivo.
-4. Omitir los archivos internos de Git y los archivos temporales.
-5. Probar el ingreso, la salida y el acceso por rol en el servidor.
-6. Comprobar que se carguen correctamente CSS, JavaScript e imágenes.
+1. Entregar `QueryBI_AI_hito1_XAMPP.sql` al profesor para crear las dos bases en una instalación nueva.
+2. Confirmar los nombres de las bases y las credenciales de conexión que se utilizarán en ese servidor.
+3. Si los nombres difieren de los locales, mantener coherencia en todas las referencias del SQL, las consultas de metadatos, la configuración de la plataforma y los datos del catálogo de fuentes.
+4. Ajustar `servidor/configuracion.local.php` con el host, puerto, base de la plataforma, usuario y contraseña asignados.
 
-GitHub se utiliza para el repositorio. GitHub Pages no ejecuta PHP y, por tanto, no permite utilizar por sí solo las funciones de sesión de esta versión.
+Transferir un archivo SQL por FTP no lo ejecuta. Su importación se realiza mediante la herramienta de administración de bases de datos que corresponda al servidor.
 
-El grupo subirá el proyecto mediante FTP, incluido `servidor/configuracion.local.php`,
-y entregará al profesor el SQL completo de las dos bases. El SQL debe ejecutarse
-mediante una herramienta de administración; transferirlo por FTP no lo ejecuta.
-Se confirmará el motor y versión del servidor del curso antes de importar el script.
-La configuración se ajustará con los nombres y credenciales de esa instalación.
-Los catálogos que siguen en localStorage no se convierten automáticamente en datos compartidos.
+### Transferencia de la aplicación
 
-## 14. Equipo
+1. Comprobar primero el funcionamiento local.
+2. Subir el proyecto conservando `index.php`, `cliente/`, `servidor/` y sus subcarpetas.
+3. Incluir `servidor/configuracion.local.php`, según el procedimiento acordado para el curso.
+4. Conservar los nombres de archivo y sus mayúsculas o minúsculas.
+5. Omitir el directorio interno de Git y los archivos temporales de trabajo.
+6. Entregar el README y el script SQL junto con el código, según las indicaciones del docente.
+
+### Verificación en el destino
+
+- Abrir la raíz del proyecto y comprobar su redirección.
+- Revisar las cinco páginas públicas y la carga de CSS, JavaScript e imágenes.
+- Ingresar con las cuentas de demostración y comprobar los permisos por rol.
+- Registrar y recuperar una fuente en la base del servidor.
+- Probar el cierre de sesión.
+- Comprobar las funciones locales desde el navegador utilizado en la demostración.
+
+Los datos locales del navegador de desarrollo no viajan dentro de los archivos enviados por FTP. El navegador del servidor publicado constituye otro origen y mantiene su propio almacenamiento local.
+
+GitHub almacena el código y su historial. GitHub Pages por sí solo no procesa PHP ni ejecuta el acceso y las operaciones de servidor de esta aplicación.
+
+## 14. Problemas frecuentes
+
+| Situación | Qué revisar |
+|---|---|
+| El login muestra servicio no disponible | MariaDB iniciado, extensión `pdo_mysql`, credenciales y nombre de base en la configuración |
+| La raíz no abre correctamente | Servidor PHP iniciado desde la carpeta raíz y presencia de `index.php` |
+| El navegador descarga PHP o muestra su código | El servidor utilizado no está procesando PHP |
+| CSS, JavaScript o imágenes no aparecen | Estructura `cliente/assets/`, rutas relativas, nombres exactos y recarga forzada |
+| Cambios de diseño no se reflejan | Caché del navegador; recargar con Ctrl + F5 |
+| El SQL informa que una base o tabla ya existe | Se está intentando reimportar un script de instalación inicial |
+| Una fuente nueva no muestra esquema | El registro de la fuente no descubre ni importa automáticamente sus metadatos |
+| No aparecen preguntas o reportes en otro equipo | Esos módulos todavía utilizan almacenamiento local del navegador |
+| Un usuario creado en el catálogo no puede ingresar | El catálogo local no crea cuentas de autenticación en MariaDB |
+| Desactivar un registro local no bloquea el acceso | Los catálogos de demostración no actualizan el estado de las cuentas reales |
+| La recuperación no envía un correo | El envío y el cambio de contraseña todavía no están integrados |
+| Abrir archivos compartidos o de configuración devuelve acceso denegado | Son archivos internos; se utilizan a través de las páginas de la aplicación |
+
+## 15. Equipo
 
 - Universidad: Universidad Nacional del Santa.
 - Escuela profesional: Ingeniería de Sistemas e Informática.

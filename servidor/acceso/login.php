@@ -139,5 +139,8 @@ try {
             </a>
         </section>
     </main>
+    <footer class="pie">
+        <?php require dirname(__DIR__) . '/compartido/pie-marca.php'; ?>
+    </footer>
 </body>
 </html>

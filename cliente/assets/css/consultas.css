@@ -1,84 +1,16 @@
-/* Pestañas de resultados y barras que JavaScript ajusta a los datos. */
-.opciones-resultado {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    border-bottom: 1px solid var(--borde);
-    margin: 20px 0;
-}
-
-.opciones-resultado button {
-    padding: 12px 20px;
-    border: 0;
-    border-bottom: 3px solid transparent;
-    background: transparent;
-    color: var(--gris);
-}
-
-.opciones-resultado button[aria-selected="true"] {
-    color: var(--verde);
-    border-color: var(--naranja);
-    font-weight: bold;
-}
-
-.grafico {
-    margin: 20px 0;
-}
-
-.fila-grafico {
-    margin: 20px 0;
-}
-
-.dato-grafico {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 6px;
-    font-size: 14px;
-}
-
-.pista {
-    height: 20px;
-    background: #e9e8dd;
-}
-
-.barra {
-    height: 100%;
-    background: var(--verde);
-}
-
-.fila-grafico:last-child .barra {
-    background: #ba572e;
-}
-
-.sql {
-    padding: 20px;
-    border: 1px solid var(--borde);
-    background: #eeeee4;
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-}
-
-.estado-ejemplo {
-    margin: 16px 0;
-    padding: 20px;
-    border-top: 1px solid var(--borde);
-}
-
-section[id] {
-    scroll-margin-top: 20px;
-}
-
-.resumen-resultado {
-    display: flex;
-    gap: 24px;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.pregunta-registrada {
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-}
+/* Presentación de resultados; se conservan pestañas, estados y datos. */
+.opciones-resultado { display: flex; flex-wrap: wrap; gap: 5px; margin: 22px 0; padding-bottom: 7px; border-bottom: 1px solid var(--borde); }
+.opciones-resultado button { min-height: 42px; padding: 10px 17px; border: 0; border-bottom: 2px solid transparent; border-radius: 8px 8px 0 0; background: transparent; color: var(--gris); font-size: 13px; font-weight: 550; }
+.opciones-resultado button:hover { background: var(--fondo); }
+.opciones-resultado button[aria-selected="true"] { border-color: var(--verde); background: var(--verde-claro); color: #105d43; font-weight: 650; }
+.grafico { margin: 22px 0; }
+.fila-grafico { margin: 20px 0; }
+.dato-grafico { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; color: var(--gris); font-size: 13px; }
+.pista { height: 12px; overflow: hidden; border-radius: 20px; background: var(--verde-claro); }
+.barra { height: 100%; border-radius: 20px; background: var(--verde); }
+.fila-grafico:last-child .barra { background: var(--verde); }
+.sql { padding: 20px; border: 1px solid var(--borde); border-radius: 10px; background: #f4f8f6; color: var(--tinta); font: 12px/1.8 ui-monospace, SFMono-Regular, Consolas, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
+.estado-ejemplo { margin: 18px 0; padding: 20px; border: 1px solid var(--borde); border-radius: 10px; background: var(--fondo); color: var(--gris); }
+section[id] { scroll-margin-top: 20px; }
+.resumen-resultado { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+.pregunta-registrada { white-space: pre-wrap; overflow-wrap: anywhere; }

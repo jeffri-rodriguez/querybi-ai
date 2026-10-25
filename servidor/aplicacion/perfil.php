@@ -166,7 +166,8 @@ $cuenta = qbi_usuario();
     </div>
 
     <footer class="pie">
-        <p>QueryBI AI · Grupo 04 · Aplicaciones Distribuidas I</p>
-    </footer>
+        <?php require dirname(__DIR__) . '/compartido/pie-marca.php'; ?>
+    <small>Datos ficticios · Acceso y fuentes en MariaDB · Ejemplos sin IA · Los cambios locales no se comparten con otros usuarios.</small>
+</footer>
 </body>
 </html>

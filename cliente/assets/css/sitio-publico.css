@@ -281,3 +281,53 @@
     .pub-datos-fuente code { font-size: 11px; }
     .pub-tabla th, .pub-tabla td { padding-inline: 5px; }
 }
+
+/* Nosotros y Centro de ayuda. */
+.pub-manifiesto > h2 { margin-top: 20px; font-size: clamp(25px, 2.8vw, 35px); line-height: 1.2; letter-spacing: -.8px; }
+.pub-manifiesto > p { margin-top: 20px; color: var(--pub-texto); font-size: 15px; }
+.pub-cadena { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 28px; font-size: 12px; }
+.pub-cadena span:not([aria-hidden]) { padding: 7px 11px; border-radius: 8px; background: var(--pub-menta); color: var(--pub-verde-oscuro); font-weight: 650; }
+.pub-cadena span[aria-hidden] { color: var(--pub-texto); }
+.pub-texto-largo { display: grid; gap: 20px; color: var(--pub-texto); font-size: 16px; }
+
+.pub-ayuda-presentacion { max-width: 740px; margin-inline: auto; text-align: center; }
+.pub-ayuda-presentacion h1 { margin-inline: auto; }
+.pub-ayuda-presentacion .pub-intro { max-width: 600px; margin-inline: auto; }
+.pub-buscador { display: flex; align-items: center; gap: 12px; max-width: 680px; padding: 8px; margin: 30px auto 0; border: 1px solid var(--pub-borde); border-radius: 12px; background: white; box-shadow: 0 8px 30px rgb(21 55 45 / 5%); }
+.pub-buscador input { flex: 1; min-width: 0; width: 100%; padding: 12px; border: 0; border-radius: 7px; background: white; color: var(--pub-tinta); font: inherit; font-size: 16px; }
+.pub-buscador input::placeholder { color: var(--pub-texto); opacity: 1; }
+.pub-ayuda-pista { margin-top: 18px !important; color: var(--pub-texto); font-size: 12px; }
+.pub-ayuda-contenido { padding-top: 56px; }
+.pub-ayuda-cabecera { display: flex; align-items: flex-end; justify-content: space-between; gap: 28px; }
+.pub-ayuda-cabecera h2 { font-size: clamp(28px, 3vw, 38px); letter-spacing: -1px; }
+.pub-ayuda-cabecera .pub-rotulo { margin-bottom: 12px; }
+.pub-ayuda-temas { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+.pub-ayuda-temas a { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 14px; border: 1px solid var(--pub-borde); border-radius: 8px; background: white; font-size: 12px; font-weight: 600; text-decoration: none; }
+.pub-ayuda-temas a:hover { background: var(--pub-menta); color: var(--pub-verde-oscuro); }
+.pub-ayuda-estado { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; min-height: 72px; padding-block: 18px; color: var(--pub-texto); font-size: 12px; }
+.pub-ayuda-limpiar { min-height: 36px; padding: 7px 0; border: 0; background: transparent; color: var(--pub-verde); font-size: 12px; font-weight: 650; text-decoration: underline; text-underline-offset: 4px; }
+.pub-ayuda-grupos { display: grid; gap: 42px; }
+.pub-ayuda-grupo { display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); gap: 64px; padding-top: 32px; border-top: 1px solid var(--pub-borde); }
+.pub-ayuda-grupo-titulo h3 { margin-top: 16px; font-size: 25px; letter-spacing: -.6px; }
+.pub-ayuda-grupo-titulo > p { max-width: 285px; margin-top: 14px; color: var(--pub-texto); font-size: 14px; }
+.pub-ayuda-grupo .pub-faq { overflow-wrap: anywhere; }
+.pub-ayuda-vacio { max-width: 740px; padding: 38px; margin: 16px auto 0; border: 1px solid var(--pub-borde); border-radius: 13px; background: var(--pub-suave); text-align: center; }
+.pub-ayuda-vacio h3 { font-size: 22px; }
+.pub-ayuda-vacio p { margin-top: 16px; color: var(--pub-texto); font-size: 14px; }
+
+@media (max-width: 820px) {
+    .pub-ayuda-cabecera { align-items: flex-start; flex-direction: column; gap: 0; }
+    .pub-ayuda-grupo { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+    .pub-ayuda-grupo-titulo > p { max-width: none; }
+}
+
+@media (max-width: 520px) {
+    .pub-cadena { gap: 8px; }
+    .pub-cadena span:not([aria-hidden]) { padding-inline: 9px; }
+    .pub-buscador { flex-direction: column; align-items: stretch; gap: 8px; }
+    .pub-buscador .pub-boton { width: 100%; }
+    .pub-ayuda-temas { gap: 8px; }
+    .pub-ayuda-temas a { padding-inline: 11px; }
+    .pub-ayuda-limpiar { min-height: 44px; }
+    .pub-ayuda-vacio { padding: 28px; }
+}
