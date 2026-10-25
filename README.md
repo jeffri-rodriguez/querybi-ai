@@ -154,111 +154,106 @@ Las rutas siguientes son relativas a la raíz del proyecto:
 
 ```text
 querybi-ai/
-    index.html
+    index.php
     README.md
     .gitignore
     QueryBI_AI_hito1_XAMPP.sql
 
-    paginas/
-        nosotros.html
-        como-funciona.html
-        ayuda.html
+    cliente/
+        index.html
 
-    acceso/
-        login.php
-        salir.php
-        recuperar-contrasena.html
+        paginas/
+            nosotros.html
+            como-funciona.html
+            ayuda.html
+            recuperar-contrasena.html
 
-    aplicacion/
-        panel.php
-        consultas.php
-        detalle-consulta.php
-        ejemplos.php
-        historial.php
-        reportes.php
-        perfil.php
-
-    administracion/
-        fuentes.php
-        configurar-fuente.php
-        detalle-fuente.php
-        esquema.php
-        usuarios.php
-
-    plataforma/
-        panel.php
-        empresas.php
-        administradores.php
+        assets/
+            css/
+            js/
+            datos/
+            imagenes/
 
     servidor/
-        sesion.php
-        base-datos.php
         configuracion.local.php
-        navegacion.php
-        vista-gestion.php
-        fuentes.php
-        vista-fuentes.php
 
-    assets/
-        css/
-            estilos.css
-            publico.css
-            acceso.css
-            aplicacion.css
-            consultas.css
-            administracion.css
+        compartido/
+            sesion.php
+            base-datos.php
+            fuentes.php
+            navegacion.php
+            vista-fuentes.php
+            vista-gestion.php
 
-        js/
-            principal.js
-            panel.js
-            consultas.js
-            detalle-consulta.js
-            ejemplos.js
-            graficos.js
-            historial.js
-            reportes.js
-            perfil.js
-            esquema.js
-            gestion.js
-            plataforma.js
-            validaciones.js
+        acceso/
+            login.php
+            salir.php
 
-        datos/
-            datos-demo.js
-            esquema-demo.js
+        aplicacion/
+            panel.php
+            consultas.php
+            detalle-consulta.php
+            ejemplos.php
+            historial.php
+            reportes.php
+            perfil.php
 
-        imagenes/
-            logo.svg
-            favicon.svg
+        administracion/
+            fuentes.php
+            configurar-fuente.php
+            detalle-fuente.php
+            esquema.php
+            usuarios.php
+
+        plataforma/
+            panel.php
+            empresas.php
+            administradores.php
 ```
 
 ### Responsabilidad de las carpetas
 
-| Carpeta | Contenido |
+| Ruta | Responsabilidad |
 |---|---|
-| paginas | Información pública del proyecto |
-| acceso | Inicio de sesión, cierre y recuperación de demostración |
-| aplicacion | Espacio de consultas y análisis |
-| administracion | Funciones del administrador empresarial |
-| plataforma | Funciones del superadministrador |
-| servidor | Código PHP compartido |
-| assets/css | Estilos separados por área |
-| assets/js | Comportamiento de las interfaces |
-| assets/datos | Datos ficticios iniciales |
-| assets/imagenes | Recursos gráficos |
+| `index.php` | Entrada del proyecto; redirige a la portada del cliente |
+| `cliente/index.html` | Portada pública |
+| `cliente/paginas` | Páginas HTML públicas e información de recuperación de acceso |
+| `cliente/assets/css` | Estilos de las interfaces |
+| `cliente/assets/js` | Comportamiento ejecutado en el navegador |
+| `cliente/assets/datos` | Ejemplos preparados y datos iniciales de demostración |
+| `cliente/assets/imagenes` | Logo, favicon y recursos gráficos |
+| `servidor/acceso` | Inicio y cierre de sesión |
+| `servidor/aplicacion` | Páginas PHP del espacio de consultas y análisis |
+| `servidor/administracion` | Páginas PHP del administrador empresarial |
+| `servidor/plataforma` | Páginas PHP del superadministrador |
+| `servidor/compartido` | Funciones y vistas PHP compartidas |
+
+Las páginas PHP se ejecutan en el servidor y generan HTML para el navegador.
+Por eso se encuentran dentro de `servidor/`, aunque presenten formularios,
+listados y otras partes de la interfaz.
+
+La arquitectura es cliente-servidor: el navegador presenta la interfaz y
+ejecuta JavaScript; PHP procesa sesiones, permisos, validaciones y operaciones
+con MariaDB.
 
 ### Archivos compartidos principales
 
-- `servidor/sesion.php`: manejo de sesiones, comprobación de roles y funciones auxiliares.
-- `servidor/base-datos.php`: conexión PDO compartida.
-- `servidor/configuracion.local.php`: único archivo de configuración, incluido en Git por acuerdo del grupo. Debe ajustarse al entorno local o al servidor del curso.
-- `servidor/fuentes.php`: validación y operaciones persistentes de fuentes.
-- `servidor/vista-fuentes.php`: vista compartida de listado, formulario y detalle.
-- `servidor/navegacion.php`: encabezado y menú según el rol autenticado.
-- `servidor/vista-gestion.php`: presentación compartida de empresas, administradores y usuarios.
-- `assets/js/principal.js`: utilidades de almacenamiento, tablas, mensajes y navegación.
-- `assets/js/gestion.js`: formularios, filtros y detalles de los catálogos administrativos.
-- `assets/datos/datos-demo.js`: ejemplos y registros iniciales.
+- `servidor/compartido/sesion.php`: sesiones, comprobación de roles,
+  generación de URL y funciones auxiliares.
+- `servidor/compartido/base-datos.php`: conexión PDO a la base de la plataforma.
+- `servidor/configuracion.local.php`: único archivo de configuración.
+  Se incluye en Git y FTP por acuerdo del grupo y se ajusta al entorno.
+- `servidor/compartido/fuentes.php`: validaciones, operaciones persistentes
+  de fuentes y lectura de metadatos del esquema.
+- `servidor/compartido/vista-fuentes.php`: listado, formulario y detalle de fuentes.
+- `servidor/compartido/navegacion.php`: encabezado y menú según el rol.
+- `servidor/compartido/vista-gestion.php`: presentación de los catálogos
+  locales de empresas, administradores y usuarios.
+- `cliente/assets/js/principal.js`: utilidades de tablas, mensajes
+  y almacenamiento local.
+- `cliente/assets/js/gestion.js`: comportamiento de los catálogos locales.
+- `cliente/assets/datos/datos-demo.js`: resultados preparados y datos ficticios.
+- `cliente/assets/datos/esquema-demo.js`: recibe los metadatos enviados por PHP.
 
 ## 6. Ejecución local
 
@@ -280,9 +275,34 @@ querybi-ai/
 
 MariaDB debe estar iniciado tanto al ingresar como al abrir páginas protegidas.
 
+### Uso actual de las dos bases de datos
+
+| Base | Uso actual |
+|---|---|
+| `querybi_ai_pagina` | Autenticación, consulta del estado de la empresa, gestión persistente de fuentes y lectura de metadatos |
+| `db_empresa_demo` | Dataset sintético preparado para consultas empresariales posteriores |
+
+La conexión PDO de la aplicación utiliza `querybi_ai_pagina`.
+
+Durante la instalación, el SQL consulta la estructura de `db_empresa_demo`
+y registra sus metadatos en la base de la plataforma. La aplicación todavía
+no abre una conexión para consultar las ventas de la tienda.
+
+Los resultados de Ejemplos están preparados en JavaScript y coinciden con
+los datos del script inicial. No se actualizan automáticamente al modificar
+la tienda.
+
+En una instalación nueva con el SQL revisado, las tablas
+`historial_consultas`, `resultados_consulta` y `reportes` quedan vacías.
+Estos módulos todavía almacenan sus registros en el navegador.
+
+El script es de instalación inicial. Actualizar su archivo en el repositorio
+no modifica las bases ya creadas y no requiere reimportarlo.
+
 ### Opción A: servidor integrado de PHP
 
-Abre una terminal en la carpeta que contiene `index.html` y ejecuta:
+Abre una terminal en la raíz del proyecto, donde están `index.php`,
+`cliente/`, `servidor/` y `README.md`, y ejecuta:
 
 ```bash
 php -S localhost:8000
@@ -293,6 +313,11 @@ Luego abre:
 ```text
 http://localhost:8000/
 ```
+
+El archivo `index.php` de la raíz redirige a `cliente/index.html`.
+
+El servidor debe iniciarse desde la raíz del proyecto para que estén
+disponibles tanto los recursos del cliente como las páginas PHP del servidor.
 
 Para detener el servidor, presiona `Ctrl + C` en la terminal.
 
@@ -511,7 +536,7 @@ no editar su selección.
 Se muestran mensajes específicos cuando la fuente no existe, no tiene
 un esquema disponible o el catálogo está vacío.
 
-El archivo `assets/datos/esquema-demo.js` recibe los metadatos enviados por
+El archivo `cliente/assets/datos/esquema-demo.js` recibe los metadatos enviados por
 PHP; ya no contiene un esquema fijo asociado al identificador ficticio tienda.
 
 La selección no modifica estructuras de MySQL ni aplica restricciones
