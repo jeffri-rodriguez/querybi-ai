@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Centro de ayuda de QueryBI AI. Encuentra respuestas sobre fuentes de datos, consultas con IA, acceso por roles, historial y reportes.">
+    <title>Centro de ayuda | QueryBI AI</title>
+    <link rel="icon" href="../assets/imagenes/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../assets/css/sitio-publico.css">
+    <script src="../assets/js/sitio-publico.js" defer></script>
+</head>
+<body class="web-publica">
+    <a class="pub-saltar" href="#contenido">Saltar al contenido</a>
+    <header class="pub-encabezado">
+        <div class="pub-contenedor pub-barra">
+            <a class="pub-logo" href="../index.html" aria-label="QueryBI AI, inicio"><img src="../assets/imagenes/logo.svg" alt="QueryBI AI" width="190" height="44"></a>
+            <button class="pub-menu-boton" id="boton-menu-publico" type="button" aria-controls="navegacion-publica" aria-expanded="false" hidden>Menú <span aria-hidden="true">☰</span></button>
+            <nav class="pub-nav" id="navegacion-publica" aria-label="Navegación principal">
+                <a href="../index.html">Inicio</a>
+                <a href="producto.html">Producto</a>
+                <a href="como-funciona.html">Cómo funciona</a>
+                <a href="nosotros.html">Nosotros</a>
+                <a href="ayuda.html" aria-current="page">Ayuda</a>
+                <a class="pub-boton pub-boton-principal" href="../../servidor/acceso/login.php">Acceder <span aria-hidden="true">↗</span></a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="contenido">
+        <section class="pub-interior pub-ayuda-portada" aria-labelledby="titulo-ayuda">
+            <div class="pub-contenedor">
+                <nav class="pub-migas" aria-label="Ruta de navegación"><a href="../index.html">Inicio</a><span aria-hidden="true">/</span><span aria-current="page">Ayuda</span></nav>
+                <div class="pub-ayuda-presentacion">
+                    <span class="pub-rotulo">Centro de ayuda</span>
+                    <h1 id="titulo-ayuda">¿En qué podemos<br><span>ayudarte?</span></h1>
+                    <p class="pub-intro">Encuentra respuestas para conectar tus fuentes, hacer mejores preguntas y comprender los resultados de tu equipo.</p>
+                    <form class="pub-buscador" id="ayuda-formulario" role="search" hidden>
+                        <label class="pub-sr" for="ayuda-busqueda">Buscar en el centro de ayuda</label>
+                        <input id="ayuda-busqueda" name="q" type="search" placeholder="Busca: fuentes, permisos o reportes…" aria-describedby="ayuda-pista" aria-controls="preguntas-ayuda">
+                        <button class="pub-boton pub-boton-principal" type="submit">Buscar</button>
+                    </form>
+                    <p class="pub-ayuda-pista" id="ayuda-pista">También puedes explorar las preguntas por tema.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="pub-seccion pub-ayuda-contenido" aria-labelledby="titulo-preguntas">
+            <div class="pub-contenedor">
+                <div class="pub-ayuda-cabecera">
+                    <div><span class="pub-rotulo">Respuestas para tu día a día</span><h2 id="titulo-preguntas">Explora por tema.</h2></div>
+                    <a class="pub-enlace" href="como-funciona.html">Ver guía de funcionamiento <span aria-hidden="true">→</span></a>
+                </div>
+                <nav class="pub-ayuda-temas" id="ayuda-temas" aria-label="Temas de ayuda">
+                    <a href="#primeros-pasos" data-ayuda-enlace="primeros-pasos">Primeros pasos</a>
+                    <a href="#fuentes" data-ayuda-enlace="fuentes">Fuentes de datos</a>
+                    <a href="#consultas" data-ayuda-enlace="consultas">Consultas y resultados</a>
+                    <a href="#acceso" data-ayuda-enlace="acceso">Acceso y roles</a>
+                    <a href="#reportes" data-ayuda-enlace="reportes">Historial y reportes</a>
+                </nav>
+                <div class="pub-ayuda-estado">
+                    <p id="ayuda-resultado" aria-live="polite" aria-atomic="true">Consulta las preguntas de cada categoría.</p>
+                    <button class="pub-ayuda-limpiar" type="button" id="ayuda-limpiar" hidden>Limpiar búsqueda</button>
+                </div>
+
+                <div id="preguntas-ayuda" class="pub-ayuda-grupos">
+                    <section class="pub-ayuda-grupo" id="primeros-pasos" data-ayuda-categoria aria-labelledby="titulo-primeros-pasos">
+                        <div class="pub-ayuda-grupo-titulo"><span class="pub-estado">Empieza aquí</span><h3 id="titulo-primeros-pasos">Primeros pasos</h3><p>Conoce la plataforma y encuentra tu punto de partida.</p></div>
+                        <div class="pub-faq">
+                            <details data-ayuda-pregunta><summary>¿Qué es QueryBI AI?</summary><p>Es una plataforma de consulta y análisis de datos empresariales mediante lenguaje natural. Conecta tus fuentes, formula preguntas y explora resultados con tablas, indicadores y gráficos. Conoce sus funciones en <a href="producto.html">Producto</a>.</p></details>
+                            <details data-ayuda-pregunta><summary>¿Necesito saber SQL para utilizar QueryBI?</summary><p>Puedes formular preguntas con tus propias palabras. QueryBI utiliza el contexto de la fuente para generar el SQL. La consulta permanece disponible para que las personas con conocimientos técnicos puedan revisarla.</p></details>
+                            <details data-ayuda-pregunta><summary>¿Qué necesito para comenzar?</summary><p>Accede a tu cuenta y comprueba que tu empresa tenga una fuente habilitada. El administrador prepara las fuentes y el esquema disponible; el equipo selecciona la información autorizada para empezar a consultar.</p></details>
+                            <details data-ayuda-pregunta><summary>¿Dónde puedo ver un ejemplo del producto?</summary><p>En <a href="../index.html#ejemplo">el ejemplo de Inicio</a> puedes alternar entre ventas, productos y ciudades para explorar preguntas, resultados y SQL de referencia con datos ilustrativos.</p></details>
+                        </div>
+                    </section>
+
+                    <section class="pub-ayuda-grupo" id="fuentes" data-ayuda-categoria aria-labelledby="titulo-fuentes">
+                        <div class="pub-ayuda-grupo-titulo"><span class="pub-estado">Conecta tu información</span><h3 id="titulo-fuentes">Fuentes de datos</h3><p>Prepara el acceso y el contexto de tus bases empresariales.</p></div>
+                        <div class="pub-faq">
+                            <details data-ayuda-pregunta><summary>¿Qué bases de datos puedo conectar?</summary><p>QueryBI trabaja con fuentes MySQL y MariaDB. El administrador registra cada fuente dentro del espacio de su empresa y configura la información que estará disponible para las consultas.</p></details>
+                            <details data-ayuda-pregunta><summary>¿Qué datos necesito para conectar una fuente?</summary><p>Necesitas el motor, la dirección del servidor, el puerto, el nombre de la base y una cuenta de conexión autorizada para leer la información. El servidor empresarial debe permitir el acceso desde el servidor de QueryBI.</p></details>
+                            <details data-ayuda-pregunta><summary>¿Debo subir un archivo SQL para usar mi base?</summary><p>El flujo de conexión utiliza una base que ya está funcionando en un servidor. Registra sus datos de acceso en Fuentes de datos; no necesitas trasladar un respaldo SQL a QueryBI para conectar esa fuente.</p></details>
+                            <details data-ayuda-pregunta><summary>¿Puedo conectar una base que está en otra ubicación?</summary><p>Sí, siempre que exista una vía de comunicación autorizada entre ambos servidores. Si la base está dentro de una red empresarial privada, su encargado debe preparar el acceso correspondiente; registrar la dirección por sí solo no establece esa comunicación.</p></details>
+                            <details data-ayuda-pregunta><summary>¿Para qué sirven el esquema y los permisos?</summary><p>Definen las tablas y los campos disponibles, junto con sus relaciones. Este contexto ayuda a interpretar las preguntas y delimita la información que puede consultar el equipo. Seleccionar campos para el análisis no cambia la estructura física de la base.</p></details>
+                        </div>
+                    </section>
+
+                    <section class="pub-ayuda-grupo" id="consultas" data-ayuda-categoria aria-labelledby="titulo-consultas">
+                        <div class="pub-ayuda-grupo-titulo"><span class="pub-estado">Pregunta y comprende</span><h3 id="titulo-consultas">Consultas y resultados</h3><p>Da contexto a tus preguntas y entiende la información obtenida.</p></div>
+                        <div class="pub-faq">
+                            <details data-ayuda-pregunta><summary>¿Cómo formulo una pregunta clara?</summary><p>Indica qué quieres conocer, el período y cómo deseas agrupar los resultados. Por ejemplo: «¿Cuánto vendimos por mes entre enero y marzo de 2025?». Utiliza términos que correspondan a la información de la fuente seleccionada.</p></details>
+                            <details data-ayuda-pregunta><summary>¿Cómo interviene la inteligencia artificial?</summary><p>La IA interpreta la pregunta utilizando el esquema de la fuente y genera una consulta SQL. QueryBI valida las tablas, los campos y las operaciones antes de ejecutarla y presentar los resultados. Revisa el recorrido en <a href="como-funciona.html">Cómo funciona</a>.</p></details>
+                            <details data-ayuda-pregunta><summary>¿Qué significa que una consulta no tenga resultados?</summary><p>Puede significar que no existen registros para el período o las condiciones indicadas. Revisa la fuente, las fechas y los filtros de tu pregunta. Un resultado vacío no implica necesariamente un problema de conexión.</p></details>
+                            <details data-ayuda-pregunta><summary>¿Puedo revisar el SQL utilizado?</summary><p>Sí. El SQL forma parte del detalle del análisis, junto con la pregunta y sus resultados. Esto permite comprender qué información se consultó y cómo se agrupó o filtró.</p></details>
+                        </div>
+                    </section>
+
+                    <section class="pub-ayuda-grupo" id="acceso" data-ayuda-categoria aria-labelledby="titulo-acceso">
+                        <div class="pub-ayuda-grupo-titulo"><span class="pub-estado">Cada responsabilidad, su espacio</span><h3 id="titulo-acceso">Acceso y roles</h3><p>Conoce las funciones de cada perfil dentro de QueryBI.</p></div>
+                        <div class="pub-faq">
+                            <details data-ayuda-pregunta><summary>¿Qué puede hacer un usuario de empresa?</summary><p>Puede realizar preguntas sobre fuentes autorizadas, explorar ejemplos y resultados, revisar su historial y gestionar sus reportes. La configuración de fuentes, esquema y usuarios corresponde al administrador empresarial.</p></details>
+                            <details data-ayuda-pregunta><summary>¿Qué puede hacer el administrador de empresa?</summary><p>Prepara las fuentes, configura el esquema disponible y gestiona los usuarios de su organización. También dispone del espacio de consulta para realizar preguntas y revisar análisis.</p></details>
+                            <details data-ayuda-pregunta><summary>¿Cuál es la función del superadministrador?</summary><p>Gestiona el espacio general de la plataforma, las empresas y sus administradores. Su panel es diferente del espacio de análisis y de la administración interna de cada empresa.</p></details>
+                            <details data-ayuda-pregunta><summary>¿Qué hago si olvidé mi contraseña?</summary><p>Consulta la opción de <a href="recuperar-contrasena.html">recuperación de acceso</a> disponible desde el ingreso. Si necesitas ayuda con tu cuenta empresarial, comunícate con el administrador de tu organización.</p></details>
+                        </div>
+                    </section>
+
+                    <section class="pub-ayuda-grupo" id="reportes" data-ayuda-categoria aria-labelledby="titulo-reportes">
+                        <div class="pub-ayuda-grupo-titulo"><span class="pub-estado">Conserva tus análisis</span><h3 id="titulo-reportes">Historial y reportes</h3><p>Vuelve a tus preguntas y utiliza los resultados de tus consultas.</p></div>
+                        <div class="pub-faq">
+                            <details data-ayuda-pregunta><summary>¿Qué puedo revisar en el historial?</summary><p>El historial reúne tus consultas y permite volver al detalle de cada análisis: la pregunta, la fuente, el estado y, cuando corresponde, el SQL y los resultados obtenidos.</p></details>
+                            <details data-ayuda-pregunta><summary>¿Cómo guardo o descargo un reporte?</summary><p>Desde un análisis con resultados, guarda el reporte y revísalo en Reportes. Puedes consultar su contenido y exportar los datos en formato CSV para trabajar con ellos en una hoja de cálculo.</p></details>
+                            <details data-ayuda-pregunta><summary>¿Las consultas o los reportes modifican mis datos?</summary><p>El espacio de análisis está orientado a la lectura. Consultar información o generar un reporte no tiene como finalidad insertar, actualizar o eliminar registros de la base empresarial. Configura la fuente con permisos adecuados para ese uso.</p></details>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="pub-ayuda-vacio" id="ayuda-sin-resultados" hidden>
+                    <h3>No encontramos respuestas para esa búsqueda.</h3>
+                    <p>Prueba con palabras como «fuentes», «permisos» o «reportes», o limpia la búsqueda para volver a los temas.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="pub-cta" aria-labelledby="titulo-siguiente-paso">
+            <div class="pub-contenedor"><div class="pub-cta-interior"><div><h2 id="titulo-siguiente-paso">Conoce el recorrido completo del producto.</h2><p>Desde conectar una fuente hasta explorar los resultados de una pregunta de negocio.</p></div><a class="pub-boton" href="como-funciona.html">Cómo funciona <span aria-hidden="true">→</span></a></div></div>
+        </section>
+    </main>
+
+    <footer class="pub-pie">
+        <div class="pub-contenedor">
+            <div class="pub-pie-grid">
+                <div class="pub-pie-marca"><a class="pub-logo" href="../index.html" aria-label="QueryBI AI, inicio"><img src="../assets/imagenes/logo.svg" alt="QueryBI AI" width="190" height="44"></a><p class="pub-pie-descripcion">Inteligencia de negocios en tus propias palabras. Conecta, pregunta y comprende.</p></div>
+                <div><h2>Plataforma</h2><nav class="pub-pie-enlaces" aria-label="Plataforma"><a href="producto.html">Producto</a><a href="como-funciona.html">Cómo funciona</a><a href="../../servidor/acceso/login.php">Acceder</a></nav></div>
+                <div><h2>Conoce QueryBI</h2><nav class="pub-pie-enlaces" aria-label="Información y ayuda"><a href="nosotros.html">Nosotros</a><a href="ayuda.html">Centro de ayuda</a><a href="../index.html#ejemplo">Ver un ejemplo</a></nav></div>
+            </div>
+            <div class="pub-pie-final"><p>© 2026 QueryBI AI. Todos los derechos reservados.</p><p>Hecho para acercar los datos a las personas.</p></div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<?php
+require_once __DIR__ . '/../compartido/sesion.php';
+qbi_requerir(['administrador', 'usuario']);
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Detalle de consulta | QueryBI AI</title>
+
+    <link
+        rel="icon"
+        href="../../cliente/assets/imagenes/favicon.svg"
+        type="image/svg+xml"
+    >
+
+    <link rel="stylesheet" href="../../cliente/assets/css/estilos.css">
+    <link rel="stylesheet" href="../../cliente/assets/css/aplicacion.css">
+    <link rel="stylesheet" href="../../cliente/assets/css/consultas.css">
+
+    <script src="../../cliente/assets/datos/datos-demo.js" defer></script>
+    <script src="../../cliente/assets/js/principal.js" defer></script>
+    <script src="../../cliente/assets/js/detalle-consulta.js" defer></script>
+</head>
+
+<body>
+    <noscript>
+        <p class="aviso">
+            Activa JavaScript para utilizar los registros
+            locales de demostración.
+        </p>
+    </noscript>
+
+    <a class="saltar-contenido" href="#contenido">
+        Saltar al contenido
+    </a>
+
+    <?php require __DIR__ . '/../compartido/navegacion.php'; ?>
+
+    <main id="contenido" class="contenido-app">
+        <a href="historial.php">Volver al historial</a>
+
+        <div class="cabecera-seccion">
+            <div>
+                <h1>Detalle de consulta</h1>
+            </div>
+        </div>
+
+        <p
+            id="mensaje-detalle"
+            class="mensaje"
+            role="status"
+            hidden
+        ></p>
+
+        <section id="detalle-consulta" class="tarjeta" hidden>
+            <h2>Pregunta registrada</h2>
+
+            <p
+                id="pregunta-detalle"
+                class="pregunta-registrada"
+            ></p>
+
+            <div class="dos-columnas">
+                <div>
+                    <h3>Fuente</h3>
+                    <p id="fuente-detalle"></p>
+                </div>
+
+                <div>
+                    <h3>Fecha</h3>
+                    <p id="fecha-detalle"></p>
+                </div>
+
+                <div>
+                    <h3>Tipo</h3>
+                    <p id="tipo-detalle"></p>
+                </div>
+
+                <div>
+                    <h3>Estado</h3>
+                    <p id="estado-detalle"></p>
+                </div>
+            </div>
+
+            <p id="explicacion-detalle" class="aviso"></p>
+
+            <div class="acciones">
+                <a
+                    id="abrir-ejemplo"
+                    href="ejemplos.php"
+                    class="boton"
+                    hidden
+                >
+                    Ver ejemplo preparado
+                </a>
+
+                <a
+                    href="consultas.php"
+                    class="boton boton-secundario"
+                >
+                    Nueva pregunta
+                </a>
+            </div>
+        </section>
+    </main>
+</div>
+
+<footer class="pie">
+    <?php require dirname(__DIR__) . '/compartido/pie-marca.php'; ?>
+    <small>Datos ficticios · Acceso y fuentes en MariaDB · Ejemplos sin IA · Los cambios locales no se comparten con otros usuarios.</small>
+</footer>
+</body>
+</html>
