@@ -263,7 +263,7 @@ querybi-ai/
 
 1. Iniciar el módulo MySQL de XAMPP, que en este entorno ejecuta MariaDB.
 2. Abrir phpMyAdmin.
-3. Si las dos bases todavía no existen, importar `QueryBI_AI_hito1_XAMPP.sql` desde el nivel del servidor.
+3. Si las dos bases todavía no existen, importar `scriptBD.sql` desde el nivel del servidor.
 4. Comprobar que aparecen `querybi_ai_pagina` y `db_empresa_demo`.
 5. Revisar las tablas, las cuentas iniciales, la fuente y los metadatos creados por el script.
 

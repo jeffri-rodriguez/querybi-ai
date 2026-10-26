@@ -1,11 +1,3 @@
--- QueryBI AI - Grupo 04 - Instalacion inicial del primer hito.
--- Compatible con MariaDB 10.4.32 de XAMPP.
--- Crea querybi_ai_pagina y db_empresa_demo sin borrar bases existentes.
--- Usar solamente en una instalacion nueva. No reimportar sobre las bases actuales.
--- La estructura conserva las entidades previstas para el producto completo.
--- Solo se precargan cuentas, empresa, fuente, metadatos y datos sinteticos de tienda.
--- Historial, resultados y reportes quedan vacios: la web aun usa localStorage para ellos.
-
 SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
 SET SESSION foreign_key_checks = 1;
 SET SESSION check_constraint_checks = 1;
@@ -283,11 +275,6 @@ CREATE TABLE detalle_ventas (
     CONSTRAINT ck_detalle_subtotal CHECK (subtotal = ROUND(cantidad * precio_unitario_venta,2))
 ) ENGINE=InnoDB;
 
--- Ninguna FK borra detalles de ventas al eliminar productos.
--- Se modela una linea por producto y venta, sin descuentos/impuestos adicionales.
--- Los totales de cabecera y el stock requieren logica transaccional si se
--- implementan operaciones comerciales. Esta tienda se utiliza para lectura.
--- El stock de prueba es una fotografia sintetica; no hay kardex implementado.
 
 -- 3. DATOS DE PRUEBA: todos son ficticios.
 START TRANSACTION;
@@ -353,7 +340,7 @@ INSERT INTO detalle_ventas (venta_id,producto_id,cantidad,precio_unitario_venta,
 USE querybi_ai_pagina;
 INSERT INTO empresas (id,nombre_empresa,correo_contacto,ruc) VALUES
 (1,'Tienda Demo','contacto@tienda.test',NULL);
--- Credenciales de acceso WEB (no cuentas del servidor MariaDB):
+-- Credenciales de acceso WEB:
 -- superadmin@querybi.test / SuperDemo2026!
 -- admin@tienda.test / AdminDemo2026!
 -- usuario@tienda.test / UsuarioDemo2026!
@@ -402,7 +389,7 @@ ORDER BY k.CONSTRAINT_NAME,k.ORDINAL_POSITION;
 
 -- Sin actividad operativa precargada:
 -- historial_consultas, resultados_consulta y reportes permanecen vacios.
--- Los registros del navegador no se sincronizan con estas tablas en el primer hito.
+-- Los registros del navegador no se sincronizan con estas tablas por ahora
 COMMIT;
 
 -- 4. COMPROBACIONES DE INSTALACION (no son evidencia de integracion web).
